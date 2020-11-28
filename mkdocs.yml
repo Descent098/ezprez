@@ -1,12 +1,12 @@
-site_name: project_name
+site_name: ezprez
 
 nav:
     - Home: index.md
 
 theme: readthedocs
 
-repo_url: Fill in your repo url here
+repo_url: https://github.com/Descent098/ezprez
 
-site_description: This is the documentation site for project_name.
+site_description: An object based api for generating web presentations
 
-site_author: Your name here
+site_author: Kieran Wood

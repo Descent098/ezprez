@@ -22,34 +22,27 @@ def get_content(*filename:str) -> str:
     return content
 
 setuptools.setup(
-    name = "", # TODO: Give the package a name
-    version = "0.0.1", # I recommend every 2nd decimal release (i.e. 0.x.0) for big releases and 3rd (i.e. 0.0.x) for bug fixes.
-    author = "", # TODO: Add your name
-    author_email = "", # TODO: Add your email
-    description = "", # TODO: Give the package a description
+    name = "ezprez", 
+    version = "0.0.1", 
+    author = "Kieran Wood",
+    author_email = "kieran@canadiancoding.ca",
+    description = "An object based api for generating web presentations",
     long_description = get_content("README.md", "CHANGELOG.md"),
     long_description_content_type = "text/markdown",
-    # Replace https://github.com/canadian-coding/python-package-template with your repo github URL 
     project_urls = {
-        "User Docs" :      "", # TODO: Fill out or remove
-        "API Docs"  :      "", # TODO: Fill out or remove
-        "Source" :         "https://github.com/canadian-coding/python-package-template",
-        "Bug Report":      "https://github.com/canadian-coding/python-package-template/issues/new?assignees=Descent098&labels=bug&template=bug_report.md&title=%5BBUG%5D",
-        "Feature Request": "https://github.com/canadian-coding/python-package-template/issues/new?labels=enhancement&template=feature_request.md&title=%5BFeature%5D",
-        "Roadmap":         "https://github.com/canadian-coding/python-package-template/projects"
+        "User Docs" :      "https://ezprez.readthedocs.io",
+        "API Docs"  :      "https://kieranwood.ca/ezprez",
+        "Source" :         "https://github.com/Descent098/ezprez",
+        "Bug Report":      "https://github.com/Descent098/ezprez/issues/new?assignees=Descent098&labels=bug&template=bug_report.md&title=%5BBUG%5D",
+        "Feature Request": "https://github.com/Descent098/ezprez/issues/new?labels=enhancement&template=feature_request.md&title=%5BFeature%5D",
+        "Roadmap":         "https://github.com/Descent098/ezprez/projects"
     },
     include_package_data = True,
     packages = setuptools.find_packages(),
-
-    # The code below is used to define entrypoints, if you don't know what this is then:
-    # SEE: https://canadiancoding.ca/posts/post/python/script-entrypoints/
-
-    
+    # TODO: uncomment when entrypoint is made
     # entry_points = { 
-    #        'console_scripts': ['... = ...']
+    #        'console_scripts': ['ezprez = ezprez.cli.main']
     #    },
-    
-
     install_requires = [
     "docopt", # Used for argument parsing if you are writing a CLI
         ],
@@ -62,6 +55,6 @@ setuptools.setup(
     classifiers = [
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
-        "Development Status :: 1 - Planning" # TODO: Change this when you have created package, SEE: https://pypi.org/classifiers/
+        "Development Status :: 1 - Planning"
     ],
 )
