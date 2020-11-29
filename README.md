@@ -1,8 +1,8 @@
-**THIS IS A WORK IN PROGRESS, I AM JUST UPLOADING THIS AS A PLACEHOLDER FOR NOW**
+![ezprez logo](https://raw.githubusercontent.com/Descent098/ezprez/master/.github/logo.png)
 
 # ezprez
 
-*A generic python PyPi project template. Replace this line with a project description*
+*An object based api for generating web presentations*
 
 ## TODO
 
