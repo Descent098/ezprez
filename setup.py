@@ -23,7 +23,7 @@ def get_content(*filename:str) -> str:
 
 setuptools.setup(
     name = "ezprez", 
-    version = "0.0.1", 
+    version = "0.1.0", 
     author = "Kieran Wood",
     author_email = "kieran@canadiancoding.ca",
     description = "An object based api for generating web presentations",
