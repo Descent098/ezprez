@@ -10,25 +10,35 @@ from ezprez.components import *
 
 
 class Slide:
-    def __init__(self, heading:str, *contents:Union[str, list, tuple], background:Union[bool,str] = False ):
+    def __init__(self, heading:str, *contents:Union[str, list, tuple, Component], background:Union[bool,str] = False, horizontal_alignment="center", vertical_alignment="center", image="" ):
         self.contents = contents
         self.heading = heading # The slide's title/heading
         self.background = background # i.e. brown, generates <section class='bg-<background>'>
+        self.image = image
+        self.horizontal_alignment = horizontal_alignment # Can be left, right or center
+        self.vertical_alignment = vertical_alignment # can be top, bottom or center
+        
 
 
     def _generate_content(self):
-        result = f"\n\t\t\t<section class='bg-{self.background}'>\n\t\t\t\t<h2>{self.heading}</h2>\n"
+        result = f"\n\t\t\t<section class='bg-{self.background}'>"
+        
+        if self.image:
+            result += f"\n\t\t\t\t<span class='background' style='background-image:url(\"{self.image}\")'></span>"
+        result += f"\n\t\t\t\t<div class='wrap content-{self.horizontal_alignment} slide-{self.vertical_alignment}'>\n\t\t\t\t\t<h2>{self.heading}</h2>\n"
         
         for content in self.contents:
             if type(content) == str:
-                result += f"\t\t\t\t<p>{content}</p>\n"
+                result += f"\t\t\t\t\t<p>{content}</p>\n"
 
             elif type(content) == list or type(content) == tuple:
-                result += "\t\t\t\t<ul>\n"
+                result += "\t\t\t\t\t<ul>\n"
                 for bullet_point in content:
-                    result += f"\t\t\t\t\t<li>{bullet_point}</li>\n"
-                result += "\t\t\t\t</ul>\n"
-        result += "\t\t\t</section>\n"
+                    result += f"\t\t\t\t\t\t<li>{bullet_point}</li>\n"
+                result += "\t\t\t\t\t</ul>\n"
+            elif isinstance(content, Component):
+                result += content.__html__()
+        result += "\t\t\t\t</div>\n\t\t\t</section>\n"
 
         yield result
 
@@ -48,11 +58,12 @@ class Presentation:
     slides: List[Slide]
     background: str = "white" # What color the intro slide should be
     image: str = "" # Path to image to use for og tags
+    endcard: bool = True # Whether to add the endcard
     generate_intro: bool = True # Generate an introduction slide with the background image and whatnot
-    favicon: Union[bool, str] =  field(default_factory=lambda: False) # Path to favicon
+    favicon: Union[bool, str] =  False # Path to favicon
     vertical: bool = field(default_factory=lambda: False) #Whether the slideshow should be verticle or not
-    navbar: Union[bool, Navbar] = field(default_factory=lambda: False) # The navbar for the site
-    footer: Union[bool, Footer] = field(default_factory=lambda: False) # The footer for the site
+    navbar: Union[bool, Navbar] = False # The navbar for the site
+    footer: Union[bool, Footer] = False # The footer for the site
 
 
     def _generate_favicon_markup(self):
@@ -63,12 +74,12 @@ class Presentation:
             return f'''<!-- FAVICONS -->
             <link rel="apple-touch-icon icon" sizes="76x76" href="static/images/favicons/favicon-152.png">'''
 
+
     def _generate_intro_slide(self):
         if self.generate_intro:
-            ...
             if self.image:
                 return f"""\t\t\t<section class='bg-{self.background}'>
-                <span class='background' style='background-image:url('{self.image}')'></span>
+                <span class='background' style='background-image:url("{self.image}")'></span>
                     <div class='wrap aligncenter'>
                         <h1><strong>{self.title}</strong></h1>
                         <p class='text-intro'>{self.description}</p>
@@ -81,6 +92,28 @@ class Presentation:
                         <p class='text-intro'>{self.description}</p>
                     </div>
             </section>"""
+
+
+    def _generate_endcard(self):
+        if self.endcard:
+            return f"""\t\t\t<section class='bg-{self.background}'>
+                    <div class='wrap aligncenter'>
+                        <h2><strong>Thank you for listening</strong></h2>
+                        <h4 class='text-intro'>This presentation was made with the help of</h4>
+                        <h4>
+                            <strong><em><a href='https://webslides.tv' target='_blank'>WebSlides</a></em></strong> 
+                        </h4>
+                        <h4>
+                            <strong><em><a href='https://github.com/Descent098/ezprez' target='_blank'>ezprez</a></em></strong>
+                        </h4>
+                    </div>
+            </section>"""
+        else:
+            return ""
+
+
+    def __len__(self):
+        return len(self.slides)
 
 
     def __html__(self):
@@ -111,7 +144,7 @@ class Presentation:
         <link rel="stylesheet" type='text/css' media='all' href="static/css/webslides.css">
 
         <!-- Optional - CSS SVG Icons (Font Awesome) -->
-        <link rel="stylesheet" type='text/css' media='all' href="static/css/svg-icons.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 
         <!-- SOCIAL CARDS (ADD YOUR INFO) -->
 
@@ -136,12 +169,14 @@ class Presentation:
         <meta name="theme-color" content="#f0f0f0">
 
     </head>
+    {self.navbar.__html__() if self.navbar else ""}
     <body>
 
     <main role='main'>
         <article id='webslides' {'class="vertical"' if self.vertical else ""}>
 {self._generate_intro_slide()}
 {slides_html}
+{self._generate_endcard()}
 
         </article>
         <!-- end article -->
@@ -158,6 +193,7 @@ class Presentation:
     <script defer src='static/js/svg-icons.js'></script>
 
     </body>
+    {self.footer.__html__() if self.footer else ""}
 </html>
         '''
         return result
@@ -186,7 +222,10 @@ class Presentation:
 
 
 if __name__ == "__main__":
+
+    # header = Navbar("Basic web technologies", [[SocialLinks.github,"https://kieranwood.ca"], ["canadian coding", "https://canadiancoding.ca"]])
+    # foot = Footer([[SocialLinks.github,"https://kieranwood.ca"], ["canadian coding", "https://canadiancoding.ca"]])
     slide_1 = Slide("H T M L", "Any nouns on a webpage are typically html", ["that block of text", "that image", "etc."], background="black")
     slide_2 = Slide("J S", "Hello my dude", background="white")
-    prez = Presentation("Basic web technologies", "Learn to code my dude", "", background="red", slides=[slide_1, slide_2])
+    prez = Presentation("Basic web technologies", "Learn to code my dude", "", background="black-blue", slides=[slide_1, slide_2])
     prez.export(".", force=True)
