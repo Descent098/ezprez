@@ -45,6 +45,8 @@ setuptools.setup(
     #    },
     install_requires = [
     "docopt", # Used for argument parsing if you are writing a CLI
+    "pystall",
+    "elevate"
         ],
     extras_require = {
         "dev" : ["nox",    # Used to run automated processes

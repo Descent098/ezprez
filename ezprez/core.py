@@ -8,6 +8,10 @@ from dataclasses import dataclass, field
 # Internal dependencies
 from ezprez.components import *
 
+# External Dependencies
+from elevate import elevate
+from pystall.core import ZIPResource, build
+
 
 class Slide:
     def __init__(self, heading:str, *contents:Union[str, list, tuple, Component], background:Union[bool,str] = False, horizontal_alignment="center", vertical_alignment="center", image="" ):
@@ -207,19 +211,27 @@ class Presentation:
     def export(self, file_path:str, force:bool = False):
         # check if webslides is downloaded, if it is use those files, if not download and extract it
         file_path = os.path.abspath(file_path)
-        if os.path.exists(os.path.join(os.path.dirname(__file__), "webslides")):
-            try:
-                copytree(os.path.join(os.path.dirname(__file__), "webslides"), os.path.join(file_path, self.title))
-            except FileExistsError:
-                if force:
-                    rmtree(os.path.join(file_path, self.title))
-                    copytree(os.path.join(os.path.dirname(__file__), "webslides"), os.path.join(file_path, self.title))
-                else:
-                    raise FileExistsError(f"The file path {os.path.join(file_path, self.title)} exists, to replace use Presentation.export({file_path}, force=True)")
-        else:
-            # TODO: download and extract webslides
-            ...
 
+        # finding downloads folder
+        if os.name == "nt":
+            DOWNLOAD_FOLDER = f"{os.getenv('USERPROFILE')}\\Downloads"
+        else: # PORT: Assuming variable is there for MacOS and Linux installs
+            DOWNLOAD_FOLDER = f"{os.getenv('HOME')}/Downloads" 
+        if not os.path.exists(os.path.join(os.path.dirname(__file__), "webslides")):
+            try:
+                build(ZIPResource("webslides", "https://webslides.tv/webslides-latest.zip", overwrite_agreement=True))
+                copytree(os.path.join(DOWNLOAD_FOLDER, "webslides"), os.path.join(os.path.dirname(__file__), "webslides"))
+            except PermissionError:
+                elevate()
+                copytree(os.path.join(DOWNLOAD_FOLDER, "webslides"), os.path.join(os.path.dirname(__file__), "webslides"))
+        try:
+            copytree(os.path.join(os.path.dirname(__file__), "webslides"), os.path.join(file_path, self.title))
+        except FileExistsError:
+            if force:
+                rmtree(os.path.join(file_path, self.title))
+                copytree(os.path.join(os.path.dirname(__file__), "webslides"), os.path.join(file_path, self.title))
+            else:
+                raise FileExistsError(f"The file path {os.path.join(file_path, self.title)} exists, to replace use Presentation.export({file_path}, force=True)")
 
         # replace index.html with generated html
         with open(os.path.join(file_path, self.title, "index.html"), "w+") as presentation_file:
