@@ -21,6 +21,25 @@ class SocialLinks(enum.Enum):
                     </a>\n"""
 
 @dataclass
+class Link(Component):
+    label: str
+    link: str
+
+    def __html__(self):
+        return f"""\n\t\t\t\t\t<a href={self.link} target='_blank' rel='external'>{self.label}</a>\n"""
+
+@dataclass
+class Code(Component):
+    language:str
+    content: str
+
+    def __html__(self):
+        # TODO: Add escaping
+        return f"""\t\t\t\t\t<pre><code class='language-{self.language.lower()}'>{self.content}</code></pre>\n"""
+
+
+
+@dataclass
 class Footer(Component):
     links: str
 
@@ -50,7 +69,7 @@ class Navbar(Component):
         result =f"""
         <header role="banner">
             <nav role="navigation">
-                <p class="logo"><a href="/" target="_blank" title="{self.title}">{self.title}</a></p>
+                <p class="logo"><a href="" target="_blank" title="{self.title}">{self.title}</a></p>
                 <ul>
         """
 

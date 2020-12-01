@@ -21,24 +21,24 @@ class Slide:
 
 
     def _generate_content(self):
-        result = f"\n\t\t\t<section class='bg-{self.background}'>"
+        result = f"\n\t\t\t<section class='bg-{self.background} slide-{self.vertical_alignment}'>"
         
         if self.image:
             result += f"\n\t\t\t\t<span class='background' style='background-image:url(\"{self.image}\")'></span>"
-        result += f"\n\t\t\t\t<div class='wrap content-{self.horizontal_alignment} slide-{self.vertical_alignment}'>\n\t\t\t\t\t<h2>{self.heading}</h2>\n"
+        result += f"\n\t\t\t\t<div class='wrap'>\n\t\t\t\t\t<div class='content-{self.horizontal_alignment}'>\n\t\t\t\t\t<h2>{self.heading}</h2>\n"
         
         for content in self.contents:
             if type(content) == str:
                 result += f"\t\t\t\t\t<p>{content}</p>\n"
 
             elif type(content) == list or type(content) == tuple:
-                result += "\t\t\t\t\t<ul>\n"
+                result += f"\t\t\t\t\t<div class='grid {'content-' + self.horizontal_alignment if not self.horizontal_alignment == 'right' else ''}'>\n\t\t\t\t\t\t\t<ul style='text-align:justify;'>\n"
                 for bullet_point in content:
-                    result += f"\t\t\t\t\t\t<li>{bullet_point}</li>\n"
-                result += "\t\t\t\t\t</ul>\n"
+                    result += f"\t\t\t\t\t\t\t\t<li>{bullet_point}</li>\n"
+                result += "\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</ul>\n"
             elif isinstance(content, Component):
                 result += content.__html__()
-        result += "\t\t\t\t</div>\n\t\t\t</section>\n"
+        result += "\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</section>\n"
 
         yield result
 
@@ -61,7 +61,7 @@ class Presentation:
     endcard: bool = True # Whether to add the endcard
     generate_intro: bool = True # Generate an introduction slide with the background image and whatnot
     favicon: Union[bool, str] =  False # Path to favicon
-    vertical: bool = field(default_factory=lambda: False) #Whether the slideshow should be verticle or not
+    vertical: bool = False # Whether the slideshow should be vertical or not
     navbar: Union[bool, Navbar] = False # The navbar for the site
     footer: Union[bool, Footer] = False # The footer for the site
 
@@ -168,6 +168,11 @@ class Presentation:
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="theme-color" content="#f0f0f0">
 
+        <!-- Code highlighting -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/styles/default.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
     </head>
     {self.navbar.__html__() if self.navbar else ""}
     <body>
@@ -227,5 +232,6 @@ if __name__ == "__main__":
     # foot = Footer([[SocialLinks.github,"https://kieranwood.ca"], ["canadian coding", "https://canadiancoding.ca"]])
     slide_1 = Slide("H T M L", "Any nouns on a webpage are typically html", ["that block of text", "that image", "etc."], background="black")
     slide_2 = Slide("J S", "Hello my dude", background="white")
-    prez = Presentation("Basic web technologies", "Learn to code my dude", "", background="black-blue", slides=[slide_1, slide_2])
+    slide_3 = Slide("TITLe", "CONTENT", background="white")
+    prez = Presentation("Basic web technologies", "Learn to code my dude", "", background="black-blue", slides=[slide_1, slide_2, slide_3])
     prez.export(".", force=True)
