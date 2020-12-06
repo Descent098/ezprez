@@ -1,7 +1,6 @@
 # Standard lib dependencies
 import os
-import enum
-from shutil import copytree, copyfile, rmtree
+from shutil import copytree, rmtree
 from datetime import datetime
 from typing import Union, List
 from dataclasses import dataclass, field
@@ -28,6 +27,7 @@ class Slide:
         Slide.all.append(self) # Add created instance to the ALL list
 
     def _generate_content(self):
+        """Generates the necessary html with the provided contents"""
         result = f"\n\t\t\t<section class='bg-{self.background} slide-{self.vertical_alignment}'>"
         
         if self.image:
@@ -57,32 +57,91 @@ class Slide:
             result+= content
         return result
 
+
 @dataclass
 class Presentation:
-    title: str # The title of the presentation
-    description: str # The description of the presentation
-    url: str # The canonical URL the presentation will be deployed at
-    slides: List[Slide] = field(default_factory=lambda: Slide.all)
-    background: str = "white" # What color the intro slide should be
-    image: str = "" # Path to image to use for og tags
-    endcard: bool = True # Whether to add the endcard
-    generate_intro: bool = True # Generate an introduction slide with the background image and whatnot
-    favicon: Union[bool, str] =  False # Path to favicon
-    vertical: bool = False # Whether the slideshow should be vertical or not
-    navbar: Union[bool, Navbar] = False # The navbar for the site
-    footer: Union[bool, Footer] = False # The footer for the site
+    """The class for defining the presentation configuration, and primary entrypoint to exporting presentations
+
+    Attributes
+    ----------
+    title: (str)
+        The title of the presentation
+
+    description: (str)
+        The description of the presentation
+
+    url: (str)
+        The canonical URL the presentation will be deployed at
+
+    slides: List[Slide]
+        The slides to generate the presentation with, optional and defaults to Slide.all
+
+    background: (str)
+        What color the intro slie and default slide background color should be, optional defaults to 'white'
+
+    image: (Image or False)
+        Path to background image to use for og tags, and intro slide, optional defaults to False
+
+    endcard: (bool)
+        Whether to add the endcard, optional defaults to True
+
+    generate_intro: (bool)
+        Generate an introduction slide with the background image, title, and description, optional defaults to True
+
+    favicon: (Image or False)
+        The image to use for the favicon, optional defaults to False
+
+    vertical: (bool)
+        Whether the slideshow should be vertical or not, optional defaults to False
+
+    navbar: (Navbar or False)
+        The navbar for the site, optional defaults to False
+
+    footer: (Footer or False)
+        The footer for the site, optional defaults to False
+
+    Methods
+    -------
+    export:
+        Exports the presentation files
+
+    Examples
+    --------
+    ### Creating a presentation and exporting it to ./Presentation
+    ```
+    from ezprez.core import Presentation
+
+    prez = Presentation(title, description, url)
+
+    # Export the files to the current directory at /Presentation, and delete existing files if they're found
+    prez.export(".", force=True, folder_name="Presentation")
+    ```
+    """
+    title: str 
+    description: str 
+    url: str
+    endcard: bool = True
+    vertical: bool = False
+    background: str = "white"
+    generate_intro: bool = True
+    image: Union[bool, Image] = False
+    favicon: Union[bool, Image] = False
+    navbar: Union[bool, Navbar] = False
+    footer: Union[bool, Footer] = False
+    slides: List[Slide] = field(default_factory=lambda: Slide.all) 
 
 
     def _generate_favicon_markup(self):
+        """Generates the html to render the favicon properly"""
         if self.favicon: # TODO: COPY FAVICON
-            return f'''<!-- FAVICONS -->
-            <link rel="apple-touch-icon icon" sizes="76x76" href="{self.favicon}">'''
+            return self.favicon.__html__()
         else:
             return f'''<!-- FAVICONS -->
             <link rel="apple-touch-icon icon" sizes="76x76" href="static/images/favicons/favicon-152.png">'''
 
 
     def _generate_intro_slide(self):
+        """Generates the first slide in a presentation"""
         if self.generate_intro:
             if self.image:
                 return f"""\t\t\t<section class='bg-{self.background}'>
@@ -101,11 +160,12 @@ class Presentation:
             </section>"""
 
 
-    def _generate_endcard(self):
+    def _generate_endcard(self) -> str:
+        """Generates the slide that goes at the end of Presentation's"""
         if self.endcard:
             return f"""\t\t\t<section class='bg-{self.background}'>
                     <div class='wrap aligncenter'>
-                        <h2><strong>Thank you for listening</strong></h2>
+                        <h2><strong>Thank you</strong></h2>
                         <h4 class='text-intro'>This presentation was made with the help of</h4>
                         <h4>
                             <strong><em><a href='https://webslides.tv' target='_blank'>WebSlides</a></em></strong> 
@@ -119,19 +179,18 @@ class Presentation:
             return ""
 
 
-    def __len__(self):
+    def __len__(self) -> int:
+        """Returns the number of slides in the presentation"""
         return len(self.slides)
 
 
-    def __html__(self):
-        """Generates the base html"""
+    def __html__(self) -> str:
+        """Generates the index.html file of a presentation using the provided slides"""
         slides_html = ""
         for slide in self.slides:
             if not slide.background:
                 slide.background = self.background
             slides_html += slide.__html__()
-        
-        #TODO; copy specfied image
 
         result = f'''<!doctype html>
 <html lang="en" prefix="og: http://ogp.me/ns#">
@@ -211,10 +270,45 @@ class Presentation:
 </html>
         '''
         return result
-        
 
-    def export(self, file_path:str, force:bool = False):
-        # check if webslides is downloaded, if it is use those files, if not download and extract it
+
+    def export(self, file_path:str, folder_name:Union[str, bool] = False, force:bool = False):
+        """Exports the presentation files
+
+        Parameters
+        ----------
+        file_path : (str)
+            The path to export the folder of content to
+
+        folder_name : (str or False)
+            If you want to overwrite the folder name the output files are put in (defaults to Presentation.title), optional and defaults to False
+
+        force : (bool)
+            Whether to force generating files (overwrite existing files if found), optional and defaults to False
+
+        Notes
+        -----
+        - all files are exported to file_path/folder_name
+        - folder_name defaults to Presenation.title
+
+        Raises
+        ------
+        FileExistsError
+            If force is False, and a folder exists at file_path/folder_name
+
+        Examples
+        --------
+        ### Export a presentation to the current directory at /Presentation
+        ```
+        from ezprez.core import Presentation
+        prez = Presentation(title, description, url)
+
+        # Export the files to the current directory at /Presentation
+        prez.export(".", force=True, folder_name="Presentation")
+        ```
+        """
+        if not folder_name:
+            folder_name = self.title
         file_path = os.path.abspath(file_path)
 
         # finding downloads folder
@@ -222,6 +316,8 @@ class Presentation:
             DOWNLOAD_FOLDER = f"{os.getenv('USERPROFILE')}\\Downloads"
         else: # PORT: Assuming variable is there for MacOS and Linux installs
             DOWNLOAD_FOLDER = f"{os.getenv('HOME')}/Downloads" 
+
+        # check if webslides is downloaded, if it is use those files, if not download and extract it
         if not os.path.exists(os.path.join(os.path.dirname(__file__), "webslides")):
             try:
                 build(ZIPResource("webslides", "https://webslides.tv/webslides-latest.zip", overwrite_agreement=True))
@@ -230,34 +326,14 @@ class Presentation:
                 elevate()
                 copytree(os.path.join(DOWNLOAD_FOLDER, "webslides"), os.path.join(os.path.dirname(__file__), "webslides"))
         try:
-            copytree(os.path.join(os.path.dirname(__file__), "webslides"), os.path.join(file_path, self.title))
+            copytree(os.path.join(os.path.dirname(__file__), "webslides"), os.path.join(file_path, folder_name))
         except FileExistsError:
             if force:
-                rmtree(os.path.join(file_path, self.title))
-                copytree(os.path.join(os.path.dirname(__file__), "webslides"), os.path.join(file_path, self.title))
+                rmtree(os.path.join(file_path, folder_name))
+                copytree(os.path.join(os.path.dirname(__file__), "webslides"), os.path.join(file_path, folder_name))
             else:
-                raise FileExistsError(f"The file path {os.path.join(file_path, self.title)} exists, to replace use Presentation.export({file_path}, force=True)")
+                raise FileExistsError(f"The file path {os.path.join(file_path, folder_name)} exists, to replace use Presentation.export({file_path}, force=True)")
 
         # replace index.html with generated html
-        with open(os.path.join(file_path, self.title, "index.html"), "w+") as presentation_file:
+        with open(os.path.join(file_path, folder_name, "index.html"), "w+") as presentation_file:
             presentation_file.write(self.__html__())
-
-
-if __name__ == "__main__":
-    
-    header = Navbar("Basic web technologies", [SocialLink.github.link("https://kieranwood.ca"), Link("canadian coding", "https://canadiancoding.ca")])
-    foot = Footer([SocialLink.github.link("https://kieranwood.ca"), Link("canadian coding", "https://canadiancoding.ca")])
-    sections = {"H T M L":2, "TITLe": 4}
-    # Slide.all.append(TableOfContents(sections))
-    # print(Slide.all)
-    Slide("Table of contents", TableOfContents(sections), background="white")
-    Slide("H T M L", "Any nouns on a webpage are typically html", ["that block of text", "that image", "etc."])
-    Slide("J S", "Hello my dude", Icon("fa-heart"))
-    Slide("HTML code example", Code("html", "<div><a href='https://youtube.com' target='_blank'>qqqqq</a></div>"))
-    Slide("J S", Raw("<div><a href='https://youtube.com' target='_blank'>qqqqq</a></div>"))
-    Slide("TITLe", SocialLink.github.link("https://github.com/descent098"))
-    # slide_3 = Slide("TITLe", "CONTENT", background="white")
-
-
-    prez = Presentation("Basic web technologies", "Learn to code my dude", "", background="black", navbar=header, footer=foot)
-    prez.export(".", force=True)

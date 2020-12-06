@@ -8,7 +8,7 @@ from dataclasses import dataclass
 
 class _Component(ABC):
     """Base class used for type checking, and inheritance on all components"""
-    def __html__(self):
+    def __html__(self) -> str:
         raise NotImplementedError("Components require a __html__() method to be defined")
 
 
@@ -62,7 +62,7 @@ class SocialLink(enum.Enum):
         return self
 
 
-    def __html__(self, header:bool = True):
+    def __html__(self, header:bool = True) -> str:
         if self.url: 
             if header:
                 return f"""\n\t\t\t\t\t<a href='{self.url}' target='_blank' rel='external' style='background-color:#fff; color:#141414;'>
@@ -105,7 +105,7 @@ class Link(_Component):
     link: str
 
 
-    def __html__(self, header:bool = False):
+    def __html__(self, header:bool = False) -> str:
         if not header:
             return f"""\n\t\t\t\t\t<a href={self.link} target='_blank' rel='external'>{self.label}</a>\n"""
         else:
@@ -150,11 +150,11 @@ class Code(_Component):
         str
             The escaped string of content
         """
-        self.content = self.content.replace("<", "&lt").replace(">", "&gt").replace("&", "&amp").replace('"', "&quot").replace("'", "&apos")
+        self.content = self.content.replace("<", "&lt").replace(">", "&gt").replace("&", "&amp")
         return self.content
 
 
-    def __html__(self):
+    def __html__(self) -> str:
         return f"""\t\t\t\t\t<pre><code class='language-{self.language.lower()}'>{self._escape()}</code></pre>\n"""
 
 
@@ -162,7 +162,7 @@ class Code(_Component):
 class Icon(_Component):
     """A component that generates an icon
 
-    Parameters
+    Attributes
     ----------
     label: (str)
         The icon name i.e. 'fa-heart' (details at https://fontawesome.com/)
@@ -184,16 +184,34 @@ class Icon(_Component):
     size:str = "48px"
 
 
-    def __html__(self):
+    def __html__(self) -> str:
         return f"""\t\t\t\t\t<svg class='{self.label}' style='width:{self.size};height:{self.size};'><use xlink:href='#{self.label}'></use></svg>\n"""
 
 
 @dataclass
 class Footer(_Component):
-    links: str
+    """Allows you to add a footer to the presentation
+
+    Attributes
+    ----------
+    links: (list[Link or SocialLink])
+        A list of Link's or SocialLink's to include in the footer
+
+    Examples
+    --------
+    ### Adding a footer with a github link to a presentation
+    ```
+    from ezprez.core import Presentation
+    from ezprez.components import Footer
+
+    foot = Footer([SocialLink.github.link("https://github.com/Descent098/ezprez-example")])
+    Presentation(title, description, url, footer=foot)
+    ```
+    """
+    links: List[Union[Link, SocialLink]]
 
 
-    def __html__(self):
+    def __html__(self) -> str:
         result =f"""
         <footer>
         """
@@ -202,7 +220,7 @@ class Footer(_Component):
             if type(link) == Link or type(link) == SocialLink:
                 result += f"\n\t\t\t{link.__html__(header=True)}\n"
             else:
-                raise ValueError(f"Navbar arguments must be of type ezprez.components.Link or ezprez.components.SocialLink, got type {type(link)}")
+                raise ValueError(f"Footer arguments must be of type ezprez.components.Link or ezprez.components.SocialLink, got \n\ttype {type(link)}\n\tValue{link}")
 
         result += """
         </footer>\n
@@ -211,12 +229,99 @@ class Footer(_Component):
 
 
 @dataclass
+class Button(_Component):
+    """A component that allows you to add html buttons
+
+    Attributes
+    ----------
+    label: (str)
+        The text that is shown on the button
+    
+    url: (str)
+        The url the button links to
+    
+    icon: (False or Icon)
+        Provide an Icon component to display in the button, optional and defaults to False
+    
+    ghost: (bool)
+        Whether to not fill a color, optional and defaults to False
+    
+    rounding: (bool)
+        Whether to round the corners of the button or not, optional and defaults to True
+    
+    color: (False or str)
+        The color of the button, optional and defaults to False
+    
+    text_color: (False or str)
+        The color of the button text, optional and defaults to False
+
+    Notes 
+    -----
+    - The color and text_color attribute takes an HTML color as a string i.e. #f0f0f0, blue, rgba(255, 255, 255, 0.9)
+    - If ghost is set to True all other colors will be ignored
+    - The URL parameter also can use anchor links to other slides
+
+    Examples
+    --------
+    ### Adding a button to a slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Button
+
+    b = Button("click me", "https://kieranwood.ca")
+    Slide("Here's a button", b)
+    ```
+    """
+    label: str # The text to put inside the button
+    url: str # The url to link the button to
+    icon: Union[bool, Icon] = False # The icon to put on the button (if you want one)
+    ghost: bool = False # Whether to fill in a color or use ghost styling
+    rounding: bool = True # Whether to round
+    color: Union[bool, str] = False # The color to make the button
+    text_color: Union[bool, str] = False # The color to make the button text
+
+    def __html__(self) -> str:
+        color_string = ""
+        if self.color and self.text_color and not self.ghost:
+            color_string = f"style='background-color:{self.color};color:{self.text_color};'"
+        elif self.color or self.text_color and not self.ghost:
+            color_string = "style="
+            if self.color:
+                color_string += f'\"background-color:{self.color};\"'
+            if self.text_color:
+                color_string += f'\"color:{self.text_color};\"'
+
+        return f"""\n\t\t\t<a href='{self.url}' class='button{' ghost' if self.ghost else ''}{' radius' if self.rounding else ''}' {color_string}>{self.icon.__html__() if self.icon else ''} {self.label} </a>\n"""
+
+
+@dataclass
 class Navbar(_Component):
+    """Allows you to add a navbar to the presentation
+
+    Attributes
+    ----------
+    title: (str)
+        The presentation title (used for accessibility reasons)
+
+    links: (list[Link or SocialLink])
+        A list of Link's or SocialLink's to include in the Navbar
+
+    Examples
+    --------
+    ### Adding a Navbar with a github link to a presentation
+    ```
+    from ezprez.core import Presentation
+    from ezprez.components import Navbar
+
+    nav = Navbar('Presentation title', [SocialLink.github.link("https://github.com/Descent098/ezprez-example")])
+    Presentation(title, description, url, navbar=nav)
+    ```
+    """
     title: str
     links: List[Union[Link, SocialLink]]
 
 
-    def __html__(self):
+    def __html__(self) -> str:
         result =f"""
         <header role="banner">
             <nav role="navigation">
@@ -228,7 +333,7 @@ class Navbar(_Component):
             if type(link) == Link or type(link) == SocialLink:
                 result += f"\n\t\t\t\t\t<li>{link.__html__(header=True)}</li>\n"
             else:
-                raise ValueError(f"Navbar arguments must be of type ezprez.components.Link or ezprez.components.SocialLink, got type {type(link)}")
+                raise ValueError(f"Navbar arguments must be of type ezprez.components.Link or ezprez.components.SocialLink, got \n\ttype {type(link)}\n\tValue{link}")
         result += """
                 </ul>
             </nav>
@@ -244,7 +349,7 @@ class Raw(_Component):
 
     Attributes
     ----------
-    content: str 
+    content: (str) 
         The HTML content to generate
 
     Examples
@@ -262,7 +367,7 @@ class Raw(_Component):
     content:str
 
 
-    def __html__(self):
+    def __html__(self) -> str:
         return self.content
 
 
@@ -271,7 +376,7 @@ class TableOfContents(_Component):
 
     Attributes
     ----------
-    sections: dict
+    sections: (dict)
         A dictionary of {label:slide_number}'s to generate the table of contents with
 
     Examples
@@ -292,9 +397,44 @@ class TableOfContents(_Component):
         self.sections = sections
 
 
-    def __html__(self):
+    def __html__(self) -> str:
         result = "\n\t\t<hr>\n\t\t<div class='toc'>\n\t\t\t<ol>"
         for section_title in self.sections:
             result += f"\n\t\t\t\t<li>\n\t\t\t\t\t<a href='#slide={self.sections[section_title]}' title='Go to {section_title}'>\n\t\t\t\t\t<span class='chapter'>{section_title}</span>\n\t\t\t\t\t<span class='toc-page'>{self.sections[section_title]}</span>\n\t\t\t\t</a></li>"
         result += "\n\t\t\t</ol>\n\t\t</div>\n"
         return result 
+
+
+@dataclass
+class Video(_Component):
+    """A component that allows you to embed a youtube video
+
+    Attributes
+    ----------
+    video_id: (str)
+        The youtube video id, for example if the url is youtube.com/watch?v=wSVljLh1VmI then the id is 'wSVljLh1VmI'
+
+    Examples
+    --------
+    ### Adding a youtube video to a Dlide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Video
+
+    Slide('Here is a video', Video('wSVljLh1VmI'))
+    ```
+    """
+    video_id: str
+
+    def __html__(self) -> str:
+        return f"""\n\t\t\t\t<div class='embed'>\n\t\t\t\t\t<iframe src='https://www.youtube.com/embed/{self.video_id}' frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen ></iframe>\n\t\t\t\t</div> """
+
+@dataclass
+class Image(_Component):
+    path: str
+    title: str
+    width: Union[bool, int] = False
+    height: Union[bool, int] = False
+
+    def __html__(self) -> str:
+        return """ """
