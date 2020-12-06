@@ -1,11 +1,13 @@
 # Standard lib dependencies
 import os
+import enum
 from shutil import copytree, copyfile, rmtree
 from datetime import datetime
 from typing import Union, List
 from dataclasses import dataclass, field
 
 # Internal dependencies
+from ezprez.components import _Component
 from ezprez.components import *
 
 # External Dependencies
@@ -14,15 +16,16 @@ from pystall.core import ZIPResource, build
 
 
 class Slide:
-    def __init__(self, heading:str, *contents:Union[str, list, tuple, Component], background:Union[bool,str] = False, horizontal_alignment="center", vertical_alignment="center", image="" ):
+    all = []
+
+    def __init__(self, heading:str, *contents:Union[str, list, tuple, _Component], background:Union[bool,str] = False, horizontal_alignment="center", vertical_alignment="center", image="" ):
         self.contents = contents
         self.heading = heading # The slide's title/heading
         self.background = background # i.e. brown, generates <section class='bg-<background>'>
         self.image = image
         self.horizontal_alignment = horizontal_alignment # Can be left, right or center
         self.vertical_alignment = vertical_alignment # can be top, bottom or center
-        
-
+        Slide.all.append(self) # Add created instance to the ALL list
 
     def _generate_content(self):
         result = f"\n\t\t\t<section class='bg-{self.background} slide-{self.vertical_alignment}'>"
@@ -40,7 +43,7 @@ class Slide:
                 for bullet_point in content:
                     result += f"\t\t\t\t\t\t\t\t<li>{bullet_point}</li>\n"
                 result += "\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</ul>\n"
-            elif isinstance(content, Component):
+            elif isinstance(content, _Component) or type(SocialLink):
                 result += content.__html__()
         result += "\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</section>\n"
 
@@ -59,7 +62,7 @@ class Presentation:
     title: str # The title of the presentation
     description: str # The description of the presentation
     url: str # The canonical URL the presentation will be deployed at
-    slides: List[Slide]
+    slides: List[Slide] = field(default_factory=lambda: Slide.all)
     background: str = "white" # What color the intro slide should be
     image: str = "" # Path to image to use for og tags
     endcard: bool = True # Whether to add the endcard
@@ -124,6 +127,8 @@ class Presentation:
         """Generates the base html"""
         slides_html = ""
         for slide in self.slides:
+            if not slide.background:
+                slide.background = self.background
             slides_html += slide.__html__()
         
         #TODO; copy specfied image
@@ -135,7 +140,7 @@ class Presentation:
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- SEO -->
-        <title>Basic Web Technologies</title>
+        <title>{self.title}</title>
         <meta name="description" content="{self.description}">
 
         <!-- URL CANONICAL -->
@@ -239,11 +244,20 @@ class Presentation:
 
 
 if __name__ == "__main__":
+    
+    header = Navbar("Basic web technologies", [SocialLink.github.link("https://kieranwood.ca"), Link("canadian coding", "https://canadiancoding.ca")])
+    foot = Footer([SocialLink.github.link("https://kieranwood.ca"), Link("canadian coding", "https://canadiancoding.ca")])
+    sections = {"H T M L":2, "TITLe": 4}
+    # Slide.all.append(TableOfContents(sections))
+    # print(Slide.all)
+    Slide("Table of contents", TableOfContents(sections), background="white")
+    Slide("H T M L", "Any nouns on a webpage are typically html", ["that block of text", "that image", "etc."])
+    Slide("J S", "Hello my dude", Icon("fa-heart"))
+    Slide("HTML code example", Code("html", "<div><a href='https://youtube.com' target='_blank'>qqqqq</a></div>"))
+    Slide("J S", Raw("<div><a href='https://youtube.com' target='_blank'>qqqqq</a></div>"))
+    Slide("TITLe", SocialLink.github.link("https://github.com/descent098"))
+    # slide_3 = Slide("TITLe", "CONTENT", background="white")
 
-    # header = Navbar("Basic web technologies", [[SocialLinks.github,"https://kieranwood.ca"], ["canadian coding", "https://canadiancoding.ca"]])
-    # foot = Footer([[SocialLinks.github,"https://kieranwood.ca"], ["canadian coding", "https://canadiancoding.ca"]])
-    slide_1 = Slide("H T M L", "Any nouns on a webpage are typically html", ["that block of text", "that image", "etc."], background="black")
-    slide_2 = Slide("J S", "Hello my dude", background="white")
-    slide_3 = Slide("TITLe", "CONTENT", background="white")
-    prez = Presentation("Basic web technologies", "Learn to code my dude", "", background="black-blue", slides=[slide_1, slide_2, slide_3])
+
+    prez = Presentation("Basic web technologies", "Learn to code my dude", "", background="black", navbar=header, footer=foot)
     prez.export(".", force=True)
