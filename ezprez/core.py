@@ -1,30 +1,114 @@
+"""The module that contains the Presentation and Slide classes that are used to generate web presentations
+
+Classes
+-------
+Slide:
+    The class that is used to generate slides that are fed into the Presentation object
+
+Presentation:
+    The class for defining the presentation configuration, and primary entrypoint to exporting presentations
+
+Notes
+-----
+- On first run you will need an internet connection to download webslides
+
+Examples
+--------
+### Creating a presentation with a slide and exporting it to ./Presentation
+```
+from ezprez.core import Presentation, Slide
+
+# This slide is auto-added to the Presentation object by default
+Slide('This is the title', 'and this is the content')
+
+prez = Presentation(title, description, url)
+
+# Export the files to the current directory at /Presentation, and delete existing files if they're found
+prez.export(".", force=True, folder_name="Presentation")
+```
+"""
 # Standard lib dependencies
-import os
-from shutil import copytree, rmtree
-from datetime import datetime
-from typing import Union, List
-from dataclasses import dataclass, field
+import os                                   # Used in path validation
+from datetime import datetime               # Used to get date for export
+from typing import Union, List              # Used to enrich type hints in methods
+from shutil import copytree, rmtree         # Used to do high level filesystem operations
+from dataclasses import dataclass, field    # Used to make class generation faster and more efficient
 
 # Internal dependencies
-from ezprez.components import _Component
-from ezprez.components import *
+from ezprez.components import *             # Used for type checking in content generation
+from ezprez.components import _Component    # Used for type checking in content generation
 
 # External Dependencies
-from elevate import elevate
-from pystall.core import ZIPResource, build
+from elevate import elevate                 # Used for any protected folder access such as system wide python installs or exports
+from pystall.core import ZIPResource, build # Used to download webslides from the latest version and extract it for use on export
 
 
 class Slide:
+    """The class that is used to generate slides that are fed into the Presentation object
+
+    Class Variables
+    ---------------
+    all: (List[Slide])
+        Contains all slide instances that have been instatiated, accessed through Slide.all
+
+    Attributes
+    ----------
+    heading: (str)
+        The slide's title/heading
+
+    contents: (str, list, or Component)
+        An arbitrary number of strings, lists or Component subclasses that make up the contents of the slide
+
+    background: (False or str)
+        The background color of the slide (see notes), optional by default False
+
+    image: (False or Image)
+        An image to use as a background for the slide, optional by default False
+
+    horizontal_alignment: (str)
+        Where to align the slide contents horizontally, optional defaults to 'center'
+
+    vertical_alignment: (str)
+        Where to align the slide contents vertically, optional defaults to 'center'
+
+    Notes
+    -----
+    - Horizontal alignment can be left, right or center
+    - Vertical alignment can be top, bottom or center
+    - Contents is an unpacked variable, meaning you just specify multiple sets of contents such as Slide(title, 'this is content', ['and', 'so', 'is', 'this'], Button('This to', '#'))
+
+
+    Examples
+    --------
+    ### Create a basic text slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Button
+
+    Slide('Here is a text slide', 'and this is the text')
+    ```
+
+    ### Create a slide with some text, a list, and a button
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Button
+
+    Slide('This is the title...', '... and this is content', ['and', 'so', 'is', 'this'], Button('This to', '#'))
+    ```
+    """
     all = []
 
-    def __init__(self, heading:str, *contents:Union[str, list, tuple, _Component], background:Union[bool,str] = False, horizontal_alignment="center", vertical_alignment="center", image="" ):
-        self.contents = contents
-        self.heading = heading # The slide's title/heading
-        self.background = background # i.e. brown, generates <section class='bg-<background>'>
+    def __init__(self, heading:str, *contents:Union[str, list, tuple, _Component], background:Union[bool,str] = False, horizontal_alignment:str = "center", vertical_alignment:str = "center", image:Union[bool, Image]=False ):
+        # Assign class attributes
         self.image = image
-        self.horizontal_alignment = horizontal_alignment # Can be left, right or center
-        self.vertical_alignment = vertical_alignment # can be top, bottom or center
-        Slide.all.append(self) # Add created instance to the ALL list
+        self.heading = heading
+        self.contents = contents
+        self.background = background
+        self.vertical_alignment = vertical_alignment 
+        self.horizontal_alignment = horizontal_alignment
+
+        # Append slide to the class variable Slide.all
+        Slide.all.append(self)
 
     def _generate_content(self):
         """Generates the necessary html with the provided contents"""
@@ -110,6 +194,19 @@ class Presentation:
     ### Creating a presentation and exporting it to ./Presentation
     ```
     from ezprez.core import Presentation
+
+    prez = Presentation(title, description, url)
+
+    # Export the files to the current directory at /Presentation, and delete existing files if they're found
+    prez.export(".", force=True, folder_name="Presentation")
+    ```
+
+    ### Creating a presentation with a slide and exporting it to ./Presentation
+    ```
+    from ezprez.core import Presentation, Slide
+
+    # This slide is auto-added to the Presentation object by default
+    Slide('This is the title', 'and this is the content')
 
     prez = Presentation(title, description, url)
 

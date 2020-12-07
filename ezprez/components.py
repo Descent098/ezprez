@@ -1,4 +1,37 @@
+"""The module that contains all component subclasses that can be used to generate Slide content
 
+Classes
+-------
+SocialLink:
+    Can be used to create a social media link icon, or just the icon
+
+Link:
+    A component for generating web links
+
+Code:
+    A component for adding code demos with syntax highlighting
+
+Icon:
+    A component that generates an icon
+
+Footer:
+    Allows you to add a footer to the presentation
+
+Navbar:
+    Allows you to add a navbar to the presentation
+
+Button:
+    A component that allows you to add html buttons
+
+Raw:
+    A component that dumps provided raw html
+
+TableOfContents:
+    A component used to generate table of contents for a presentation
+
+Video:
+    A component that allows you to embed a youtube video
+"""
 # Internal Dependencies
 import enum
 from abc import ABC

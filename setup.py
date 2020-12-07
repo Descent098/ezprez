@@ -4,6 +4,7 @@ import setuptools
 def get_content(*filename:str) -> str:
     """ Gets the content of a file or files and returns
     it/them as a string
+
     Parameters
     ----------
     filename : (str)
@@ -39,20 +40,15 @@ setuptools.setup(
     },
     include_package_data = True,
     packages = setuptools.find_packages(),
-    # TODO: uncomment when entrypoint is made
-    # entry_points = { 
-    #        'console_scripts': ['ezprez = ezprez.cli.main']
-    #    },
     install_requires = [
-    "docopt", # Used for argument parsing if you are writing a CLI
-    "pystall",
-    "elevate"
+    "docopt",  # Used for argument parsing if you are writing a CLI
+    "pystall", # Used to install webslides
+    "elevate"  # Used to elevate permissions for protected folder access
         ],
     extras_require = {
         "dev" : ["nox",    # Used to run automated processes
                 "pytest",  # Used to run the test code in the tests directory
                 "mkdocs"], # Used to create HTML versions of the markdown docs in the docs directory
-
     },
     classifiers = [
         "Programming Language :: Python :: 3",
