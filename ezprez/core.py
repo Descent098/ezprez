@@ -2,11 +2,11 @@
 
 Classes
 -------
-Slide:
-    The class that is used to generate slides that are fed into the Presentation object
+#### Slide
+The class that is used to generate slides that are fed into the Presentation object
 
-Presentation:
-    The class for defining the presentation configuration, and primary entrypoint to exporting presentations
+####Presentation
+The class for defining the presentation configuration, and primary entrypoint to exporting presentations
 
 Notes
 -----
@@ -14,7 +14,7 @@ Notes
 
 Examples
 --------
-### Creating a presentation with a slide and exporting it to ./Presentation
+#### Creating a presentation with a slide and exporting it to ./Presentation
 ```
 from ezprez.core import Presentation, Slide
 

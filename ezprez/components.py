@@ -2,35 +2,35 @@
 
 Classes
 -------
-SocialLink:
-    Can be used to create a social media link icon, or just the icon
+#### SocialLink
+Can be used to create a social media link icon, or just the icon
 
-Link:
-    A component for generating web links
+#### Link
+A component for generating web links
 
-Code:
-    A component for adding code demos with syntax highlighting
+#### Code
+A component for adding code demos with syntax highlighting
 
-Icon:
-    A component that generates an icon
+#### Icon
+A component that generates an icon
 
-Footer:
-    Allows you to add a footer to the presentation
+#### F‎ooter_
+Allows you to add a footer to the presentation
 
-Navbar:
-    Allows you to add a navbar to the presentation
+#### Navbar
+Allows you to add a navbar to the presentation
 
-Button:
-    A component that allows you to add html buttons
+#### Button
+A component that allows you to add html buttons
 
-Raw:
-    A component that dumps provided raw html
+#### Raw
+A component that dumps provided raw html
 
-TableOfContents:
-    A component used to generate table of contents for a presentation
+#### TableOfContents
+A component used to generate table of contents for a presentation
 
-Video:
-    A component that allows you to embed a youtube video
+#### Video
+A component that allows you to embed a youtube video
 """
 # Internal Dependencies
 import enum
@@ -403,7 +403,7 @@ class Raw(_Component):
     def __html__(self) -> str:
         return self.content
 
-
+@dataclass
 class TableOfContents(_Component):
     """A component used to generate table of contents for a presentation
 
@@ -426,8 +426,7 @@ class TableOfContents(_Component):
     Slide('Table of contents', TableOfContents(sections))
     ```
     """
-    def __init__(self, sections):
-        self.sections = sections
+    sections: dict
 
 
     def __html__(self) -> str:

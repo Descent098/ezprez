@@ -2,24 +2,26 @@
 
 Installation
 ------------
-### From pypi
-```pip install ezprez``` or ```sudo pip3 install ezprez````
+#### From pypi
+```pip install ezprez``` or ```sudo pip3 install ezprez```
 
-### From source
-1. ```git clone https://github.com/Descent098/ezprez````
-2. ```pip install .``` or ```sudo pip3 install .````
+#### From source
+1. ```git clone https://github.com/Descent098/ezprez```
+2. ```pip install .``` or ```sudo pip3 install .```
 
 Modules
 -------
-core:
-    The module that contains the Presentation and Slide classes that are used to generate web presentations
+#### core
 
-components:
-    The module that contains all component subclasses that can be used to generate Slide content
+The module that contains the Presentation and Slide classes that are used to generate web presentations
+
+#### components
+
+The module that contains all component subclasses that can be used to generate Slide content
 
 Quickstart
 ----------
-### Creating a presentation with a text slide and exporting it to ./Presentation
+#### Creating a presentation with a text slide and exporting it to ./Presentation
 ```
 from ezprez.core import Presentation, Slide
 
@@ -32,7 +34,7 @@ prez = Presentation(title, description, url)
 prez.export(".", force=True, folder_name="Presentation")
 ```
 
-### Creating a presentation with a slide that has text, and a code snippet and exporting it to ./Presentation
+#### Creating a presentation with a slide that has text, and a code snippet and exporting it to ./Presentation
 ```
 from ezprez.core import Presentation, Slide
 from ezprez.components import Code
