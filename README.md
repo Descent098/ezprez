@@ -4,32 +4,17 @@
 
 *An object based api for generating web presentations*
 
-## TODO
-
-- [ ] Fill out [quick start](#quick-start)
-- [ ] Create the actual package code
-- [ ] Fill out or remove the following sections
-  - [ ] [Examples](#examples)
-  - [ ] [Arguments](#arguments)
-  - [ ] [Additional documentation](#additional-documentation)
-- [ ] Fill out CONTRIBUTING.md
-- [ ] Fill out CHANGELOG.md
-- [ ] Create tests, see [creating tests](#creating-tests) if you have never made tests before
-- [ ] Add deepsource
-
 ## Table of Contents
 - [What does ezprez do?](#what-does-ezprez-do)
 - [Features & Roadmap](#features--roadmap)
 - [Why should I use ezprez?](#why-should-i-use-ezprez)
 - [Who is ezprez for?](#who-is-ezprez-for)
+- [Installation](#installation)
+  - [From source](#from-source)
+  - [From PyPi](#from-pypi)
 - [Quick-start](#quick-start)
-    - [Installation](#installation)
-      - [From source](#from-source)
-      - [From PyPi](#from-pypi)
-      - [Examples](#examples)
-- [Usage](#usage)
-    - [Arguments](#arguments)
 - [Additional Documentation](#additional-documentation)
+  - [Examples and Resources](#examples-and-resources) 
 
 ## What does ezprez do?
 
@@ -58,33 +43,47 @@ Ezprez is the simplest API for writing web presentations without needing explici
 - People who want an easy way to create web presentations without editing html
 - People who know python but not web development technologies
 
-## Quick-start
+## Installation
 
-*Include how people can get started using your project in the shortest time possible*
+### From PyPi
 
-### Installation
+1. Run ```pip install ezprez```
 
-#### From source
+### From source
 
 1. Clone this repo: (put github/source code link here)
 2. Run ```pip install .``` or ```sudo pip3 install .```in the root directory
 
-#### From PyPi
+## Quick-start
 
-1. Run ```pip install ezprez```
+For just plain text slides the easiest way to get started is just using the ```Slide``` and ```Presentation``` objects:
 
-#### Examples
+```python
+from ezprez.core import Slide, Presentation
 
-*Include an example or two of usage, or common use cases*
+# Create a slide object (don't need to assign it to a variable or anything it's added to presentation on instantiation)
+Slide("This is the slide title", "this is some content")
 
-## Usage
+# Setup the actual presentation settings
+presentation_url = "https://kieranwood.ca/ezprez-example" # The URL the presentation will be hosted at
+prez = Presentation("This is the presentation title", "This is the presentation description", presentation_url)
 
-*Include how to use your package as an API (if that's what you're going for)*
+# Export the presentation in the current directory at /Presentation
+prez.export(".", folder_name="Presentation")
+```
 
-### Arguments
+There will then be a folder called Presentation, and inside the ```index.html``` file will contain your presentation. Just put that up on a static hosting service and you're good to go.
 
-*If you are writing a script, include some helpful/often used arguments here. If you decide to use [docopt](http://docopt.org/) the usage string should do.* 
 
 ## Additional Documentation
 
-*If you have any supplementary documentation elsewhere (i.e. https://readthedocs.org/) include references to it here.*
+
+[User Docs](https://ezprez.readthedocs.io)
+
+[API Docs](https://kieranwood.ca/ezprez) (I would recommend the user docs first)
+
+## Examples and resources
+
+[Template repository for bootstrapping projects](https://github.com/QU-UP/ezprez)
+
+Example presentation: [Live demo](https://kieranwood.ca/ezprez-example), [Source Code](https://github.com/Descent098/ezprez-example)

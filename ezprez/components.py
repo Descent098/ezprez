@@ -392,7 +392,7 @@ class Raw(_Component):
     from ezprez.core import Slide
     from ezprez.components import Raw
 
-    content = '<p>This is some text</p'
+    content = '<p>This is some text</p>'
 
     Slide('This is some raw content', Raw(content))
     ```
@@ -448,7 +448,7 @@ class Video(_Component):
 
     Examples
     --------
-    ### Adding a youtube video to a Dlide
+    ### Adding a youtube video to a Slide
     ```
     from ezprez.core import Slide
     from ezprez.components import Video

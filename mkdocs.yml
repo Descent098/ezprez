@@ -2,6 +2,10 @@ site_name: ezprez
 
 nav:
     - Home: index.md
+    - Quick Start: quick-start.md
+    - Slide Object: slide.md
+    - Presentation Object: presentation.md
+    - Component Objects: components.md
 
 theme: readthedocs
 

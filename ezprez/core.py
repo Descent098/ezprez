@@ -75,6 +75,7 @@ class Slide:
     -----
     - Horizontal alignment can be left, right or center
     - Vertical alignment can be top, bottom or center
+    - Background colors available can be found at https://webslides.tv/demos/components#slide=27; just make sure to remove 'bg', so for example 'bg-black' becomes 'black'
     - Contents is an unpacked variable, meaning you just specify multiple sets of contents such as Slide(title, 'this is content', ['and', 'so', 'is', 'this'], Button('This to', '#'))
 
 

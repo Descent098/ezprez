@@ -1,3 +1,3 @@
-# Package name
+# ezprez
 
-Welcome to the package_name docs!
+*An object based api for generating web presentations*

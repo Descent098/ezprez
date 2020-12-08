@@ -108,3 +108,6 @@ venv.bak/
 
 # Webslides source files
 */webslides/*
+
+# Test presentations
+*/Presentation/*

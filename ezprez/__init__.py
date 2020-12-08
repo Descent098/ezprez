@@ -1,5 +1,9 @@
 """An object based api for generating web presentations
 
+Note
+----
+If this is your first time using ezprez I would recommend looking at the user docs at https://ezprez.readthedocs.io
+
 Installation
 ------------
 #### From pypi

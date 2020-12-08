@@ -36,14 +36,13 @@
 
 ### Getting dev dependencies
 
-To grab the specified development dependencies simply run ```pip install adh[dev]```, this will grab everything you need.
+To grab the specified development dependencies simply run ```pip install ezprez[dev]```, this will grab everything you need.
 
 
 
 If for some reason this does not work, here are a list of development dependencies:
 
 ```
-nox    # Used to run automated processes
 pytest # Used to run the test code in the tests directory
 mkdocs # Used to create HTML versions of the markdown docs in the docs directory
 ```
@@ -53,12 +52,6 @@ mkdocs # Used to create HTML versions of the markdown docs in the docs directory
 ### Building "API" docs
 
 API docs are useful if you want an easily navigatable version of the in-line documentation. The best way to do this currently is to download [pdoc3](https://pdoc3.github.io/pdoc/doc/pdoc/); ```pip install pdoc3``` then (assuming ahd is installed) run ````pdoc ahd --http localhost:8080`. Go to a browser and type in [http://localhost:8080/ahd](http://localhost:8080/ahd).
-
-
-
-### Nox integration
-
-If you have never used [nox](https://nox.readthedocs.io/) before it is a great system for automating tedius tasks (builds, distributions, testing etc). This project uses nox for a number of things and in the following sections I will explain each. 
 
 
 
