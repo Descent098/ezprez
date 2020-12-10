@@ -2,7 +2,7 @@
 
 # ezprez
 
-*An object based api for generating web presentations*
+*An object based api for generating web presentations/slideshows*
 
 ## Table of Contents
 - [What does ezprez do?](#what-does-ezprez-do)
@@ -18,7 +18,7 @@
 
 ## What does ezprez do?
 
-Let's you write simple python scripts to generate web presentations
+Let's you write simple python scripts to generate web presentations/slideshows
 
 ## Features & Roadmap
 

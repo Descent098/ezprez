@@ -9,7 +9,6 @@ labels: documentation
 **Question**
 Add your question here
 
-
 **Expected behavior**
 If what happened was unexpected, outline the expected behaviour.
 

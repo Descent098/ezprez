@@ -9,6 +9,11 @@ labels: bug
 **Describe the bug**
 A clear and concise description of what the bug is.
 
+**Details**
+Which part of the API seems to be broken:
+Class: (i.e. Presentation)
+Method/Function: (i.e. Presentation.export)
+
 **To Reproduce**
 Steps to reproduce the behavior:
 1. Go to '...'

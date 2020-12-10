@@ -27,7 +27,7 @@ setuptools.setup(
     version = "0.1.0", 
     author = "Kieran Wood",
     author_email = "kieran@canadiancoding.ca",
-    description = "An object based api for generating web presentations",
+    description = "An object based api for generating web presentations/slideshows",
     long_description = get_content("README.md", "CHANGELOG.md"),
     long_description_content_type = "text/markdown",
     project_urls = {
@@ -42,7 +42,8 @@ setuptools.setup(
     packages = setuptools.find_packages(),
     install_requires = [
     "pystall", # Used to install webslides
-    "elevate"  # Used to elevate permissions for protected folder access
+    "elevate", # Used to elevate permissions for protected folder access
+    "tqdm"     # Used for progress bars
         ],
     extras_require = {
         "dev" : ["pytest", # Used to run the test code in the tests directory
@@ -51,6 +52,6 @@ setuptools.setup(
     classifiers = [
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
-        "Development Status :: 1 - Planning"
+        "Development Status :: 4 - Beta"
     ],
 )

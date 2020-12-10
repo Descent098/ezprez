@@ -11,6 +11,6 @@ theme: readthedocs
 
 repo_url: https://github.com/Descent098/ezprez
 
-site_description: An object based api for generating web presentations
+site_description: An object based api for generating web presentations/slideshows
 
 site_author: Kieran Wood

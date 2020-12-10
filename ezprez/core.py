@@ -39,6 +39,7 @@ from ezprez.components import *             # Used for type checking in content 
 from ezprez.components import _Component    # Used for type checking in content generation
 
 # External Dependencies
+from tqdm import tqdm                       # Used for progress bars
 from elevate import elevate                 # Used for any protected folder access such as system wide python installs or exports
 from pystall.core import ZIPResource, build # Used to download webslides from the latest version and extract it for use on export
 
@@ -285,7 +286,9 @@ class Presentation:
     def __html__(self) -> str:
         """Generates the index.html file of a presentation using the provided slides"""
         slides_html = ""
-        for slide in self.slides:
+        slide_iterator = tqdm(self.slides)
+        slide_iterator.set_description_str("Generating slide content")
+        for slide in slide_iterator:
             if not slide.background:
                 slide.background = self.background
             slides_html += slide.__html__()
@@ -433,5 +436,8 @@ class Presentation:
                 raise FileExistsError(f"The file path {os.path.join(file_path, folder_name)} exists, to replace use Presentation.export({file_path}, force=True)")
 
         # replace index.html with generated html
-        with open(os.path.join(file_path, folder_name, "index.html"), "w+") as presentation_file:
-            presentation_file.write(self.__html__())
+        presentation_content = self.__html__()
+        index_path = os.path.join(file_path, folder_name, "index.html")
+        print(f"Writing html to {index_path}")
+        with open(index_path, "w+") as presentation_file:
+            presentation_file.write(presentation_content)
