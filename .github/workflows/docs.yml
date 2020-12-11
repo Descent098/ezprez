@@ -29,8 +29,8 @@ jobs:
 
     - name: build html files
       run: |
-        python -m pdoc ezspreadsheet --html --force
-        mv "html/ezspreadsheet.html" "html/index.html"
+        python -m pdoc ezprez --html --force
+        mv "html/ezprez.html" "html/index.html"
 
     - name: Deploy Docs
       uses: peaceiris/actions-gh-pages@v3
