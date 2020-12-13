@@ -33,10 +33,10 @@ jobs:
         echo before
         cd html
         ls
-        mv "ezprez/*" "html"
+        mv "./ezprez/*" "."
         echo after
         ls
-        rm -rf "ezprez"
+        rm -rf "./ezprez"
         echo after cleanup
         ls
 
