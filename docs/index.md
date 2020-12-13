@@ -1,3 +1,5 @@
+![ezprez logo](https://raw.githubusercontent.com/Descent098/ezprez/master/.github/logo.png)
+
 # ezprez
 
 *An object based api for generating web presentations/slideshows*
