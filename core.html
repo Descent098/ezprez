@@ -1,0 +1,1239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>ezprez.core API documentation</title>
+<meta name="description" content="The module that contains the Presentation and Slide classes that are used to generate web presentations …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>ezprez.core</code></h1>
+</header>
+<section id="section-intro">
+<p>The module that contains the Presentation and Slide classes that are used to generate web presentations</p>
+<h2 id="classes">Classes</h2>
+<h4 id="slide">Slide</h4>
+<p>The class that is used to generate slides that are fed into the Presentation object</p>
+<h4 id="presentation">Presentation</h4>
+<p>The class for defining the presentation configuration, and primary entrypoint to exporting presentations</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>On first run you will need an internet connection to download webslides</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<h4 id="creating-a-presentation-with-a-slide-and-exporting-it-to-presentation">Creating a presentation with a slide and exporting it to ./Presentation</h4>
+<pre><code>from ezprez.core import Presentation, Slide
+
+# This slide is auto-added to the Presentation object by default
+Slide('This is the title', 'and this is the content')
+
+prez = Presentation(title, description, url)
+
+# Export the files to the current directory at /Presentation, and delete existing files if they're found
+prez.export(&quot;.&quot;, force=True, folder_name=&quot;Presentation&quot;)
+</code></pre>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;The module that contains the Presentation and Slide classes that are used to generate web presentations
+
+Classes
+-------
+#### Slide
+The class that is used to generate slides that are fed into the Presentation object
+
+####Presentation
+The class for defining the presentation configuration, and primary entrypoint to exporting presentations
+
+Notes
+-----
+- On first run you will need an internet connection to download webslides
+
+Examples
+--------
+#### Creating a presentation with a slide and exporting it to ./Presentation
+```
+from ezprez.core import Presentation, Slide
+
+# This slide is auto-added to the Presentation object by default
+Slide(&#39;This is the title&#39;, &#39;and this is the content&#39;)
+
+prez = Presentation(title, description, url)
+
+# Export the files to the current directory at /Presentation, and delete existing files if they&#39;re found
+prez.export(&#34;.&#34;, force=True, folder_name=&#34;Presentation&#34;)
+```
+&#34;&#34;&#34;
+# Standard lib dependencies
+import os                                   # Used in path validation
+from datetime import datetime               # Used to get date for export
+from typing import Union, List              # Used to enrich type hints in methods
+from shutil import copytree, rmtree         # Used to do high level filesystem operations
+from dataclasses import dataclass, field    # Used to make class generation faster and more efficient
+
+# Internal dependencies
+from ezprez.components import *             # Used for type checking in content generation
+from ezprez.components import _Component    # Used for type checking in content generation
+
+# External Dependencies
+from tqdm import tqdm                       # Used for progress bars
+from elevate import elevate                 # Used for any protected folder access such as system wide python installs or exports
+from pystall.core import ZIPResource, build # Used to download webslides from the latest version and extract it for use on export
+
+
+class Slide:
+    &#34;&#34;&#34;The class that is used to generate slides that are fed into the Presentation object
+
+    Class Variables
+    ---------------
+    all: (List[Slide])
+        Contains all slide instances that have been instatiated, accessed through Slide.all
+
+    Attributes
+    ----------
+    heading: (str)
+        The slide&#39;s title/heading
+
+    contents: (str, list, or Component)
+        An arbitrary number of strings, lists or Component subclasses that make up the contents of the slide
+
+    background: (False or str)
+        The background color of the slide (see notes), optional by default False
+
+    image: (False or Image)
+        An image to use as a background for the slide, optional by default False
+
+    horizontal_alignment: (str)
+        Where to align the slide contents horizontally, optional defaults to &#39;center&#39;
+
+    vertical_alignment: (str)
+        Where to align the slide contents vertically, optional defaults to &#39;center&#39;
+
+    Notes
+    -----
+    - Horizontal alignment can be left, right or center
+    - Vertical alignment can be top, bottom or center
+    - Background colors available can be found at https://webslides.tv/demos/components#slide=27; just make sure to remove &#39;bg&#39;, so for example &#39;bg-black&#39; becomes &#39;black&#39;
+    - Contents is an unpacked variable, meaning you just specify multiple sets of contents such as Slide(title, &#39;this is content&#39;, [&#39;and&#39;, &#39;so&#39;, &#39;is&#39;, &#39;this&#39;], Button(&#39;This to&#39;, &#39;#&#39;))
+
+
+    Examples
+    --------
+    ### Create a basic text slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Button
+
+    Slide(&#39;Here is a text slide&#39;, &#39;and this is the text&#39;)
+    ```
+
+    ### Create a slide with some text, a list, and a button
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Button
+
+    Slide(&#39;This is the title...&#39;, &#39;... and this is content&#39;, [&#39;and&#39;, &#39;so&#39;, &#39;is&#39;, &#39;this&#39;], Button(&#39;This to&#39;, &#39;#&#39;))
+    ```
+    &#34;&#34;&#34;
+    all = []
+
+    def __init__(self, heading:str, *contents:Union[str, list, tuple, _Component], background:Union[bool,str] = False, horizontal_alignment:str = &#34;center&#34;, vertical_alignment:str = &#34;center&#34;, image:Union[bool, Image]=False ):
+        # Assign class attributes
+        self.image = image
+        self.heading = heading
+        self.contents = contents
+        self.background = background
+        self.vertical_alignment = vertical_alignment 
+        self.horizontal_alignment = horizontal_alignment
+
+        # Append slide to the class variable Slide.all
+        Slide.all.append(self)
+
+    def _generate_content(self):
+        &#34;&#34;&#34;Generates the necessary html with the provided contents&#34;&#34;&#34;
+        result = f&#34;\n\t\t\t&lt;section class=&#39;bg-{self.background} slide-{self.vertical_alignment}&#39;&gt;&#34;
+        
+        if self.image:
+            result += f&#34;\n\t\t\t\t&lt;span class=&#39;background&#39; style=&#39;background-image:url(\&#34;{self.image}\&#34;)&#39;&gt;&lt;/span&gt;&#34;
+        result += f&#34;\n\t\t\t\t&lt;div class=&#39;wrap&#39;&gt;\n\t\t\t\t\t&lt;div class=&#39;content-{self.horizontal_alignment}&#39;&gt;\n\t\t\t\t\t&lt;h2&gt;{self.heading}&lt;/h2&gt;\n&#34;
+        
+        for content in self.contents:
+            if type(content) == str:
+                result += f&#34;\t\t\t\t\t&lt;p&gt;{content}&lt;/p&gt;\n&#34;
+
+            elif type(content) == list or type(content) == tuple:
+                result += f&#34;\t\t\t\t\t&lt;div class=&#39;grid {&#39;content-&#39; + self.horizontal_alignment if not self.horizontal_alignment == &#39;right&#39; else &#39;&#39;}&#39;&gt;\n\t\t\t\t\t\t\t&lt;ul style=&#39;text-align:justify;&#39;&gt;\n&#34;
+                for bullet_point in content:
+                    result += f&#34;\t\t\t\t\t\t\t\t&lt;li&gt;{bullet_point}&lt;/li&gt;\n&#34;
+                result += &#34;\t\t\t\t\t&lt;/div&gt;\n\t\t\t\t\t\t\t&lt;/ul&gt;\n&#34;
+            elif isinstance(content, _Component) or type(SocialLink):
+                result += content.__html__()
+        result += &#34;\n\t\t\t\t\t&lt;/div&gt;\n\t\t\t\t&lt;/div&gt;\n\t\t\t&lt;/section&gt;\n&#34;
+
+        yield result
+
+
+    def __html__(self):
+        &#34;&#34;&#34;Generates the markup for each slide&#34;&#34;&#34;
+        result = &#34;&#34;
+        for content in self._generate_content():
+            result+= content
+        return result
+
+
+@dataclass
+class Presentation:
+    &#34;&#34;&#34;The class for defining the presentation configuration, and primary entrypoint to exporting presentations
+
+    Attributes
+    ----------
+    title: (str)
+        The title of the presentation
+
+    description: (str)
+        The description of the presentation
+
+    url: (str)
+        The canonical URL the presentation will be deployed at
+
+    slides: List[Slide]
+        The slides to generate the presentation with, optional and defaults to Slide.all
+
+    background: (str)
+        What color the intro slie and default slide background color should be, optional defaults to &#39;white&#39;
+
+    image: (Image or False)
+        Path to background image to use for og tags, and intro slide, optional defaults to False
+
+    endcard: (bool)
+        Whether to add the endcard, optional defaults to True
+
+    intro: (bool)
+        Generate an introduction slide with the background image, title, and description, optional defaults to True
+
+    favicon: (Image or False)
+        The image to use for the favicon, optional defaults to False
+
+    vertical: (bool)
+        Whether the slideshow should be vertical or not, optional defaults to False
+
+    navbar: (Navbar or False)
+        The navbar for the site, optional defaults to False
+
+    footer: (Footer or False)
+        The footer for the site, optional defaults to False
+
+    Methods
+    -------
+    export:
+        Exports the presentation files
+
+    Examples
+    --------
+    ### Creating a presentation and exporting it to ./Presentation
+    ```
+    from ezprez.core import Presentation
+
+    prez = Presentation(title, description, url)
+
+    # Export the files to the current directory at /Presentation, and delete existing files if they&#39;re found
+    prez.export(&#34;.&#34;, force=True, folder_name=&#34;Presentation&#34;)
+    ```
+
+    ### Creating a presentation with a slide and exporting it to ./Presentation
+    ```
+    from ezprez.core import Presentation, Slide
+
+    # This slide is auto-added to the Presentation object by default
+    Slide(&#39;This is the title&#39;, &#39;and this is the content&#39;)
+
+    prez = Presentation(title, description, url)
+
+    # Export the files to the current directory at /Presentation, and delete existing files if they&#39;re found
+    prez.export(&#34;.&#34;, force=True, folder_name=&#34;Presentation&#34;)
+    ```
+    &#34;&#34;&#34;
+    title: str 
+    description: str 
+    url: str
+    intro: bool = True
+    endcard: bool = True
+    vertical: bool = False
+    background: str = &#34;white&#34;
+    image: Union[bool, Image] = False
+    favicon: Union[bool, Image] = False
+    navbar: Union[bool, Navbar] = False
+    footer: Union[bool, Footer] = False
+    slides: List[Slide] = field(default_factory=lambda: Slide.all) 
+
+
+    def _generate_favicon_markup(self):
+        &#34;&#34;&#34;Generates the html to render the favicon properly&#34;&#34;&#34;
+        if self.favicon: # TODO: COPY FAVICON
+            return self.favicon.__html__()
+        else:
+            return f&#39;&#39;&#39;&lt;!-- FAVICONS --&gt;
+            &lt;link rel=&#34;apple-touch-icon icon&#34; sizes=&#34;76x76&#34; href=&#34;static/images/favicons/favicon-152.png&#34;&gt;&#39;&#39;&#39;
+
+
+    def _generate_intro_slide(self):
+        &#34;&#34;&#34;Generates the first slide in a presentation&#34;&#34;&#34;
+        if self.intro:
+            if self.image:
+                return f&#34;&#34;&#34;\t\t\t&lt;section class=&#39;bg-{self.background}&#39;&gt;
+                &lt;span class=&#39;background&#39; style=&#39;background-image:url(&#34;{self.image}&#34;)&#39;&gt;&lt;/span&gt;
+                    &lt;div class=&#39;wrap aligncenter&#39;&gt;
+                        &lt;h1&gt;&lt;strong&gt;{self.title}&lt;/strong&gt;&lt;/h1&gt;
+                        &lt;p class=&#39;text-intro&#39;&gt;{self.description}&lt;/p&gt;
+                    &lt;/div&gt;
+            &lt;/section&gt;&#34;&#34;&#34;
+            else:
+                return f&#34;&#34;&#34;\t\t\t&lt;section class=&#39;bg-{self.background}&#39;&gt;
+                    &lt;div class=&#39;wrap aligncenter&#39;&gt;
+                        &lt;h1&gt;&lt;strong&gt;{self.title}&lt;/strong&gt;&lt;/h1&gt;
+                        &lt;p class=&#39;text-intro&#39;&gt;{self.description}&lt;/p&gt;
+                    &lt;/div&gt;
+            &lt;/section&gt;&#34;&#34;&#34;
+
+
+    def _generate_endcard(self) -&gt; str:
+        &#34;&#34;&#34;Generates the slide that goes at the end of Presentation&#39;s&#34;&#34;&#34;
+        if self.endcard:
+            return f&#34;&#34;&#34;\t\t\t&lt;section class=&#39;bg-{self.background}&#39;&gt;
+                    &lt;div class=&#39;wrap aligncenter&#39;&gt;
+                        &lt;h2&gt;&lt;strong&gt;Thank you&lt;/strong&gt;&lt;/h2&gt;
+                        &lt;h4 class=&#39;text-intro&#39;&gt;This presentation was made with the help of&lt;/h4&gt;
+                        &lt;h4&gt;
+                            &lt;strong&gt;&lt;em&gt;&lt;a href=&#39;https://webslides.tv&#39; target=&#39;_blank&#39;&gt;WebSlides&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt; 
+                        &lt;/h4&gt;
+                        &lt;h4&gt;
+                            &lt;strong&gt;&lt;em&gt;&lt;a href=&#39;https://github.com/Descent098/ezprez&#39; target=&#39;_blank&#39;&gt;ezprez&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;
+                        &lt;/h4&gt;
+                    &lt;/div&gt;
+            &lt;/section&gt;&#34;&#34;&#34;
+        else:
+            return &#34;&#34;
+
+
+    def __len__(self) -&gt; int:
+        &#34;&#34;&#34;Returns the number of slides in the presentation&#34;&#34;&#34;
+        return len(self.slides)
+
+
+    def __html__(self) -&gt; str:
+        &#34;&#34;&#34;Generates the index.html file of a presentation using the provided slides&#34;&#34;&#34;
+        slides_html = &#34;&#34;
+        slide_iterator = tqdm(self.slides)
+        slide_iterator.set_description_str(&#34;Generating slide content&#34;)
+        for slide in slide_iterator:
+            if not slide.background:
+                slide.background = self.background
+            slides_html += slide.__html__()
+
+        result = f&#39;&#39;&#39;&lt;!doctype html&gt;
+&lt;html lang=&#34;en&#34; prefix=&#34;og: http://ogp.me/ns#&#34;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&#34;utf-8&#34;&gt;
+        &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1&#34;&gt;
+
+        &lt;!-- SEO --&gt;
+        &lt;title&gt;{self.title}&lt;/title&gt;
+        &lt;meta name=&#34;description&#34; content=&#34;{self.description}&#34;&gt;
+
+        &lt;!-- URL CANONICAL --&gt;
+        &lt;link rel=&#34;canonical&#34; href=&#34;{self.url}&#34;&gt;
+
+        &lt;!-- Google Fonts --&gt;
+        &lt;link href=&#34;https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,700,700i%7CMaitree:200,300,400,600,700&amp;amp;subset=latin-ext&#34; rel=&#34;stylesheet&#34;&gt;
+
+        &lt;!-- CSS WebSlides --&gt;
+        &lt;link rel=&#34;stylesheet&#34; type=&#39;text/css&#39; media=&#39;all&#39; href=&#34;static/css/webslides.css&#34;&gt;
+
+        &lt;!-- Optional - CSS SVG Icons (Font Awesome) --&gt;
+        &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css&#34; integrity=&#34;sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==&#34; crossorigin=&#34;anonymous&#34; /&gt;
+
+        &lt;!-- SOCIAL CARDS (ADD YOUR INFO) --&gt;
+
+        &lt;!-- FACEBOOK --&gt;
+        &lt;meta property=&#34;og:url&#34; content=&#34;{self.url}&#34;&gt;
+        &lt;meta property=&#34;og:type&#34; content=&#34;article&#34;&gt;
+        &lt;meta property=&#34;og:title&#34; content=&#34;{self.title}&#34;&gt; 
+        &lt;meta property=&#34;og:description&#34; content=&#34;{self.description}&#34;&gt;
+        &lt;meta property=&#34;og:updated_time&#34; content=&#34;{datetime.today()}&#34;&gt;
+        &lt;meta property=&#34;og:image&#34; content=&#34;{self.image if self.image else &#34;static/images/share-webslides.jpg&#34;}&#34;&gt;
+
+        &lt;!-- TWITTER --&gt;
+        &lt;meta name=&#34;twitter:card&#34; content=&#34;summary_large_image&#34;&gt;
+        &lt;meta name=&#34;twitter:title&#34; content=&#34;{self.title}&#34;&gt; 
+        &lt;meta name=&#34;twitter:description&#34; content=&#34;{self.description}&#34;&gt; 
+        &lt;meta name=&#34;twitter:image&#34; content=&#34;{self.image if self.image else &#34;static/images/share-webslides.jpg&#34;}&#34;&gt;
+
+        {self._generate_favicon_markup()}
+
+        &lt;!-- Android --&gt;
+        &lt;meta name=&#34;mobile-web-app-capable&#34; content=&#34;yes&#34;&gt;
+        &lt;meta name=&#34;theme-color&#34; content=&#34;#f0f0f0&#34;&gt;
+
+        &lt;!-- Code highlighting --&gt;
+        &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/styles/default.min.css&#34;&gt;
+        &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/highlight.min.js&#34;&gt;&lt;/script&gt;
+        &lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+
+    &lt;/head&gt;
+    {self.navbar.__html__() if self.navbar else &#34;&#34;}
+    &lt;body&gt;
+
+    &lt;main role=&#39;main&#39;&gt;
+        &lt;article id=&#39;webslides&#39; {&#39;class=&#34;vertical&#34;&#39; if self.vertical else &#34;&#34;}&gt;
+{self._generate_intro_slide()}
+{slides_html}
+{self._generate_endcard()}
+
+        &lt;/article&gt;
+        &lt;!-- end article --&gt;
+    &lt;/main&gt;
+    &lt;!-- end main --&gt;
+
+    &lt;!-- Required --&gt;
+    &lt;script src=&#39;static/js/webslides.js&#39;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        window.ws = new WebSlides();
+    &lt;/script&gt;
+
+    &lt;!-- OPTIONAL - svg-icons.js (fontastic.me - Font Awesome as svg icons) --&gt;
+    &lt;script defer src=&#39;static/js/svg-icons.js&#39;&gt;&lt;/script&gt;
+
+    &lt;/body&gt;
+    {self.footer.__html__() if self.footer else &#34;&#34;}
+&lt;/html&gt;
+        &#39;&#39;&#39;
+        return result
+
+
+    def export(self, file_path:str, folder_name:Union[str, bool] = False, force:bool = False):
+        &#34;&#34;&#34;Exports the presentation files
+
+        Parameters
+        ----------
+        file_path : (str)
+            The path to export the folder of content to
+
+        folder_name : (str or False)
+            If you want to overwrite the folder name the output files are put in (defaults to Presentation.title), optional and defaults to False
+
+        force : (bool)
+            Whether to force generating files (overwrite existing files if found), optional and defaults to False
+
+        Notes
+        -----
+        - all files are exported to file_path/folder_name
+        - folder_name defaults to Presenation.title
+
+        Raises
+        ------
+        FileExistsError
+            If force is False, and a folder exists at file_path/folder_name
+
+        Examples
+        --------
+        ### Export a presentation to the current directory at /Presentation
+        ```
+        from ezprez.core import Presentation
+        prez = Presentation(title, description, url)
+
+        # Export the files to the current directory at /Presentation
+        prez.export(&#34;.&#34;, force=True, folder_name=&#34;Presentation&#34;)
+        ```
+        &#34;&#34;&#34;
+        if not folder_name:
+            folder_name = self.title
+        file_path = os.path.abspath(file_path)
+
+        # finding downloads folder
+        if os.name == &#34;nt&#34;:
+            DOWNLOAD_FOLDER = f&#34;{os.getenv(&#39;USERPROFILE&#39;)}\\Downloads&#34;
+        else: # PORT: Assuming variable is there for MacOS and Linux installs
+            DOWNLOAD_FOLDER = f&#34;{os.getenv(&#39;HOME&#39;)}/Downloads&#34; 
+
+        # check if webslides is downloaded, if it is use those files, if not download and extract it
+        if not os.path.exists(os.path.join(os.path.dirname(__file__), &#34;webslides&#34;)):
+            try:
+                build(ZIPResource(&#34;webslides&#34;, &#34;https://webslides.tv/webslides-latest.zip&#34;, overwrite_agreement=True))
+                copytree(os.path.join(DOWNLOAD_FOLDER, &#34;webslides&#34;), os.path.join(os.path.dirname(__file__), &#34;webslides&#34;))
+            except PermissionError:
+                elevate()
+                copytree(os.path.join(DOWNLOAD_FOLDER, &#34;webslides&#34;), os.path.join(os.path.dirname(__file__), &#34;webslides&#34;))
+        try:
+            copytree(os.path.join(os.path.dirname(__file__), &#34;webslides&#34;), os.path.join(file_path, folder_name))
+        except FileExistsError:
+            if force:
+                rmtree(os.path.join(file_path, folder_name))
+                copytree(os.path.join(os.path.dirname(__file__), &#34;webslides&#34;), os.path.join(file_path, folder_name))
+            else:
+                raise FileExistsError(f&#34;The file path {os.path.join(file_path, folder_name)} exists, to replace use Presentation.export({file_path}, force=True)&#34;)
+
+        # replace index.html with generated html
+        presentation_content = self.__html__()
+        index_path = os.path.join(file_path, folder_name, &#34;index.html&#34;)
+        print(f&#34;Writing html to {index_path}&#34;)
+        with open(index_path, &#34;w+&#34;) as presentation_file:
+            presentation_file.write(presentation_content)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="ezprez.core.Presentation"><code class="flex name class">
+<span>class <span class="ident">Presentation</span></span>
+<span>(</span><span>title: str, description: str, url: str, intro: bool = True, endcard: bool = True, vertical: bool = False, background: str = 'white', image: Union[bool, <a title="ezprez.components.Image" href="components.html#ezprez.components.Image">Image</a>] = False, favicon: Union[bool, <a title="ezprez.components.Image" href="components.html#ezprez.components.Image">Image</a>] = False, navbar: Union[bool, <a title="ezprez.components.Navbar" href="components.html#ezprez.components.Navbar">Navbar</a>] = False, footer: Union[bool, <a title="ezprez.components.Footer" href="components.html#ezprez.components.Footer">Footer</a>] = False, slides: List[<a title="ezprez.core.Slide" href="#ezprez.core.Slide">Slide</a>] = &lt;factory&gt;)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The class for defining the presentation configuration, and primary entrypoint to exporting presentations</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>title</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>The title of the presentation</dd>
+<dt><strong><code>description</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>The description of the presentation</dd>
+<dt><strong><code>url</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>The canonical URL the presentation will be deployed at</dd>
+<dt><strong><code>slides</code></strong> :&ensp;<code>List[<a title="ezprez.core.Slide" href="#ezprez.core.Slide">Slide</a>]</code></dt>
+<dd>The slides to generate the presentation with, optional and defaults to Slide.all</dd>
+<dt><strong><code>background</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>What color the intro slie and default slide background color should be, optional defaults to 'white'</dd>
+<dt><strong><code>image</code></strong> :&ensp;<code>(Image</code> or <code>False)</code></dt>
+<dd>Path to background image to use for og tags, and intro slide, optional defaults to False</dd>
+<dt><strong><code>endcard</code></strong> :&ensp;<code>(bool)</code></dt>
+<dd>Whether to add the endcard, optional defaults to True</dd>
+<dt><strong><code>intro</code></strong> :&ensp;<code>(bool)</code></dt>
+<dd>Generate an introduction slide with the background image, title, and description, optional defaults to True</dd>
+<dt><strong><code>favicon</code></strong> :&ensp;<code>(Image</code> or <code>False)</code></dt>
+<dd>The image to use for the favicon, optional defaults to False</dd>
+<dt><strong><code>vertical</code></strong> :&ensp;<code>(bool)</code></dt>
+<dd>Whether the slideshow should be vertical or not, optional defaults to False</dd>
+<dt><strong><code>navbar</code></strong> :&ensp;<code>(Navbar</code> or <code>False)</code></dt>
+<dd>The navbar for the site, optional defaults to False</dd>
+<dt><strong><code>footer</code></strong> :&ensp;<code>(Footer</code> or <code>False)</code></dt>
+<dd>The footer for the site, optional defaults to False</dd>
+</dl>
+<h2 id="methods">Methods</h2>
+<p>export:
+Exports the presentation files</p>
+<h2 id="examples">Examples</h2>
+<h3 id="creating-a-presentation-and-exporting-it-to-presentation">Creating a presentation and exporting it to ./Presentation</h3>
+<pre><code>from ezprez.core import Presentation
+
+prez = Presentation(title, description, url)
+
+# Export the files to the current directory at /Presentation, and delete existing files if they're found
+prez.export(&quot;.&quot;, force=True, folder_name=&quot;Presentation&quot;)
+</code></pre>
+<h3 id="creating-a-presentation-with-a-slide-and-exporting-it-to-presentation">Creating a presentation with a slide and exporting it to ./Presentation</h3>
+<pre><code>from ezprez.core import Presentation, Slide
+
+# This slide is auto-added to the Presentation object by default
+Slide('This is the title', 'and this is the content')
+
+prez = Presentation(title, description, url)
+
+# Export the files to the current directory at /Presentation, and delete existing files if they're found
+prez.export(&quot;.&quot;, force=True, folder_name=&quot;Presentation&quot;)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class Presentation:
+    &#34;&#34;&#34;The class for defining the presentation configuration, and primary entrypoint to exporting presentations
+
+    Attributes
+    ----------
+    title: (str)
+        The title of the presentation
+
+    description: (str)
+        The description of the presentation
+
+    url: (str)
+        The canonical URL the presentation will be deployed at
+
+    slides: List[Slide]
+        The slides to generate the presentation with, optional and defaults to Slide.all
+
+    background: (str)
+        What color the intro slie and default slide background color should be, optional defaults to &#39;white&#39;
+
+    image: (Image or False)
+        Path to background image to use for og tags, and intro slide, optional defaults to False
+
+    endcard: (bool)
+        Whether to add the endcard, optional defaults to True
+
+    intro: (bool)
+        Generate an introduction slide with the background image, title, and description, optional defaults to True
+
+    favicon: (Image or False)
+        The image to use for the favicon, optional defaults to False
+
+    vertical: (bool)
+        Whether the slideshow should be vertical or not, optional defaults to False
+
+    navbar: (Navbar or False)
+        The navbar for the site, optional defaults to False
+
+    footer: (Footer or False)
+        The footer for the site, optional defaults to False
+
+    Methods
+    -------
+    export:
+        Exports the presentation files
+
+    Examples
+    --------
+    ### Creating a presentation and exporting it to ./Presentation
+    ```
+    from ezprez.core import Presentation
+
+    prez = Presentation(title, description, url)
+
+    # Export the files to the current directory at /Presentation, and delete existing files if they&#39;re found
+    prez.export(&#34;.&#34;, force=True, folder_name=&#34;Presentation&#34;)
+    ```
+
+    ### Creating a presentation with a slide and exporting it to ./Presentation
+    ```
+    from ezprez.core import Presentation, Slide
+
+    # This slide is auto-added to the Presentation object by default
+    Slide(&#39;This is the title&#39;, &#39;and this is the content&#39;)
+
+    prez = Presentation(title, description, url)
+
+    # Export the files to the current directory at /Presentation, and delete existing files if they&#39;re found
+    prez.export(&#34;.&#34;, force=True, folder_name=&#34;Presentation&#34;)
+    ```
+    &#34;&#34;&#34;
+    title: str 
+    description: str 
+    url: str
+    intro: bool = True
+    endcard: bool = True
+    vertical: bool = False
+    background: str = &#34;white&#34;
+    image: Union[bool, Image] = False
+    favicon: Union[bool, Image] = False
+    navbar: Union[bool, Navbar] = False
+    footer: Union[bool, Footer] = False
+    slides: List[Slide] = field(default_factory=lambda: Slide.all) 
+
+
+    def _generate_favicon_markup(self):
+        &#34;&#34;&#34;Generates the html to render the favicon properly&#34;&#34;&#34;
+        if self.favicon: # TODO: COPY FAVICON
+            return self.favicon.__html__()
+        else:
+            return f&#39;&#39;&#39;&lt;!-- FAVICONS --&gt;
+            &lt;link rel=&#34;apple-touch-icon icon&#34; sizes=&#34;76x76&#34; href=&#34;static/images/favicons/favicon-152.png&#34;&gt;&#39;&#39;&#39;
+
+
+    def _generate_intro_slide(self):
+        &#34;&#34;&#34;Generates the first slide in a presentation&#34;&#34;&#34;
+        if self.intro:
+            if self.image:
+                return f&#34;&#34;&#34;\t\t\t&lt;section class=&#39;bg-{self.background}&#39;&gt;
+                &lt;span class=&#39;background&#39; style=&#39;background-image:url(&#34;{self.image}&#34;)&#39;&gt;&lt;/span&gt;
+                    &lt;div class=&#39;wrap aligncenter&#39;&gt;
+                        &lt;h1&gt;&lt;strong&gt;{self.title}&lt;/strong&gt;&lt;/h1&gt;
+                        &lt;p class=&#39;text-intro&#39;&gt;{self.description}&lt;/p&gt;
+                    &lt;/div&gt;
+            &lt;/section&gt;&#34;&#34;&#34;
+            else:
+                return f&#34;&#34;&#34;\t\t\t&lt;section class=&#39;bg-{self.background}&#39;&gt;
+                    &lt;div class=&#39;wrap aligncenter&#39;&gt;
+                        &lt;h1&gt;&lt;strong&gt;{self.title}&lt;/strong&gt;&lt;/h1&gt;
+                        &lt;p class=&#39;text-intro&#39;&gt;{self.description}&lt;/p&gt;
+                    &lt;/div&gt;
+            &lt;/section&gt;&#34;&#34;&#34;
+
+
+    def _generate_endcard(self) -&gt; str:
+        &#34;&#34;&#34;Generates the slide that goes at the end of Presentation&#39;s&#34;&#34;&#34;
+        if self.endcard:
+            return f&#34;&#34;&#34;\t\t\t&lt;section class=&#39;bg-{self.background}&#39;&gt;
+                    &lt;div class=&#39;wrap aligncenter&#39;&gt;
+                        &lt;h2&gt;&lt;strong&gt;Thank you&lt;/strong&gt;&lt;/h2&gt;
+                        &lt;h4 class=&#39;text-intro&#39;&gt;This presentation was made with the help of&lt;/h4&gt;
+                        &lt;h4&gt;
+                            &lt;strong&gt;&lt;em&gt;&lt;a href=&#39;https://webslides.tv&#39; target=&#39;_blank&#39;&gt;WebSlides&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt; 
+                        &lt;/h4&gt;
+                        &lt;h4&gt;
+                            &lt;strong&gt;&lt;em&gt;&lt;a href=&#39;https://github.com/Descent098/ezprez&#39; target=&#39;_blank&#39;&gt;ezprez&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;
+                        &lt;/h4&gt;
+                    &lt;/div&gt;
+            &lt;/section&gt;&#34;&#34;&#34;
+        else:
+            return &#34;&#34;
+
+
+    def __len__(self) -&gt; int:
+        &#34;&#34;&#34;Returns the number of slides in the presentation&#34;&#34;&#34;
+        return len(self.slides)
+
+
+    def __html__(self) -&gt; str:
+        &#34;&#34;&#34;Generates the index.html file of a presentation using the provided slides&#34;&#34;&#34;
+        slides_html = &#34;&#34;
+        slide_iterator = tqdm(self.slides)
+        slide_iterator.set_description_str(&#34;Generating slide content&#34;)
+        for slide in slide_iterator:
+            if not slide.background:
+                slide.background = self.background
+            slides_html += slide.__html__()
+
+        result = f&#39;&#39;&#39;&lt;!doctype html&gt;
+&lt;html lang=&#34;en&#34; prefix=&#34;og: http://ogp.me/ns#&#34;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&#34;utf-8&#34;&gt;
+        &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1&#34;&gt;
+
+        &lt;!-- SEO --&gt;
+        &lt;title&gt;{self.title}&lt;/title&gt;
+        &lt;meta name=&#34;description&#34; content=&#34;{self.description}&#34;&gt;
+
+        &lt;!-- URL CANONICAL --&gt;
+        &lt;link rel=&#34;canonical&#34; href=&#34;{self.url}&#34;&gt;
+
+        &lt;!-- Google Fonts --&gt;
+        &lt;link href=&#34;https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,700,700i%7CMaitree:200,300,400,600,700&amp;amp;subset=latin-ext&#34; rel=&#34;stylesheet&#34;&gt;
+
+        &lt;!-- CSS WebSlides --&gt;
+        &lt;link rel=&#34;stylesheet&#34; type=&#39;text/css&#39; media=&#39;all&#39; href=&#34;static/css/webslides.css&#34;&gt;
+
+        &lt;!-- Optional - CSS SVG Icons (Font Awesome) --&gt;
+        &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css&#34; integrity=&#34;sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==&#34; crossorigin=&#34;anonymous&#34; /&gt;
+
+        &lt;!-- SOCIAL CARDS (ADD YOUR INFO) --&gt;
+
+        &lt;!-- FACEBOOK --&gt;
+        &lt;meta property=&#34;og:url&#34; content=&#34;{self.url}&#34;&gt;
+        &lt;meta property=&#34;og:type&#34; content=&#34;article&#34;&gt;
+        &lt;meta property=&#34;og:title&#34; content=&#34;{self.title}&#34;&gt; 
+        &lt;meta property=&#34;og:description&#34; content=&#34;{self.description}&#34;&gt;
+        &lt;meta property=&#34;og:updated_time&#34; content=&#34;{datetime.today()}&#34;&gt;
+        &lt;meta property=&#34;og:image&#34; content=&#34;{self.image if self.image else &#34;static/images/share-webslides.jpg&#34;}&#34;&gt;
+
+        &lt;!-- TWITTER --&gt;
+        &lt;meta name=&#34;twitter:card&#34; content=&#34;summary_large_image&#34;&gt;
+        &lt;meta name=&#34;twitter:title&#34; content=&#34;{self.title}&#34;&gt; 
+        &lt;meta name=&#34;twitter:description&#34; content=&#34;{self.description}&#34;&gt; 
+        &lt;meta name=&#34;twitter:image&#34; content=&#34;{self.image if self.image else &#34;static/images/share-webslides.jpg&#34;}&#34;&gt;
+
+        {self._generate_favicon_markup()}
+
+        &lt;!-- Android --&gt;
+        &lt;meta name=&#34;mobile-web-app-capable&#34; content=&#34;yes&#34;&gt;
+        &lt;meta name=&#34;theme-color&#34; content=&#34;#f0f0f0&#34;&gt;
+
+        &lt;!-- Code highlighting --&gt;
+        &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/styles/default.min.css&#34;&gt;
+        &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/highlight.min.js&#34;&gt;&lt;/script&gt;
+        &lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+
+    &lt;/head&gt;
+    {self.navbar.__html__() if self.navbar else &#34;&#34;}
+    &lt;body&gt;
+
+    &lt;main role=&#39;main&#39;&gt;
+        &lt;article id=&#39;webslides&#39; {&#39;class=&#34;vertical&#34;&#39; if self.vertical else &#34;&#34;}&gt;
+{self._generate_intro_slide()}
+{slides_html}
+{self._generate_endcard()}
+
+        &lt;/article&gt;
+        &lt;!-- end article --&gt;
+    &lt;/main&gt;
+    &lt;!-- end main --&gt;
+
+    &lt;!-- Required --&gt;
+    &lt;script src=&#39;static/js/webslides.js&#39;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        window.ws = new WebSlides();
+    &lt;/script&gt;
+
+    &lt;!-- OPTIONAL - svg-icons.js (fontastic.me - Font Awesome as svg icons) --&gt;
+    &lt;script defer src=&#39;static/js/svg-icons.js&#39;&gt;&lt;/script&gt;
+
+    &lt;/body&gt;
+    {self.footer.__html__() if self.footer else &#34;&#34;}
+&lt;/html&gt;
+        &#39;&#39;&#39;
+        return result
+
+
+    def export(self, file_path:str, folder_name:Union[str, bool] = False, force:bool = False):
+        &#34;&#34;&#34;Exports the presentation files
+
+        Parameters
+        ----------
+        file_path : (str)
+            The path to export the folder of content to
+
+        folder_name : (str or False)
+            If you want to overwrite the folder name the output files are put in (defaults to Presentation.title), optional and defaults to False
+
+        force : (bool)
+            Whether to force generating files (overwrite existing files if found), optional and defaults to False
+
+        Notes
+        -----
+        - all files are exported to file_path/folder_name
+        - folder_name defaults to Presenation.title
+
+        Raises
+        ------
+        FileExistsError
+            If force is False, and a folder exists at file_path/folder_name
+
+        Examples
+        --------
+        ### Export a presentation to the current directory at /Presentation
+        ```
+        from ezprez.core import Presentation
+        prez = Presentation(title, description, url)
+
+        # Export the files to the current directory at /Presentation
+        prez.export(&#34;.&#34;, force=True, folder_name=&#34;Presentation&#34;)
+        ```
+        &#34;&#34;&#34;
+        if not folder_name:
+            folder_name = self.title
+        file_path = os.path.abspath(file_path)
+
+        # finding downloads folder
+        if os.name == &#34;nt&#34;:
+            DOWNLOAD_FOLDER = f&#34;{os.getenv(&#39;USERPROFILE&#39;)}\\Downloads&#34;
+        else: # PORT: Assuming variable is there for MacOS and Linux installs
+            DOWNLOAD_FOLDER = f&#34;{os.getenv(&#39;HOME&#39;)}/Downloads&#34; 
+
+        # check if webslides is downloaded, if it is use those files, if not download and extract it
+        if not os.path.exists(os.path.join(os.path.dirname(__file__), &#34;webslides&#34;)):
+            try:
+                build(ZIPResource(&#34;webslides&#34;, &#34;https://webslides.tv/webslides-latest.zip&#34;, overwrite_agreement=True))
+                copytree(os.path.join(DOWNLOAD_FOLDER, &#34;webslides&#34;), os.path.join(os.path.dirname(__file__), &#34;webslides&#34;))
+            except PermissionError:
+                elevate()
+                copytree(os.path.join(DOWNLOAD_FOLDER, &#34;webslides&#34;), os.path.join(os.path.dirname(__file__), &#34;webslides&#34;))
+        try:
+            copytree(os.path.join(os.path.dirname(__file__), &#34;webslides&#34;), os.path.join(file_path, folder_name))
+        except FileExistsError:
+            if force:
+                rmtree(os.path.join(file_path, folder_name))
+                copytree(os.path.join(os.path.dirname(__file__), &#34;webslides&#34;), os.path.join(file_path, folder_name))
+            else:
+                raise FileExistsError(f&#34;The file path {os.path.join(file_path, folder_name)} exists, to replace use Presentation.export({file_path}, force=True)&#34;)
+
+        # replace index.html with generated html
+        presentation_content = self.__html__()
+        index_path = os.path.join(file_path, folder_name, &#34;index.html&#34;)
+        print(f&#34;Writing html to {index_path}&#34;)
+        with open(index_path, &#34;w+&#34;) as presentation_file:
+            presentation_file.write(presentation_content)</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="ezprez.core.Presentation.background"><code class="name">var <span class="ident">background</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.core.Presentation.description"><code class="name">var <span class="ident">description</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.core.Presentation.endcard"><code class="name">var <span class="ident">endcard</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.core.Presentation.favicon"><code class="name">var <span class="ident">favicon</span> : Union[bool, <a title="ezprez.components.Image" href="components.html#ezprez.components.Image">Image</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.core.Presentation.footer"><code class="name">var <span class="ident">footer</span> : Union[bool, <a title="ezprez.components.Footer" href="components.html#ezprez.components.Footer">Footer</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.core.Presentation.image"><code class="name">var <span class="ident">image</span> : Union[bool, <a title="ezprez.components.Image" href="components.html#ezprez.components.Image">Image</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.core.Presentation.intro"><code class="name">var <span class="ident">intro</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.core.Presentation.navbar"><code class="name">var <span class="ident">navbar</span> : Union[bool, <a title="ezprez.components.Navbar" href="components.html#ezprez.components.Navbar">Navbar</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.core.Presentation.slides"><code class="name">var <span class="ident">slides</span> : List[<a title="ezprez.core.Slide" href="#ezprez.core.Slide">Slide</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.core.Presentation.title"><code class="name">var <span class="ident">title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.core.Presentation.url"><code class="name">var <span class="ident">url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.core.Presentation.vertical"><code class="name">var <span class="ident">vertical</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="ezprez.core.Presentation.export"><code class="name flex">
+<span>def <span class="ident">export</span></span>(<span>self, file_path: str, folder_name: Union[str, bool] = False, force: bool = False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Exports the presentation files</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>file_path</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>The path to export the folder of content to</dd>
+<dt><strong><code>folder_name</code></strong> :&ensp;<code>(str</code> or <code>False)</code></dt>
+<dd>If you want to overwrite the folder name the output files are put in (defaults to Presentation.title), optional and defaults to False</dd>
+<dt><strong><code>force</code></strong> :&ensp;<code>(bool)</code></dt>
+<dd>Whether to force generating files (overwrite existing files if found), optional and defaults to False</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>all files are exported to file_path/folder_name</li>
+<li>folder_name defaults to Presenation.title</li>
+</ul>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>FileExistsError</code></dt>
+<dd>If force is False, and a folder exists at file_path/folder_name</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<h3 id="export-a-presentation-to-the-current-directory-at-presentation">Export a presentation to the current directory at /Presentation</h3>
+<pre><code>from ezprez.core import Presentation
+prez = Presentation(title, description, url)
+
+# Export the files to the current directory at /Presentation
+prez.export(&quot;.&quot;, force=True, folder_name=&quot;Presentation&quot;)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def export(self, file_path:str, folder_name:Union[str, bool] = False, force:bool = False):
+    &#34;&#34;&#34;Exports the presentation files
+
+    Parameters
+    ----------
+    file_path : (str)
+        The path to export the folder of content to
+
+    folder_name : (str or False)
+        If you want to overwrite the folder name the output files are put in (defaults to Presentation.title), optional and defaults to False
+
+    force : (bool)
+        Whether to force generating files (overwrite existing files if found), optional and defaults to False
+
+    Notes
+    -----
+    - all files are exported to file_path/folder_name
+    - folder_name defaults to Presenation.title
+
+    Raises
+    ------
+    FileExistsError
+        If force is False, and a folder exists at file_path/folder_name
+
+    Examples
+    --------
+    ### Export a presentation to the current directory at /Presentation
+    ```
+    from ezprez.core import Presentation
+    prez = Presentation(title, description, url)
+
+    # Export the files to the current directory at /Presentation
+    prez.export(&#34;.&#34;, force=True, folder_name=&#34;Presentation&#34;)
+    ```
+    &#34;&#34;&#34;
+    if not folder_name:
+        folder_name = self.title
+    file_path = os.path.abspath(file_path)
+
+    # finding downloads folder
+    if os.name == &#34;nt&#34;:
+        DOWNLOAD_FOLDER = f&#34;{os.getenv(&#39;USERPROFILE&#39;)}\\Downloads&#34;
+    else: # PORT: Assuming variable is there for MacOS and Linux installs
+        DOWNLOAD_FOLDER = f&#34;{os.getenv(&#39;HOME&#39;)}/Downloads&#34; 
+
+    # check if webslides is downloaded, if it is use those files, if not download and extract it
+    if not os.path.exists(os.path.join(os.path.dirname(__file__), &#34;webslides&#34;)):
+        try:
+            build(ZIPResource(&#34;webslides&#34;, &#34;https://webslides.tv/webslides-latest.zip&#34;, overwrite_agreement=True))
+            copytree(os.path.join(DOWNLOAD_FOLDER, &#34;webslides&#34;), os.path.join(os.path.dirname(__file__), &#34;webslides&#34;))
+        except PermissionError:
+            elevate()
+            copytree(os.path.join(DOWNLOAD_FOLDER, &#34;webslides&#34;), os.path.join(os.path.dirname(__file__), &#34;webslides&#34;))
+    try:
+        copytree(os.path.join(os.path.dirname(__file__), &#34;webslides&#34;), os.path.join(file_path, folder_name))
+    except FileExistsError:
+        if force:
+            rmtree(os.path.join(file_path, folder_name))
+            copytree(os.path.join(os.path.dirname(__file__), &#34;webslides&#34;), os.path.join(file_path, folder_name))
+        else:
+            raise FileExistsError(f&#34;The file path {os.path.join(file_path, folder_name)} exists, to replace use Presentation.export({file_path}, force=True)&#34;)
+
+    # replace index.html with generated html
+    presentation_content = self.__html__()
+    index_path = os.path.join(file_path, folder_name, &#34;index.html&#34;)
+    print(f&#34;Writing html to {index_path}&#34;)
+    with open(index_path, &#34;w+&#34;) as presentation_file:
+        presentation_file.write(presentation_content)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="ezprez.core.Slide"><code class="flex name class">
+<span>class <span class="ident">Slide</span></span>
+<span>(</span><span>heading: str, *contents: Union[str, list, tuple, ezprez.components._Component], background: Union[bool, str] = False, horizontal_alignment: str = 'center', vertical_alignment: str = 'center', image: Union[bool, <a title="ezprez.components.Image" href="components.html#ezprez.components.Image">Image</a>] = False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The class that is used to generate slides that are fed into the Presentation object</p>
+<h2 id="class-variables">Class Variables</h2>
+<p>all: (List[Slide])
+Contains all slide instances that have been instatiated, accessed through Slide.all</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>heading</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>The slide's title/heading</dd>
+<dt><strong><code>contents</code></strong> :&ensp;<code>(str, list,</code> or <code>Component)</code></dt>
+<dd>An arbitrary number of strings, lists or Component subclasses that make up the contents of the slide</dd>
+<dt><strong><code>background</code></strong> :&ensp;<code>(False</code> or <code>str)</code></dt>
+<dd>The background color of the slide (see notes), optional by default False</dd>
+<dt><strong><code>image</code></strong> :&ensp;<code>(False</code> or <code>Image)</code></dt>
+<dd>An image to use as a background for the slide, optional by default False</dd>
+<dt><strong><code>horizontal_alignment</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>Where to align the slide contents horizontally, optional defaults to 'center'</dd>
+<dt><strong><code>vertical_alignment</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>Where to align the slide contents vertically, optional defaults to 'center'</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Horizontal alignment can be left, right or center</li>
+<li>Vertical alignment can be top, bottom or center</li>
+<li>Background colors available can be found at <a href="https://webslides.tv/demos/components#slide=27;">https://webslides.tv/demos/components#slide=27;</a> just make sure to remove 'bg', so for example 'bg-black' becomes 'black'</li>
+<li>Contents is an unpacked variable, meaning you just specify multiple sets of contents such as Slide(title, 'this is content', ['and', 'so', 'is', 'this'], Button('This to', '#'))</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<h3 id="create-a-basic-text-slide">Create a basic text slide</h3>
+<pre><code>from ezprez.core import Slide
+from ezprez.components import Button
+
+Slide('Here is a text slide', 'and this is the text')
+</code></pre>
+<h3 id="create-a-slide-with-some-text-a-list-and-a-button">Create a slide with some text, a list, and a button</h3>
+<pre><code>from ezprez.core import Slide
+from ezprez.components import Button
+
+Slide('This is the title...', '... and this is content', ['and', 'so', 'is', 'this'], Button('This to', '#'))
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Slide:
+    &#34;&#34;&#34;The class that is used to generate slides that are fed into the Presentation object
+
+    Class Variables
+    ---------------
+    all: (List[Slide])
+        Contains all slide instances that have been instatiated, accessed through Slide.all
+
+    Attributes
+    ----------
+    heading: (str)
+        The slide&#39;s title/heading
+
+    contents: (str, list, or Component)
+        An arbitrary number of strings, lists or Component subclasses that make up the contents of the slide
+
+    background: (False or str)
+        The background color of the slide (see notes), optional by default False
+
+    image: (False or Image)
+        An image to use as a background for the slide, optional by default False
+
+    horizontal_alignment: (str)
+        Where to align the slide contents horizontally, optional defaults to &#39;center&#39;
+
+    vertical_alignment: (str)
+        Where to align the slide contents vertically, optional defaults to &#39;center&#39;
+
+    Notes
+    -----
+    - Horizontal alignment can be left, right or center
+    - Vertical alignment can be top, bottom or center
+    - Background colors available can be found at https://webslides.tv/demos/components#slide=27; just make sure to remove &#39;bg&#39;, so for example &#39;bg-black&#39; becomes &#39;black&#39;
+    - Contents is an unpacked variable, meaning you just specify multiple sets of contents such as Slide(title, &#39;this is content&#39;, [&#39;and&#39;, &#39;so&#39;, &#39;is&#39;, &#39;this&#39;], Button(&#39;This to&#39;, &#39;#&#39;))
+
+
+    Examples
+    --------
+    ### Create a basic text slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Button
+
+    Slide(&#39;Here is a text slide&#39;, &#39;and this is the text&#39;)
+    ```
+
+    ### Create a slide with some text, a list, and a button
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Button
+
+    Slide(&#39;This is the title...&#39;, &#39;... and this is content&#39;, [&#39;and&#39;, &#39;so&#39;, &#39;is&#39;, &#39;this&#39;], Button(&#39;This to&#39;, &#39;#&#39;))
+    ```
+    &#34;&#34;&#34;
+    all = []
+
+    def __init__(self, heading:str, *contents:Union[str, list, tuple, _Component], background:Union[bool,str] = False, horizontal_alignment:str = &#34;center&#34;, vertical_alignment:str = &#34;center&#34;, image:Union[bool, Image]=False ):
+        # Assign class attributes
+        self.image = image
+        self.heading = heading
+        self.contents = contents
+        self.background = background
+        self.vertical_alignment = vertical_alignment 
+        self.horizontal_alignment = horizontal_alignment
+
+        # Append slide to the class variable Slide.all
+        Slide.all.append(self)
+
+    def _generate_content(self):
+        &#34;&#34;&#34;Generates the necessary html with the provided contents&#34;&#34;&#34;
+        result = f&#34;\n\t\t\t&lt;section class=&#39;bg-{self.background} slide-{self.vertical_alignment}&#39;&gt;&#34;
+        
+        if self.image:
+            result += f&#34;\n\t\t\t\t&lt;span class=&#39;background&#39; style=&#39;background-image:url(\&#34;{self.image}\&#34;)&#39;&gt;&lt;/span&gt;&#34;
+        result += f&#34;\n\t\t\t\t&lt;div class=&#39;wrap&#39;&gt;\n\t\t\t\t\t&lt;div class=&#39;content-{self.horizontal_alignment}&#39;&gt;\n\t\t\t\t\t&lt;h2&gt;{self.heading}&lt;/h2&gt;\n&#34;
+        
+        for content in self.contents:
+            if type(content) == str:
+                result += f&#34;\t\t\t\t\t&lt;p&gt;{content}&lt;/p&gt;\n&#34;
+
+            elif type(content) == list or type(content) == tuple:
+                result += f&#34;\t\t\t\t\t&lt;div class=&#39;grid {&#39;content-&#39; + self.horizontal_alignment if not self.horizontal_alignment == &#39;right&#39; else &#39;&#39;}&#39;&gt;\n\t\t\t\t\t\t\t&lt;ul style=&#39;text-align:justify;&#39;&gt;\n&#34;
+                for bullet_point in content:
+                    result += f&#34;\t\t\t\t\t\t\t\t&lt;li&gt;{bullet_point}&lt;/li&gt;\n&#34;
+                result += &#34;\t\t\t\t\t&lt;/div&gt;\n\t\t\t\t\t\t\t&lt;/ul&gt;\n&#34;
+            elif isinstance(content, _Component) or type(SocialLink):
+                result += content.__html__()
+        result += &#34;\n\t\t\t\t\t&lt;/div&gt;\n\t\t\t\t&lt;/div&gt;\n\t\t\t&lt;/section&gt;\n&#34;
+
+        yield result
+
+
+    def __html__(self):
+        &#34;&#34;&#34;Generates the markup for each slide&#34;&#34;&#34;
+        result = &#34;&#34;
+        for content in self._generate_content():
+            result+= content
+        return result</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="ezprez.core.Slide.all"><code class="name">var <span class="ident">all</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul>
+<li><a href="#classes">Classes</a><ul>
+<li><a href="#slide">Slide</a></li>
+<li><a href="#presentation">Presentation</a></li>
+</ul>
+</li>
+<li><a href="#notes">Notes</a></li>
+<li><a href="#examples">Examples</a><ul>
+<li><a href="#creating-a-presentation-with-a-slide-and-exporting-it-to-presentation">Creating a presentation with a slide and exporting it to ./Presentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="ezprez" href="index.html">ezprez</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="ezprez.core.Presentation" href="#ezprez.core.Presentation">Presentation</a></code></h4>
+<ul class="two-column">
+<li><code><a title="ezprez.core.Presentation.background" href="#ezprez.core.Presentation.background">background</a></code></li>
+<li><code><a title="ezprez.core.Presentation.description" href="#ezprez.core.Presentation.description">description</a></code></li>
+<li><code><a title="ezprez.core.Presentation.endcard" href="#ezprez.core.Presentation.endcard">endcard</a></code></li>
+<li><code><a title="ezprez.core.Presentation.export" href="#ezprez.core.Presentation.export">export</a></code></li>
+<li><code><a title="ezprez.core.Presentation.favicon" href="#ezprez.core.Presentation.favicon">favicon</a></code></li>
+<li><code><a title="ezprez.core.Presentation.footer" href="#ezprez.core.Presentation.footer">footer</a></code></li>
+<li><code><a title="ezprez.core.Presentation.image" href="#ezprez.core.Presentation.image">image</a></code></li>
+<li><code><a title="ezprez.core.Presentation.intro" href="#ezprez.core.Presentation.intro">intro</a></code></li>
+<li><code><a title="ezprez.core.Presentation.navbar" href="#ezprez.core.Presentation.navbar">navbar</a></code></li>
+<li><code><a title="ezprez.core.Presentation.slides" href="#ezprez.core.Presentation.slides">slides</a></code></li>
+<li><code><a title="ezprez.core.Presentation.title" href="#ezprez.core.Presentation.title">title</a></code></li>
+<li><code><a title="ezprez.core.Presentation.url" href="#ezprez.core.Presentation.url">url</a></code></li>
+<li><code><a title="ezprez.core.Presentation.vertical" href="#ezprez.core.Presentation.vertical">vertical</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ezprez.core.Slide" href="#ezprez.core.Slide">Slide</a></code></h4>
+<ul class="">
+<li><code><a title="ezprez.core.Slide.all" href="#ezprez.core.Slide.all">all</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

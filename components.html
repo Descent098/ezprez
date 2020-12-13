@@ -1,0 +1,1603 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>ezprez.components API documentation</title>
+<meta name="description" content="The module that contains all component subclasses that can be used to generate Slide content …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>ezprez.components</code></h1>
+</header>
+<section id="section-intro">
+<p>The module that contains all component subclasses that can be used to generate Slide content</p>
+<h2 id="classes">Classes</h2>
+<h4 id="sociallink">SocialLink</h4>
+<p>Can be used to create a social media link icon, or just the icon</p>
+<h4 id="link">Link</h4>
+<p>A component for generating web links</p>
+<h4 id="code">Code</h4>
+<p>A component for adding code demos with syntax highlighting</p>
+<h4 id="icon">Icon</h4>
+<p>A component that generates an icon</p>
+<h4 id="footer_">F‎ooter_</h4>
+<p>Allows you to add a footer to the presentation</p>
+<h4 id="navbar">Navbar</h4>
+<p>Allows you to add a navbar to the presentation</p>
+<h4 id="button">Button</h4>
+<p>A component that allows you to add html buttons</p>
+<h4 id="raw">Raw</h4>
+<p>A component that dumps provided raw html</p>
+<h4 id="tableofcontents">TableOfContents</h4>
+<p>A component used to generate table of contents for a presentation</p>
+<h4 id="video">Video</h4>
+<p>A component that allows you to embed a youtube video</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;The module that contains all component subclasses that can be used to generate Slide content
+
+Classes
+-------
+#### SocialLink
+Can be used to create a social media link icon, or just the icon
+
+#### Link
+A component for generating web links
+
+#### Code
+A component for adding code demos with syntax highlighting
+
+#### Icon
+A component that generates an icon
+
+#### F‎ooter_
+Allows you to add a footer to the presentation
+
+#### Navbar
+Allows you to add a navbar to the presentation
+
+#### Button
+A component that allows you to add html buttons
+
+#### Raw
+A component that dumps provided raw html
+
+#### TableOfContents
+A component used to generate table of contents for a presentation
+
+#### Video
+A component that allows you to embed a youtube video
+&#34;&#34;&#34;
+# Internal Dependencies
+import enum
+from abc import ABC
+from typing import List, Union
+from dataclasses import dataclass
+
+
+class _Component(ABC):
+    &#34;&#34;&#34;Base class used for type checking, and inheritance on all components&#34;&#34;&#34;
+    def __html__(self) -&gt; str:
+        raise NotImplementedError(&#34;Components require a __html__() method to be defined&#34;)
+
+
+class SocialLink(enum.Enum):
+    &#34;&#34;&#34;Can be used to create a social media link icon, or just the icon
+
+    Notes 
+    -----
+    - If you don&#39;t call the object&#39;s link function, it will just return the social media icon
+
+    Examples
+    -------
+    ### Adding an icon link to someone&#39;s github in a navbar
+    ```
+    from ezprez.core import Presentation
+    from ezprez.components import SocialLink, Navbar
+
+    header = Navbar(&#39;Basic web technologies&#39;, [SocialLink.github.link(&#34;https://github.com/descent098&#34;)])
+    Presentation(title, url, content, navbar=header)
+    ```
+
+    ### Adding an icon with no link to a Slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import SocialLink
+
+    Slide(&#39;This is a youtube icon with no link&#39;, SocialLink.youtube)
+    ```
+    &#34;&#34;&#34;
+    url:str
+    youtube = 0
+    github = 1
+    twitter = 2
+    linkedin = 3
+    twitch = 4
+
+
+    def link(self, link):
+        &#34;&#34;&#34;Function used to asign URL parameter to the link
+
+        Parameters
+        ----------
+        link : (str)
+            The url you want to link to
+
+        Returns
+        -------
+        The instance called from
+        &#34;&#34;&#34;
+        self.url = link
+        return self
+
+
+    def __html__(self, header:bool = True) -&gt; str:
+        if self.url: 
+            if header:
+                return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href=&#39;{self.url}&#39; target=&#39;_blank&#39; rel=&#39;external&#39; style=&#39;background-color:#fff; color:#141414;&#39;&gt;
+                                    &lt;i class=&#39;fab fa-{self.name} fa-3x&#39;&gt;&lt;/i&gt;
+                                &lt;/a&gt;\n&#34;&#34;&#34;
+            else:
+                return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href=&#39;{self.url}&#39; target=&#39;_blank&#39; rel=&#39;external&#39;&gt;
+                                    &lt;i class=&#39;fab fa-{self.name} fa-3x&#39;&gt;&lt;/i&gt;
+                                &lt;/a&gt;\n&#34;&#34;&#34;
+        else:
+            if header:
+                return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;i class=&#39;fab fa-{self.name} fa-3x&#39; style=&#39;background-color:#fff; color:#141414;&#39;&gt;&lt;/i&gt;\n&#34;&#34;&#34;
+            else:
+                return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;i class=&#39;fab fa-{self.name} fa-3x&#39;&gt;&lt;/i&gt;\n&#34;&#34;&#34;
+
+
+@dataclass
+class Link(_Component):
+    &#34;&#34;&#34;A component for generating web links
+
+    Attributes
+    ----------
+    label : (str)
+        The text shown that the link is applied to
+
+    link : (str)
+        The link to tie the label to
+
+    Examples
+    -------
+    ### Add a link to google to a slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Link
+
+    Slide(&#39;This is a link to Google&#39;, Link(&#39;Click this to go to google&#39;, &#39;https://google.ca&#39;))
+    ```
+    &#34;&#34;&#34;
+    label: str
+    link: str
+
+
+    def __html__(self, header:bool = False) -&gt; str:
+        if not header:
+            return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href={self.link} target=&#39;_blank&#39; rel=&#39;external&#39;&gt;{self.label}&lt;/a&gt;\n&#34;&#34;&#34;
+        else:
+            return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href={self.link} target=&#39;_blank&#39; rel=&#39;external&#39; style=&#39;background-color:#fff; color:#141414;&#39;&gt;{self.label}&lt;/a&gt;\n&#34;&#34;&#34;
+
+
+@dataclass
+class Code(_Component):
+    &#34;&#34;&#34;A component for adding code demos with syntax highlighting
+
+    Attributes
+    ----------
+    language: (str)
+        The programming language (Supports all the common languages listed on https://highlightjs.org/download/ )
+
+    content: (str)
+        The code to show off
+
+    Notes
+    -----
+    - Uses highlightJS for syntax highlighting: https://highlightjs.org/download/
+
+    Examples
+    --------
+    ### Add some html example code to a slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Code
+
+    Slide(&#34;Here is some example html&#34;, Code(&#34;html&#34;, &#34;&lt;p&gt;This is some example code&lt;/p&gt;&#34;))
+    ```
+    &#34;&#34;&#34;
+    language: str
+    content: str
+
+
+    def _escape(self) -&gt; str:
+        &#34;&#34;&#34;Escapes self.content so it&#39;s HTML safe
+
+        Returns
+        -------
+        str
+            The escaped string of content
+        &#34;&#34;&#34;
+        self.content = self.content.replace(&#34;&lt;&#34;, &#34;&amp;lt&#34;).replace(&#34;&gt;&#34;, &#34;&amp;gt&#34;).replace(&#34;&amp;&#34;, &#34;&amp;amp&#34;)
+        return self.content
+
+
+    def __html__(self) -&gt; str:
+        return f&#34;&#34;&#34;\t\t\t\t\t&lt;pre&gt;&lt;code class=&#39;language-{self.language.lower()}&#39;&gt;{self._escape()}&lt;/code&gt;&lt;/pre&gt;\n&#34;&#34;&#34;
+
+
+@dataclass
+class Icon(_Component):
+    &#34;&#34;&#34;A component that generates an icon
+
+    Attributes
+    ----------
+    label: (str)
+        The icon name i.e. &#39;fa-heart&#39; (details at https://fontawesome.com/)
+
+    size: (str), optional;
+        The size of icon, i.e. 60px, defaults to 48px
+
+    Examples
+    -------
+    ### Put a heart icon in the middle of a slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Icon
+
+    Slide(&#34;This is a heart icon&#34;, Icon(&#34;fa-heart&#34;))
+    ```
+    &#34;&#34;&#34;
+    label:str
+    size:str = &#34;48px&#34;
+
+
+    def __html__(self) -&gt; str:
+        return f&#34;&#34;&#34;\t\t\t\t\t&lt;svg class=&#39;{self.label}&#39; style=&#39;width:{self.size};height:{self.size};&#39;&gt;&lt;use xlink:href=&#39;#{self.label}&#39;&gt;&lt;/use&gt;&lt;/svg&gt;\n&#34;&#34;&#34;
+
+
+@dataclass
+class Footer(_Component):
+    &#34;&#34;&#34;Allows you to add a footer to the presentation
+
+    Attributes
+    ----------
+    links: (list[Link or SocialLink])
+        A list of Link&#39;s or SocialLink&#39;s to include in the footer
+
+    Examples
+    --------
+    ### Adding a footer with a github link to a presentation
+    ```
+    from ezprez.core import Presentation
+    from ezprez.components import Footer
+
+    foot = Footer([SocialLink.github.link(&#34;https://github.com/Descent098/ezprez-example&#34;)])
+    Presentation(title, description, url, footer=foot)
+    ```
+    &#34;&#34;&#34;
+    links: List[Union[Link, SocialLink]]
+
+
+    def __html__(self) -&gt; str:
+        result =f&#34;&#34;&#34;
+        &lt;footer&gt;
+        &#34;&#34;&#34;
+
+        for link in self.links:
+            if type(link) == Link or type(link) == SocialLink:
+                result += f&#34;\n\t\t\t{link.__html__(header=True)}\n&#34;
+            else:
+                raise ValueError(f&#34;Footer arguments must be of type ezprez.components.Link or ezprez.components.SocialLink, got \n\ttype {type(link)}\n\tValue{link}&#34;)
+
+        result += &#34;&#34;&#34;
+        &lt;/footer&gt;\n
+        &#34;&#34;&#34;
+        return result
+
+
+@dataclass
+class Button(_Component):
+    &#34;&#34;&#34;A component that allows you to add html buttons
+
+    Attributes
+    ----------
+    label: (str)
+        The text that is shown on the button
+    
+    url: (str)
+        The url the button links to
+    
+    icon: (False or Icon)
+        Provide an Icon component to display in the button, optional and defaults to False
+    
+    ghost: (bool)
+        Whether to not fill a color, optional and defaults to False
+    
+    rounding: (bool)
+        Whether to round the corners of the button or not, optional and defaults to True
+    
+    color: (False or str)
+        The color of the button, optional and defaults to False
+    
+    text_color: (False or str)
+        The color of the button text, optional and defaults to False
+
+    Notes 
+    -----
+    - The color and text_color attribute takes an HTML color as a string i.e. #f0f0f0, blue, rgba(255, 255, 255, 0.9)
+    - If ghost is set to True all other colors will be ignored
+    - The URL parameter also can use anchor links to other slides
+
+    Examples
+    --------
+    ### Adding a button to a slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Button
+
+    b = Button(&#34;click me&#34;, &#34;https://kieranwood.ca&#34;)
+    Slide(&#34;Here&#39;s a button&#34;, b)
+    ```
+    &#34;&#34;&#34;
+    label: str # The text to put inside the button
+    url: str # The url to link the button to
+    icon: Union[bool, Icon] = False # The icon to put on the button (if you want one)
+    ghost: bool = False # Whether to fill in a color or use ghost styling
+    rounding: bool = True # Whether to round
+    color: Union[bool, str] = False # The color to make the button
+    text_color: Union[bool, str] = False # The color to make the button text
+
+    def __html__(self) -&gt; str:
+        color_string = &#34;&#34;
+        if self.color and self.text_color and not self.ghost:
+            color_string = f&#34;style=&#39;background-color:{self.color};color:{self.text_color};&#39;&#34;
+        elif self.color or self.text_color and not self.ghost:
+            color_string = &#34;style=&#34;
+            if self.color:
+                color_string += f&#39;\&#34;background-color:{self.color};\&#34;&#39;
+            if self.text_color:
+                color_string += f&#39;\&#34;color:{self.text_color};\&#34;&#39;
+
+        return f&#34;&#34;&#34;\n\t\t\t&lt;a href=&#39;{self.url}&#39; class=&#39;button{&#39; ghost&#39; if self.ghost else &#39;&#39;}{&#39; radius&#39; if self.rounding else &#39;&#39;}&#39; {color_string}&gt;{self.icon.__html__() if self.icon else &#39;&#39;} {self.label} &lt;/a&gt;\n&#34;&#34;&#34;
+
+
+@dataclass
+class Navbar(_Component):
+    &#34;&#34;&#34;Allows you to add a navbar to the presentation
+
+    Attributes
+    ----------
+    title: (str)
+        The presentation title (used for accessibility reasons)
+
+    links: (list[Link or SocialLink])
+        A list of Link&#39;s or SocialLink&#39;s to include in the Navbar
+
+    Examples
+    --------
+    ### Adding a Navbar with a github link to a presentation
+    ```
+    from ezprez.core import Presentation
+    from ezprez.components import Navbar
+
+    nav = Navbar(&#39;Presentation title&#39;, [SocialLink.github.link(&#34;https://github.com/Descent098/ezprez-example&#34;)])
+    Presentation(title, description, url, navbar=nav)
+    ```
+    &#34;&#34;&#34;
+    title: str
+    links: List[Union[Link, SocialLink]]
+
+
+    def __html__(self) -&gt; str:
+        result =f&#34;&#34;&#34;
+        &lt;header role=&#34;banner&#34;&gt;
+            &lt;nav role=&#34;navigation&#34;&gt;
+                &lt;p class=&#34;logo&#34;&gt;&lt;a href=&#34;&#34; target=&#34;_blank&#34; title=&#34;{self.title}&#34;&gt;{self.title}&lt;/a&gt;&lt;/p&gt;
+                &lt;ul&gt;
+        &#34;&#34;&#34;
+
+        for link in self.links:
+            if type(link) == Link or type(link) == SocialLink:
+                result += f&#34;\n\t\t\t\t\t&lt;li&gt;{link.__html__(header=True)}&lt;/li&gt;\n&#34;
+            else:
+                raise ValueError(f&#34;Navbar arguments must be of type ezprez.components.Link or ezprez.components.SocialLink, got \n\ttype {type(link)}\n\tValue{link}&#34;)
+        result += &#34;&#34;&#34;
+                &lt;/ul&gt;
+            &lt;/nav&gt;
+        &lt;/header&gt;
+        &#34;&#34;&#34;
+
+        return result
+
+
+@dataclass
+class Raw(_Component):
+    &#34;&#34;&#34;A component that dumps provided raw html
+
+    Attributes
+    ----------
+    content: (str) 
+        The HTML content to generate
+
+    Examples
+    -------
+    ### Add a manual paragraph tag to a Slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Raw
+
+    content = &#39;&lt;p&gt;This is some text&lt;/p&gt;&#39;
+
+    Slide(&#39;This is some raw content&#39;, Raw(content))
+    ```
+    &#34;&#34;&#34;
+    content:str
+
+
+    def __html__(self) -&gt; str:
+        return self.content
+
+@dataclass
+class TableOfContents(_Component):
+    &#34;&#34;&#34;A component used to generate table of contents for a presentation
+
+    Attributes
+    ----------
+    sections: (dict)
+        A dictionary of {label:slide_number}&#39;s to generate the table of contents with
+
+    Examples
+    ----------
+    ### Create a table of contents Slide for a presentation
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import TableOfContents
+
+    # The argument is a dictionary where each key is the label in the table
+    # and each value is the slide number
+    sections = {&#39;Intro&#39;:2, &#39;End&#39;: 5}
+
+    Slide(&#39;Table of contents&#39;, TableOfContents(sections))
+    ```
+    &#34;&#34;&#34;
+    sections: dict
+
+
+    def __html__(self) -&gt; str:
+        result = &#34;\n\t\t&lt;hr&gt;\n\t\t&lt;div class=&#39;toc&#39;&gt;\n\t\t\t&lt;ol&gt;&#34;
+        for section_title in self.sections:
+            result += f&#34;\n\t\t\t\t&lt;li&gt;\n\t\t\t\t\t&lt;a href=&#39;#slide={self.sections[section_title]}&#39; title=&#39;Go to {section_title}&#39;&gt;\n\t\t\t\t\t&lt;span class=&#39;chapter&#39;&gt;{section_title}&lt;/span&gt;\n\t\t\t\t\t&lt;span class=&#39;toc-page&#39;&gt;{self.sections[section_title]}&lt;/span&gt;\n\t\t\t\t&lt;/a&gt;&lt;/li&gt;&#34;
+        result += &#34;\n\t\t\t&lt;/ol&gt;\n\t\t&lt;/div&gt;\n&#34;
+        return result 
+
+
+@dataclass
+class Video(_Component):
+    &#34;&#34;&#34;A component that allows you to embed a youtube video
+
+    Attributes
+    ----------
+    video_id: (str)
+        The youtube video id, for example if the url is youtube.com/watch?v=wSVljLh1VmI then the id is &#39;wSVljLh1VmI&#39;
+
+    Examples
+    --------
+    ### Adding a youtube video to a Slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Video
+
+    Slide(&#39;Here is a video&#39;, Video(&#39;wSVljLh1VmI&#39;))
+    ```
+    &#34;&#34;&#34;
+    video_id: str
+
+    def __html__(self) -&gt; str:
+        return f&#34;&#34;&#34;\n\t\t\t\t&lt;div class=&#39;embed&#39;&gt;\n\t\t\t\t\t&lt;iframe src=&#39;https://www.youtube.com/embed/{self.video_id}&#39; frameborder=&#34;0&#34; allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&#34; allowfullscreen &gt;&lt;/iframe&gt;\n\t\t\t\t&lt;/div&gt; &#34;&#34;&#34;
+
+@dataclass
+class Image(_Component):
+    title: str
+    path: str
+    width: Union[bool, int] = False
+    height: Union[bool, int] = False
+
+    def __html__(self) -&gt; str:
+        return &#34;&#34;&#34; &#34;&#34;&#34;</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="ezprez.components.Button"><code class="flex name class">
+<span>class <span class="ident">Button</span></span>
+<span>(</span><span>label: str, url: str, icon: Union[bool, <a title="ezprez.components.Icon" href="#ezprez.components.Icon">Icon</a>] = False, ghost: bool = False, rounding: bool = True, color: Union[bool, str] = False, text_color: Union[bool, str] = False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A component that allows you to add html buttons</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>label</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>The text that is shown on the button</dd>
+<dt><strong><code>url</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>The url the button links to</dd>
+<dt><strong><code>icon</code></strong> :&ensp;<code>(False</code> or <code><a title="ezprez.components.Icon" href="#ezprez.components.Icon">Icon</a>)</code></dt>
+<dd>Provide an Icon component to display in the button, optional and defaults to False</dd>
+<dt><strong><code>ghost</code></strong> :&ensp;<code>(bool)</code></dt>
+<dd>Whether to not fill a color, optional and defaults to False</dd>
+<dt><strong><code>rounding</code></strong> :&ensp;<code>(bool)</code></dt>
+<dd>Whether to round the corners of the button or not, optional and defaults to True</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>(False</code> or <code>str)</code></dt>
+<dd>The color of the button, optional and defaults to False</dd>
+<dt><strong><code>text_color</code></strong> :&ensp;<code>(False</code> or <code>str)</code></dt>
+<dd>The color of the button text, optional and defaults to False</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>The color and text_color attribute takes an HTML color as a string i.e. #f0f0f0, blue, rgba(255, 255, 255, 0.9)</li>
+<li>If ghost is set to True all other colors will be ignored</li>
+<li>The URL parameter also can use anchor links to other slides</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<h3 id="adding-a-button-to-a-slide">Adding a button to a slide</h3>
+<pre><code>from ezprez.core import Slide
+from ezprez.components import Button
+
+b = Button(&quot;click me&quot;, &quot;https://kieranwood.ca&quot;)
+Slide(&quot;Here's a button&quot;, b)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class Button(_Component):
+    &#34;&#34;&#34;A component that allows you to add html buttons
+
+    Attributes
+    ----------
+    label: (str)
+        The text that is shown on the button
+    
+    url: (str)
+        The url the button links to
+    
+    icon: (False or Icon)
+        Provide an Icon component to display in the button, optional and defaults to False
+    
+    ghost: (bool)
+        Whether to not fill a color, optional and defaults to False
+    
+    rounding: (bool)
+        Whether to round the corners of the button or not, optional and defaults to True
+    
+    color: (False or str)
+        The color of the button, optional and defaults to False
+    
+    text_color: (False or str)
+        The color of the button text, optional and defaults to False
+
+    Notes 
+    -----
+    - The color and text_color attribute takes an HTML color as a string i.e. #f0f0f0, blue, rgba(255, 255, 255, 0.9)
+    - If ghost is set to True all other colors will be ignored
+    - The URL parameter also can use anchor links to other slides
+
+    Examples
+    --------
+    ### Adding a button to a slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Button
+
+    b = Button(&#34;click me&#34;, &#34;https://kieranwood.ca&#34;)
+    Slide(&#34;Here&#39;s a button&#34;, b)
+    ```
+    &#34;&#34;&#34;
+    label: str # The text to put inside the button
+    url: str # The url to link the button to
+    icon: Union[bool, Icon] = False # The icon to put on the button (if you want one)
+    ghost: bool = False # Whether to fill in a color or use ghost styling
+    rounding: bool = True # Whether to round
+    color: Union[bool, str] = False # The color to make the button
+    text_color: Union[bool, str] = False # The color to make the button text
+
+    def __html__(self) -&gt; str:
+        color_string = &#34;&#34;
+        if self.color and self.text_color and not self.ghost:
+            color_string = f&#34;style=&#39;background-color:{self.color};color:{self.text_color};&#39;&#34;
+        elif self.color or self.text_color and not self.ghost:
+            color_string = &#34;style=&#34;
+            if self.color:
+                color_string += f&#39;\&#34;background-color:{self.color};\&#34;&#39;
+            if self.text_color:
+                color_string += f&#39;\&#34;color:{self.text_color};\&#34;&#39;
+
+        return f&#34;&#34;&#34;\n\t\t\t&lt;a href=&#39;{self.url}&#39; class=&#39;button{&#39; ghost&#39; if self.ghost else &#39;&#39;}{&#39; radius&#39; if self.rounding else &#39;&#39;}&#39; {color_string}&gt;{self.icon.__html__() if self.icon else &#39;&#39;} {self.label} &lt;/a&gt;\n&#34;&#34;&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>ezprez.components._Component</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="ezprez.components.Button.color"><code class="name">var <span class="ident">color</span> : Union[bool, str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.components.Button.ghost"><code class="name">var <span class="ident">ghost</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.components.Button.icon"><code class="name">var <span class="ident">icon</span> : Union[bool, <a title="ezprez.components.Icon" href="#ezprez.components.Icon">Icon</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.components.Button.label"><code class="name">var <span class="ident">label</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.components.Button.rounding"><code class="name">var <span class="ident">rounding</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.components.Button.text_color"><code class="name">var <span class="ident">text_color</span> : Union[bool, str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.components.Button.url"><code class="name">var <span class="ident">url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="ezprez.components.Code"><code class="flex name class">
+<span>class <span class="ident">Code</span></span>
+<span>(</span><span>language: str, content: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A component for adding code demos with syntax highlighting</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>language</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>The programming language (Supports all the common languages listed on <a href="https://highlightjs.org/download/">https://highlightjs.org/download/</a> )</dd>
+<dt><strong><code>content</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>The code to show off</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Uses highlightJS for syntax highlighting: <a href="https://highlightjs.org/download/">https://highlightjs.org/download/</a></li>
+</ul>
+<h2 id="examples">Examples</h2>
+<h3 id="add-some-html-example-code-to-a-slide">Add some html example code to a slide</h3>
+<pre><code>from ezprez.core import Slide
+from ezprez.components import Code
+
+Slide(&quot;Here is some example html&quot;, Code(&quot;html&quot;, &quot;&lt;p&gt;This is some example code&lt;/p&gt;&quot;))
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class Code(_Component):
+    &#34;&#34;&#34;A component for adding code demos with syntax highlighting
+
+    Attributes
+    ----------
+    language: (str)
+        The programming language (Supports all the common languages listed on https://highlightjs.org/download/ )
+
+    content: (str)
+        The code to show off
+
+    Notes
+    -----
+    - Uses highlightJS for syntax highlighting: https://highlightjs.org/download/
+
+    Examples
+    --------
+    ### Add some html example code to a slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Code
+
+    Slide(&#34;Here is some example html&#34;, Code(&#34;html&#34;, &#34;&lt;p&gt;This is some example code&lt;/p&gt;&#34;))
+    ```
+    &#34;&#34;&#34;
+    language: str
+    content: str
+
+
+    def _escape(self) -&gt; str:
+        &#34;&#34;&#34;Escapes self.content so it&#39;s HTML safe
+
+        Returns
+        -------
+        str
+            The escaped string of content
+        &#34;&#34;&#34;
+        self.content = self.content.replace(&#34;&lt;&#34;, &#34;&amp;lt&#34;).replace(&#34;&gt;&#34;, &#34;&amp;gt&#34;).replace(&#34;&amp;&#34;, &#34;&amp;amp&#34;)
+        return self.content
+
+
+    def __html__(self) -&gt; str:
+        return f&#34;&#34;&#34;\t\t\t\t\t&lt;pre&gt;&lt;code class=&#39;language-{self.language.lower()}&#39;&gt;{self._escape()}&lt;/code&gt;&lt;/pre&gt;\n&#34;&#34;&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>ezprez.components._Component</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="ezprez.components.Code.content"><code class="name">var <span class="ident">content</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.components.Code.language"><code class="name">var <span class="ident">language</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="ezprez.components.Footer"><code class="flex name class">
+<span>class <span class="ident">Footer</span></span>
+<span>(</span><span>links: List[Union[<a title="ezprez.components.Link" href="#ezprez.components.Link">Link</a>, <a title="ezprez.components.SocialLink" href="#ezprez.components.SocialLink">SocialLink</a>]])</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Allows you to add a footer to the presentation</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>links</code></strong> :&ensp;<code>(list[<a title="ezprez.components.Link" href="#ezprez.components.Link">Link</a></code> or <code><a title="ezprez.components.SocialLink" href="#ezprez.components.SocialLink">SocialLink</a>])</code></dt>
+<dd>A list of Link's or SocialLink's to include in the footer</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<h3 id="adding-a-footer-with-a-github-link-to-a-presentation">Adding a footer with a github link to a presentation</h3>
+<pre><code>from ezprez.core import Presentation
+from ezprez.components import Footer
+
+foot = Footer([SocialLink.github.link(&quot;https://github.com/Descent098/ezprez-example&quot;)])
+Presentation(title, description, url, footer=foot)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class Footer(_Component):
+    &#34;&#34;&#34;Allows you to add a footer to the presentation
+
+    Attributes
+    ----------
+    links: (list[Link or SocialLink])
+        A list of Link&#39;s or SocialLink&#39;s to include in the footer
+
+    Examples
+    --------
+    ### Adding a footer with a github link to a presentation
+    ```
+    from ezprez.core import Presentation
+    from ezprez.components import Footer
+
+    foot = Footer([SocialLink.github.link(&#34;https://github.com/Descent098/ezprez-example&#34;)])
+    Presentation(title, description, url, footer=foot)
+    ```
+    &#34;&#34;&#34;
+    links: List[Union[Link, SocialLink]]
+
+
+    def __html__(self) -&gt; str:
+        result =f&#34;&#34;&#34;
+        &lt;footer&gt;
+        &#34;&#34;&#34;
+
+        for link in self.links:
+            if type(link) == Link or type(link) == SocialLink:
+                result += f&#34;\n\t\t\t{link.__html__(header=True)}\n&#34;
+            else:
+                raise ValueError(f&#34;Footer arguments must be of type ezprez.components.Link or ezprez.components.SocialLink, got \n\ttype {type(link)}\n\tValue{link}&#34;)
+
+        result += &#34;&#34;&#34;
+        &lt;/footer&gt;\n
+        &#34;&#34;&#34;
+        return result</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>ezprez.components._Component</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="ezprez.components.Footer.links"><code class="name">var <span class="ident">links</span> : List[Union[<a title="ezprez.components.Link" href="#ezprez.components.Link">Link</a>, <a title="ezprez.components.SocialLink" href="#ezprez.components.SocialLink">SocialLink</a>]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="ezprez.components.Icon"><code class="flex name class">
+<span>class <span class="ident">Icon</span></span>
+<span>(</span><span>label: str, size: str = '48px')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A component that generates an icon</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>label</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>The icon name i.e. 'fa-heart' (details at <a href="https://fontawesome.com/">https://fontawesome.com/</a>)</dd>
+<dt><strong><code>size</code></strong> :&ensp;<code>(str)</code>, optional<code>;</code></dt>
+<dd>The size of icon, i.e. 60px, defaults to 48px</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<h3 id="put-a-heart-icon-in-the-middle-of-a-slide">Put a heart icon in the middle of a slide</h3>
+<pre><code>from ezprez.core import Slide
+from ezprez.components import Icon
+
+Slide(&quot;This is a heart icon&quot;, Icon(&quot;fa-heart&quot;))
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class Icon(_Component):
+    &#34;&#34;&#34;A component that generates an icon
+
+    Attributes
+    ----------
+    label: (str)
+        The icon name i.e. &#39;fa-heart&#39; (details at https://fontawesome.com/)
+
+    size: (str), optional;
+        The size of icon, i.e. 60px, defaults to 48px
+
+    Examples
+    -------
+    ### Put a heart icon in the middle of a slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Icon
+
+    Slide(&#34;This is a heart icon&#34;, Icon(&#34;fa-heart&#34;))
+    ```
+    &#34;&#34;&#34;
+    label:str
+    size:str = &#34;48px&#34;
+
+
+    def __html__(self) -&gt; str:
+        return f&#34;&#34;&#34;\t\t\t\t\t&lt;svg class=&#39;{self.label}&#39; style=&#39;width:{self.size};height:{self.size};&#39;&gt;&lt;use xlink:href=&#39;#{self.label}&#39;&gt;&lt;/use&gt;&lt;/svg&gt;\n&#34;&#34;&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>ezprez.components._Component</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="ezprez.components.Icon.label"><code class="name">var <span class="ident">label</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.components.Icon.size"><code class="name">var <span class="ident">size</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="ezprez.components.Image"><code class="flex name class">
+<span>class <span class="ident">Image</span></span>
+<span>(</span><span>title: str, path: str, width: Union[bool, int] = False, height: Union[bool, int] = False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Image(title: str, path: str, width: Union[bool, int] = False, height: Union[bool, int] = False)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class Image(_Component):
+    title: str
+    path: str
+    width: Union[bool, int] = False
+    height: Union[bool, int] = False
+
+    def __html__(self) -&gt; str:
+        return &#34;&#34;&#34; &#34;&#34;&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>ezprez.components._Component</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="ezprez.components.Image.height"><code class="name">var <span class="ident">height</span> : Union[bool, int]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.components.Image.path"><code class="name">var <span class="ident">path</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.components.Image.title"><code class="name">var <span class="ident">title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.components.Image.width"><code class="name">var <span class="ident">width</span> : Union[bool, int]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="ezprez.components.Link"><code class="flex name class">
+<span>class <span class="ident">Link</span></span>
+<span>(</span><span>label: str, link: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A component for generating web links</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>label</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>The text shown that the link is applied to</dd>
+<dt><strong><code>link</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>The link to tie the label to</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<h3 id="add-a-link-to-google-to-a-slide">Add a link to google to a slide</h3>
+<pre><code>from ezprez.core import Slide
+from ezprez.components import Link
+
+Slide('This is a link to Google', Link('Click this to go to google', 'https://google.ca'))
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class Link(_Component):
+    &#34;&#34;&#34;A component for generating web links
+
+    Attributes
+    ----------
+    label : (str)
+        The text shown that the link is applied to
+
+    link : (str)
+        The link to tie the label to
+
+    Examples
+    -------
+    ### Add a link to google to a slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Link
+
+    Slide(&#39;This is a link to Google&#39;, Link(&#39;Click this to go to google&#39;, &#39;https://google.ca&#39;))
+    ```
+    &#34;&#34;&#34;
+    label: str
+    link: str
+
+
+    def __html__(self, header:bool = False) -&gt; str:
+        if not header:
+            return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href={self.link} target=&#39;_blank&#39; rel=&#39;external&#39;&gt;{self.label}&lt;/a&gt;\n&#34;&#34;&#34;
+        else:
+            return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href={self.link} target=&#39;_blank&#39; rel=&#39;external&#39; style=&#39;background-color:#fff; color:#141414;&#39;&gt;{self.label}&lt;/a&gt;\n&#34;&#34;&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>ezprez.components._Component</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="ezprez.components.Link.label"><code class="name">var <span class="ident">label</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.components.Link.link"><code class="name">var <span class="ident">link</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="ezprez.components.Navbar"><code class="flex name class">
+<span>class <span class="ident">Navbar</span></span>
+<span>(</span><span>title: str, links: List[Union[<a title="ezprez.components.Link" href="#ezprez.components.Link">Link</a>, <a title="ezprez.components.SocialLink" href="#ezprez.components.SocialLink">SocialLink</a>]])</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Allows you to add a navbar to the presentation</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>title</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>The presentation title (used for accessibility reasons)</dd>
+<dt><strong><code>links</code></strong> :&ensp;<code>(list[<a title="ezprez.components.Link" href="#ezprez.components.Link">Link</a></code> or <code><a title="ezprez.components.SocialLink" href="#ezprez.components.SocialLink">SocialLink</a>])</code></dt>
+<dd>A list of Link's or SocialLink's to include in the Navbar</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<h3 id="adding-a-navbar-with-a-github-link-to-a-presentation">Adding a Navbar with a github link to a presentation</h3>
+<pre><code>from ezprez.core import Presentation
+from ezprez.components import Navbar
+
+nav = Navbar('Presentation title', [SocialLink.github.link(&quot;https://github.com/Descent098/ezprez-example&quot;)])
+Presentation(title, description, url, navbar=nav)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class Navbar(_Component):
+    &#34;&#34;&#34;Allows you to add a navbar to the presentation
+
+    Attributes
+    ----------
+    title: (str)
+        The presentation title (used for accessibility reasons)
+
+    links: (list[Link or SocialLink])
+        A list of Link&#39;s or SocialLink&#39;s to include in the Navbar
+
+    Examples
+    --------
+    ### Adding a Navbar with a github link to a presentation
+    ```
+    from ezprez.core import Presentation
+    from ezprez.components import Navbar
+
+    nav = Navbar(&#39;Presentation title&#39;, [SocialLink.github.link(&#34;https://github.com/Descent098/ezprez-example&#34;)])
+    Presentation(title, description, url, navbar=nav)
+    ```
+    &#34;&#34;&#34;
+    title: str
+    links: List[Union[Link, SocialLink]]
+
+
+    def __html__(self) -&gt; str:
+        result =f&#34;&#34;&#34;
+        &lt;header role=&#34;banner&#34;&gt;
+            &lt;nav role=&#34;navigation&#34;&gt;
+                &lt;p class=&#34;logo&#34;&gt;&lt;a href=&#34;&#34; target=&#34;_blank&#34; title=&#34;{self.title}&#34;&gt;{self.title}&lt;/a&gt;&lt;/p&gt;
+                &lt;ul&gt;
+        &#34;&#34;&#34;
+
+        for link in self.links:
+            if type(link) == Link or type(link) == SocialLink:
+                result += f&#34;\n\t\t\t\t\t&lt;li&gt;{link.__html__(header=True)}&lt;/li&gt;\n&#34;
+            else:
+                raise ValueError(f&#34;Navbar arguments must be of type ezprez.components.Link or ezprez.components.SocialLink, got \n\ttype {type(link)}\n\tValue{link}&#34;)
+        result += &#34;&#34;&#34;
+                &lt;/ul&gt;
+            &lt;/nav&gt;
+        &lt;/header&gt;
+        &#34;&#34;&#34;
+
+        return result</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>ezprez.components._Component</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="ezprez.components.Navbar.links"><code class="name">var <span class="ident">links</span> : List[Union[<a title="ezprez.components.Link" href="#ezprez.components.Link">Link</a>, <a title="ezprez.components.SocialLink" href="#ezprez.components.SocialLink">SocialLink</a>]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.components.Navbar.title"><code class="name">var <span class="ident">title</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="ezprez.components.Raw"><code class="flex name class">
+<span>class <span class="ident">Raw</span></span>
+<span>(</span><span>content: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A component that dumps provided raw html</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>content</code></strong> :&ensp;<code>(str) </code></dt>
+<dd>The HTML content to generate</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<h3 id="add-a-manual-paragraph-tag-to-a-slide">Add a manual paragraph tag to a Slide</h3>
+<pre><code>from ezprez.core import Slide
+from ezprez.components import Raw
+
+content = '&lt;p&gt;This is some text&lt;/p&gt;'
+
+Slide('This is some raw content', Raw(content))
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class Raw(_Component):
+    &#34;&#34;&#34;A component that dumps provided raw html
+
+    Attributes
+    ----------
+    content: (str) 
+        The HTML content to generate
+
+    Examples
+    -------
+    ### Add a manual paragraph tag to a Slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Raw
+
+    content = &#39;&lt;p&gt;This is some text&lt;/p&gt;&#39;
+
+    Slide(&#39;This is some raw content&#39;, Raw(content))
+    ```
+    &#34;&#34;&#34;
+    content:str
+
+
+    def __html__(self) -&gt; str:
+        return self.content</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>ezprez.components._Component</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="ezprez.components.Raw.content"><code class="name">var <span class="ident">content</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="ezprez.components.SocialLink"><code class="flex name class">
+<span>class <span class="ident">SocialLink</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Can be used to create a social media link icon, or just the icon</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>If you don't call the object's link function, it will just return the social media icon</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<h3 id="adding-an-icon-link-to-someones-github-in-a-navbar">Adding an icon link to someone's github in a navbar</h3>
+<pre><code>from ezprez.core import Presentation
+from ezprez.components import SocialLink, Navbar
+
+header = Navbar('Basic web technologies', [SocialLink.github.link(&quot;https://github.com/descent098&quot;)])
+Presentation(title, url, content, navbar=header)
+</code></pre>
+<h3 id="adding-an-icon-with-no-link-to-a-slide">Adding an icon with no link to a Slide</h3>
+<pre><code>from ezprez.core import Slide
+from ezprez.components import SocialLink
+
+Slide('This is a youtube icon with no link', SocialLink.youtube)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SocialLink(enum.Enum):
+    &#34;&#34;&#34;Can be used to create a social media link icon, or just the icon
+
+    Notes 
+    -----
+    - If you don&#39;t call the object&#39;s link function, it will just return the social media icon
+
+    Examples
+    -------
+    ### Adding an icon link to someone&#39;s github in a navbar
+    ```
+    from ezprez.core import Presentation
+    from ezprez.components import SocialLink, Navbar
+
+    header = Navbar(&#39;Basic web technologies&#39;, [SocialLink.github.link(&#34;https://github.com/descent098&#34;)])
+    Presentation(title, url, content, navbar=header)
+    ```
+
+    ### Adding an icon with no link to a Slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import SocialLink
+
+    Slide(&#39;This is a youtube icon with no link&#39;, SocialLink.youtube)
+    ```
+    &#34;&#34;&#34;
+    url:str
+    youtube = 0
+    github = 1
+    twitter = 2
+    linkedin = 3
+    twitch = 4
+
+
+    def link(self, link):
+        &#34;&#34;&#34;Function used to asign URL parameter to the link
+
+        Parameters
+        ----------
+        link : (str)
+            The url you want to link to
+
+        Returns
+        -------
+        The instance called from
+        &#34;&#34;&#34;
+        self.url = link
+        return self
+
+
+    def __html__(self, header:bool = True) -&gt; str:
+        if self.url: 
+            if header:
+                return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href=&#39;{self.url}&#39; target=&#39;_blank&#39; rel=&#39;external&#39; style=&#39;background-color:#fff; color:#141414;&#39;&gt;
+                                    &lt;i class=&#39;fab fa-{self.name} fa-3x&#39;&gt;&lt;/i&gt;
+                                &lt;/a&gt;\n&#34;&#34;&#34;
+            else:
+                return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href=&#39;{self.url}&#39; target=&#39;_blank&#39; rel=&#39;external&#39;&gt;
+                                    &lt;i class=&#39;fab fa-{self.name} fa-3x&#39;&gt;&lt;/i&gt;
+                                &lt;/a&gt;\n&#34;&#34;&#34;
+        else:
+            if header:
+                return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;i class=&#39;fab fa-{self.name} fa-3x&#39; style=&#39;background-color:#fff; color:#141414;&#39;&gt;&lt;/i&gt;\n&#34;&#34;&#34;
+            else:
+                return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;i class=&#39;fab fa-{self.name} fa-3x&#39;&gt;&lt;/i&gt;\n&#34;&#34;&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="ezprez.components.SocialLink.github"><code class="name">var <span class="ident">github</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.components.SocialLink.linkedin"><code class="name">var <span class="ident">linkedin</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.components.SocialLink.twitch"><code class="name">var <span class="ident">twitch</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.components.SocialLink.twitter"><code class="name">var <span class="ident">twitter</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.components.SocialLink.url"><code class="name">var <span class="ident">url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.components.SocialLink.youtube"><code class="name">var <span class="ident">youtube</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="ezprez.components.SocialLink.link"><code class="name flex">
+<span>def <span class="ident">link</span></span>(<span>self, link)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function used to asign URL parameter to the link</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>link</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>The url you want to link to</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>The instance called from</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def link(self, link):
+    &#34;&#34;&#34;Function used to asign URL parameter to the link
+
+    Parameters
+    ----------
+    link : (str)
+        The url you want to link to
+
+    Returns
+    -------
+    The instance called from
+    &#34;&#34;&#34;
+    self.url = link
+    return self</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="ezprez.components.TableOfContents"><code class="flex name class">
+<span>class <span class="ident">TableOfContents</span></span>
+<span>(</span><span>sections: dict)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A component used to generate table of contents for a presentation</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>sections</code></strong> :&ensp;<code>(dict)</code></dt>
+<dd>A dictionary of {label:slide_number}'s to generate the table of contents with</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<h3 id="create-a-table-of-contents-slide-for-a-presentation">Create a table of contents Slide for a presentation</h3>
+<pre><code>from ezprez.core import Slide
+from ezprez.components import TableOfContents
+
+# The argument is a dictionary where each key is the label in the table
+# and each value is the slide number
+sections = {'Intro':2, 'End': 5}
+
+Slide('Table of contents', TableOfContents(sections))
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class TableOfContents(_Component):
+    &#34;&#34;&#34;A component used to generate table of contents for a presentation
+
+    Attributes
+    ----------
+    sections: (dict)
+        A dictionary of {label:slide_number}&#39;s to generate the table of contents with
+
+    Examples
+    ----------
+    ### Create a table of contents Slide for a presentation
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import TableOfContents
+
+    # The argument is a dictionary where each key is the label in the table
+    # and each value is the slide number
+    sections = {&#39;Intro&#39;:2, &#39;End&#39;: 5}
+
+    Slide(&#39;Table of contents&#39;, TableOfContents(sections))
+    ```
+    &#34;&#34;&#34;
+    sections: dict
+
+
+    def __html__(self) -&gt; str:
+        result = &#34;\n\t\t&lt;hr&gt;\n\t\t&lt;div class=&#39;toc&#39;&gt;\n\t\t\t&lt;ol&gt;&#34;
+        for section_title in self.sections:
+            result += f&#34;\n\t\t\t\t&lt;li&gt;\n\t\t\t\t\t&lt;a href=&#39;#slide={self.sections[section_title]}&#39; title=&#39;Go to {section_title}&#39;&gt;\n\t\t\t\t\t&lt;span class=&#39;chapter&#39;&gt;{section_title}&lt;/span&gt;\n\t\t\t\t\t&lt;span class=&#39;toc-page&#39;&gt;{self.sections[section_title]}&lt;/span&gt;\n\t\t\t\t&lt;/a&gt;&lt;/li&gt;&#34;
+        result += &#34;\n\t\t\t&lt;/ol&gt;\n\t\t&lt;/div&gt;\n&#34;
+        return result </code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>ezprez.components._Component</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="ezprez.components.TableOfContents.sections"><code class="name">var <span class="ident">sections</span> : dict</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="ezprez.components.Video"><code class="flex name class">
+<span>class <span class="ident">Video</span></span>
+<span>(</span><span>video_id: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A component that allows you to embed a youtube video</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>video_id</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>The youtube video id, for example if the url is youtube.com/watch?v=wSVljLh1VmI then the id is 'wSVljLh1VmI'</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<h3 id="adding-a-youtube-video-to-a-slide">Adding a youtube video to a Slide</h3>
+<pre><code>from ezprez.core import Slide
+from ezprez.components import Video
+
+Slide('Here is a video', Video('wSVljLh1VmI'))
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class Video(_Component):
+    &#34;&#34;&#34;A component that allows you to embed a youtube video
+
+    Attributes
+    ----------
+    video_id: (str)
+        The youtube video id, for example if the url is youtube.com/watch?v=wSVljLh1VmI then the id is &#39;wSVljLh1VmI&#39;
+
+    Examples
+    --------
+    ### Adding a youtube video to a Slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Video
+
+    Slide(&#39;Here is a video&#39;, Video(&#39;wSVljLh1VmI&#39;))
+    ```
+    &#34;&#34;&#34;
+    video_id: str
+
+    def __html__(self) -&gt; str:
+        return f&#34;&#34;&#34;\n\t\t\t\t&lt;div class=&#39;embed&#39;&gt;\n\t\t\t\t\t&lt;iframe src=&#39;https://www.youtube.com/embed/{self.video_id}&#39; frameborder=&#34;0&#34; allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&#34; allowfullscreen &gt;&lt;/iframe&gt;\n\t\t\t\t&lt;/div&gt; &#34;&#34;&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>ezprez.components._Component</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="ezprez.components.Video.video_id"><code class="name">var <span class="ident">video_id</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul>
+<li><a href="#classes">Classes</a><ul>
+<li><a href="#sociallink">SocialLink</a></li>
+<li><a href="#link">Link</a></li>
+<li><a href="#code">Code</a></li>
+<li><a href="#icon">Icon</a></li>
+<li><a href="#footer_">F‎ooter_</a></li>
+<li><a href="#navbar">Navbar</a></li>
+<li><a href="#button">Button</a></li>
+<li><a href="#raw">Raw</a></li>
+<li><a href="#tableofcontents">TableOfContents</a></li>
+<li><a href="#video">Video</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="ezprez" href="index.html">ezprez</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="ezprez.components.Button" href="#ezprez.components.Button">Button</a></code></h4>
+<ul class="two-column">
+<li><code><a title="ezprez.components.Button.color" href="#ezprez.components.Button.color">color</a></code></li>
+<li><code><a title="ezprez.components.Button.ghost" href="#ezprez.components.Button.ghost">ghost</a></code></li>
+<li><code><a title="ezprez.components.Button.icon" href="#ezprez.components.Button.icon">icon</a></code></li>
+<li><code><a title="ezprez.components.Button.label" href="#ezprez.components.Button.label">label</a></code></li>
+<li><code><a title="ezprez.components.Button.rounding" href="#ezprez.components.Button.rounding">rounding</a></code></li>
+<li><code><a title="ezprez.components.Button.text_color" href="#ezprez.components.Button.text_color">text_color</a></code></li>
+<li><code><a title="ezprez.components.Button.url" href="#ezprez.components.Button.url">url</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ezprez.components.Code" href="#ezprez.components.Code">Code</a></code></h4>
+<ul class="">
+<li><code><a title="ezprez.components.Code.content" href="#ezprez.components.Code.content">content</a></code></li>
+<li><code><a title="ezprez.components.Code.language" href="#ezprez.components.Code.language">language</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ezprez.components.Footer" href="#ezprez.components.Footer">Footer</a></code></h4>
+<ul class="">
+<li><code><a title="ezprez.components.Footer.links" href="#ezprez.components.Footer.links">links</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ezprez.components.Icon" href="#ezprez.components.Icon">Icon</a></code></h4>
+<ul class="">
+<li><code><a title="ezprez.components.Icon.label" href="#ezprez.components.Icon.label">label</a></code></li>
+<li><code><a title="ezprez.components.Icon.size" href="#ezprez.components.Icon.size">size</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ezprez.components.Image" href="#ezprez.components.Image">Image</a></code></h4>
+<ul class="">
+<li><code><a title="ezprez.components.Image.height" href="#ezprez.components.Image.height">height</a></code></li>
+<li><code><a title="ezprez.components.Image.path" href="#ezprez.components.Image.path">path</a></code></li>
+<li><code><a title="ezprez.components.Image.title" href="#ezprez.components.Image.title">title</a></code></li>
+<li><code><a title="ezprez.components.Image.width" href="#ezprez.components.Image.width">width</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ezprez.components.Link" href="#ezprez.components.Link">Link</a></code></h4>
+<ul class="">
+<li><code><a title="ezprez.components.Link.label" href="#ezprez.components.Link.label">label</a></code></li>
+<li><code><a title="ezprez.components.Link.link" href="#ezprez.components.Link.link">link</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ezprez.components.Navbar" href="#ezprez.components.Navbar">Navbar</a></code></h4>
+<ul class="">
+<li><code><a title="ezprez.components.Navbar.links" href="#ezprez.components.Navbar.links">links</a></code></li>
+<li><code><a title="ezprez.components.Navbar.title" href="#ezprez.components.Navbar.title">title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ezprez.components.Raw" href="#ezprez.components.Raw">Raw</a></code></h4>
+<ul class="">
+<li><code><a title="ezprez.components.Raw.content" href="#ezprez.components.Raw.content">content</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ezprez.components.SocialLink" href="#ezprez.components.SocialLink">SocialLink</a></code></h4>
+<ul class="two-column">
+<li><code><a title="ezprez.components.SocialLink.github" href="#ezprez.components.SocialLink.github">github</a></code></li>
+<li><code><a title="ezprez.components.SocialLink.link" href="#ezprez.components.SocialLink.link">link</a></code></li>
+<li><code><a title="ezprez.components.SocialLink.linkedin" href="#ezprez.components.SocialLink.linkedin">linkedin</a></code></li>
+<li><code><a title="ezprez.components.SocialLink.twitch" href="#ezprez.components.SocialLink.twitch">twitch</a></code></li>
+<li><code><a title="ezprez.components.SocialLink.twitter" href="#ezprez.components.SocialLink.twitter">twitter</a></code></li>
+<li><code><a title="ezprez.components.SocialLink.url" href="#ezprez.components.SocialLink.url">url</a></code></li>
+<li><code><a title="ezprez.components.SocialLink.youtube" href="#ezprez.components.SocialLink.youtube">youtube</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ezprez.components.TableOfContents" href="#ezprez.components.TableOfContents">TableOfContents</a></code></h4>
+<ul class="">
+<li><code><a title="ezprez.components.TableOfContents.sections" href="#ezprez.components.TableOfContents.sections">sections</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ezprez.components.Video" href="#ezprez.components.Video">Video</a></code></h4>
+<ul class="">
+<li><code><a title="ezprez.components.Video.video_id" href="#ezprez.components.Video.video_id">video_id</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>
