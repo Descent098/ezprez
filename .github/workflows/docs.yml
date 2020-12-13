@@ -31,11 +31,12 @@ jobs:
       run: |
         python -m pdoc ezprez --html --force
         echo before
+        cd html
         ls
-        mv "/html/ezprez/*" "html"
+        mv "ezprez/*" "html"
         echo after
         ls
-        rm -rf "/html/ezprez"
+        rm -rf "ezprez"
         echo after cleanup
         ls
 
