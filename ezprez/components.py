@@ -463,8 +463,8 @@ class Video(_Component):
 
 @dataclass
 class Image(_Component):
-    path: str
     title: str
+    path: str
     width: Union[bool, int] = False
     height: Union[bool, int] = False
 

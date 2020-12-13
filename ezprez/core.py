@@ -171,7 +171,7 @@ class Presentation:
     endcard: (bool)
         Whether to add the endcard, optional defaults to True
 
-    generate_intro: (bool)
+    intro: (bool)
         Generate an introduction slide with the background image, title, and description, optional defaults to True
 
     favicon: (Image or False)
@@ -219,10 +219,10 @@ class Presentation:
     title: str 
     description: str 
     url: str
+    intro: bool = True
     endcard: bool = True
     vertical: bool = False
     background: str = "white"
-    generate_intro: bool = True
     image: Union[bool, Image] = False
     favicon: Union[bool, Image] = False
     navbar: Union[bool, Navbar] = False
@@ -241,7 +241,7 @@ class Presentation:
 
     def _generate_intro_slide(self):
         """Generates the first slide in a presentation"""
-        if self.generate_intro:
+        if self.intro:
             if self.image:
                 return f"""\t\t\t<section class='bg-{self.background}'>
                 <span class='background' style='background-image:url("{self.image}")'></span>
