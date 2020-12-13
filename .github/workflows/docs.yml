@@ -33,11 +33,11 @@ jobs:
         echo before
         cd html/ezprez
         ls
-        mv "*" ".."
+        mv * ..
         echo after
         ls
         cd ..
-        rm -rf "ezprez"
+        rm -rf ezprez
         echo after cleanup
         ls
 
