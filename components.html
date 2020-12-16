@@ -44,6 +44,10 @@
 <p>A component used to generate table of contents for a presentation</p>
 <h4 id="video">Video</h4>
 <p>A component that allows you to embed a youtube video</p>
+<h4 id="image">Image</h4>
+<p>A component to include images</p>
+<h4 id="grid">Grid</h4>
+<p>A component that allows you to evenly space multiple peices of content</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -81,6 +85,12 @@ A component used to generate table of contents for a presentation
 
 #### Video
 A component that allows you to embed a youtube video
+
+#### Image
+A component to include images
+
+#### Grid
+A component that allows you to evenly space multiple peices of content
 &#34;&#34;&#34;
 # Internal Dependencies
 import enum
@@ -122,6 +132,7 @@ class SocialLink(enum.Enum):
     ```
     &#34;&#34;&#34;
     url:str
+    icon_color:str
     youtube = 0
     github = 1
     twitter = 2
@@ -144,22 +155,41 @@ class SocialLink(enum.Enum):
         self.url = link
         return self
 
+    def color(self, color:str):
+        &#34;&#34;&#34;Function used to asign color parameter
 
-    def __html__(self, header:bool = True) -&gt; str:
-        if self.url: 
-            if header:
-                return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href=&#39;{self.url}&#39; target=&#39;_blank&#39; rel=&#39;external&#39; style=&#39;background-color:#fff; color:#141414;&#39;&gt;
-                                    &lt;i class=&#39;fab fa-{self.name} fa-3x&#39;&gt;&lt;/i&gt;
-                                &lt;/a&gt;\n&#34;&#34;&#34;
-            else:
-                return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href=&#39;{self.url}&#39; target=&#39;_blank&#39; rel=&#39;external&#39;&gt;
-                                    &lt;i class=&#39;fab fa-{self.name} fa-3x&#39;&gt;&lt;/i&gt;
-                                &lt;/a&gt;\n&#34;&#34;&#34;
+        Parameters
+        ----------
+        color : (str)
+            The color you want the icon to be
+
+        Returns
+        -------
+        The instance called from
+        &#34;&#34;&#34;
+        self.icon_color = color
+        return self
+
+
+    def __html__(self, header:bool = False) -&gt; str:
+        try: # If no icon_color is set
+            self.__getattribute__(&#34;icon_color&#34;)
+        except AttributeError:
+            self.icon_color = &#34;#141414&#34;
+
+        try: # If no url is set
+            self.__getattribute__(&#34;url&#34;)
+        except AttributeError:
+            self.url = &#34;#&#34;
+
+        if header:
+            return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href=&#39;{self.url}&#39; target=&#39;_blank&#39; rel=&#39;external&#39; style=&#39;background-color:#fff; color:{str(self.icon_color)};&#39;&gt;
+                                &lt;i class=&#39;fab fa-{self.name} fa-3x&#39;&gt;&lt;/i&gt;
+                            &lt;/a&gt;\n&#34;&#34;&#34;
         else:
-            if header:
-                return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;i class=&#39;fab fa-{self.name} fa-3x&#39; style=&#39;background-color:#fff; color:#141414;&#39;&gt;&lt;/i&gt;\n&#34;&#34;&#34;
-            else:
-                return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;i class=&#39;fab fa-{self.name} fa-3x&#39;&gt;&lt;/i&gt;\n&#34;&#34;&#34;
+            return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href=&#39;{self.url}&#39; target=&#39;_blank&#39; rel=&#39;external&#39; style=&#39;color:{str(self.icon_color)};&#39;&gt;
+                                &lt;i class=&#39;fab fa-{self.name} fa-3x&#39;&gt;&lt;/i&gt;
+                            &lt;/a&gt;\n&#34;&#34;&#34;
 
 
 @dataclass
@@ -186,11 +216,12 @@ class Link(_Component):
     &#34;&#34;&#34;
     label: str
     link: str
+    color: str = &#34;#4dd&#34;
 
 
     def __html__(self, header:bool = False) -&gt; str:
         if not header:
-            return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href={self.link} target=&#39;_blank&#39; rel=&#39;external&#39;&gt;{self.label}&lt;/a&gt;\n&#34;&#34;&#34;
+            return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href={self.link} target=&#39;_blank&#39; rel=&#39;external&#39; style=&#39;color:{self.color};&#39;&gt;{self.label}&lt;/a&gt;\n&#34;&#34;&#34;
         else:
             return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href={self.link} target=&#39;_blank&#39; rel=&#39;external&#39; style=&#39;background-color:#fff; color:#141414;&#39;&gt;{self.label}&lt;/a&gt;\n&#34;&#34;&#34;
 
@@ -263,12 +294,13 @@ class Icon(_Component):
     Slide(&#34;This is a heart icon&#34;, Icon(&#34;fa-heart&#34;))
     ```
     &#34;&#34;&#34;
-    label:str
-    size:str = &#34;48px&#34;
+    label: str
+    size: str = &#34;48px&#34;
+    color: str = &#34;#141414&#34;
 
 
     def __html__(self) -&gt; str:
-        return f&#34;&#34;&#34;\t\t\t\t\t&lt;svg class=&#39;{self.label}&#39; style=&#39;width:{self.size};height:{self.size};&#39;&gt;&lt;use xlink:href=&#39;#{self.label}&#39;&gt;&lt;/use&gt;&lt;/svg&gt;\n&#34;&#34;&#34;
+        return f&#34;&#34;&#34;\t\t\t\t\t&lt;svg class=&#39;{self.label}&#39; style=&#39;width:{self.size};height:{self.size};color:{self.color};&#39;&gt;&lt;use xlink:href=&#39;#{self.label}&#39;&gt;&lt;/use&gt;&lt;/svg&gt;\n&#34;&#34;&#34;
 
 
 @dataclass
@@ -301,7 +333,7 @@ class Footer(_Component):
 
         for link in self.links:
             if type(link) == Link or type(link) == SocialLink:
-                result += f&#34;\n\t\t\t{link.__html__(header=True)}\n&#34;
+                result += f&#34;\n\t\t\t{link.__html__()}\n&#34;
             else:
                 raise ValueError(f&#34;Footer arguments must be of type ezprez.components.Link or ezprez.components.SocialLink, got \n\ttype {type(link)}\n\tValue{link}&#34;)
 
@@ -513,13 +545,107 @@ class Video(_Component):
 
 @dataclass
 class Image(_Component):
+    &#34;&#34;&#34;A component to include images
+
+    Attributes
+    ----------
+    title: (str) 
+        The alternate text to describe what an image is
+
+    filename: (str)
+        The filename of the image
+
+    width: (int or False)
+        Used to override the width of an image, optional and defaults to False
+
+    height: (int or False)
+        Used to override the height of an image, optional and defaults to False
+
+    Notes
+    -----
+    - All images must be included in the same directory as the presentation source file under /img or /images
+
+    Examples
+    --------
+    ### Add an image to a slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Image
+
+    Slide(&#34;This is an image&#34;, Image(&#34;low poly ice caps&#34;, &#34;kieran-wood-lp-ice-caps-4k-w-peng.jpg&#34;))
+    ```
+
+    ### Add a background image to a slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Image
+
+    Slide(&#34;This is a background image&#34;, image=Image(&#34;low poly ice caps&#34;, &#34;kieran-wood-abstract-landscape.jpg&#34;), background=&#34;black&#34;)
+    ```
+    &#34;&#34;&#34;
     title: str
-    path: str
+    filename: str
     width: Union[bool, int] = False
     height: Union[bool, int] = False
 
     def __html__(self) -&gt; str:
-        return &#34;&#34;&#34; &#34;&#34;&#34;</code></pre>
+        return f&#34;&#34;&#34;&lt;img src=&#39;./static/images/{self.filename}&#39; alt=&#39;{self.title}&#39;{f&#39; width={self.width} &#39; if self.width else &#39;&#39;} {f&#39; height={self.height} &#39; if self.height else &#39;&#39;}&gt;&#34;&#34;&#34;
+
+
+class Grid(_Component):
+    &#34;&#34;&#34;A component that allows you to evenly space multiple peices of content
+
+    Attributes
+    ----------
+    contents: (Component, str, List[Component], List[str])
+        The contents you want to include in the grid
+
+    Examples
+    --------
+    ### Add a grid with content
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Grid
+
+    Slide(&#34;You can also have grids&#34;, Grid(&#34;With&#34;, &#34;Lots&#34;, &#34;of&#34;, &#34;content&#34;))
+    ```
+
+    ### Add a slide of a grid of lists
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Grid
+
+    Slide(&#34;Like, alot of content...&#34;, Grid([&#34;You can stack content within grids&#34;, [&#34;like this&#34;, &#34;and this&#34;, &#34;and even this&#34;]], [&#34;This is getting too much now&#34;, [&#34;way&#34;, &#34;way way&#34;, &#34;too much&#34;]]))
+    ```
+    &#34;&#34;&#34;
+    def __init__(self, *contents:Union[_Component, str, List[_Component], List[str]]):
+        self.contents = contents
+
+    def __html__(self):
+        result = &#34;\n\t\t\t\t&lt;div class=&#39;grid&#39;&gt;&#34;
+        for content in self.contents:
+            if type(content) == str:
+                result += f&#34;\n\t\t\t\t\t&lt;div class=&#39;column&#39;&gt;&lt;p&gt;{content}&lt;/p&gt;&lt;/div&gt;\n&#34;
+            elif isinstance(content, _Component):
+                result += &#34;\n\t\t\t\t\t&lt;div class=&#39;column&#39;&gt;&#34;
+                result += content.__html__()
+                result += &#34;&lt;/div&gt;&#34;
+            elif type(content) == list:
+                result += &#34;\n\t\t\t\t\t&lt;div class=&#39;column&#39;&gt;&#34;
+                for subcontent in content:
+                    if isinstance(subcontent, _Component):
+                        result += subcontent.__html__()
+                    elif type(subcontent) == str:
+                        result += f&#34;\n\t\t\t\t\t&lt;p&gt;{subcontent}&lt;/p&gt;\n&#34;
+                    elif type(subcontent) == list:
+                        result += &#34;\n\t\t\t\t\t&lt;ul&gt;&#34;
+                        for point in subcontent:
+                            result += f&#34;\n\t\t\t\t\t&lt;li&gt;{point}&lt;/li&gt;\n&#34;
+                        result += &#34;\n\t\t\t\t\t&lt;/ul&gt;&#34;
+                result += &#34;\n\t\t\t\t\t&lt;/div&gt;&#34;
+            else:
+                raise ValueError(f&#34;Provided content to Grid was {type(content)}, which is not List, Component or string&#34;)
+        return result</code></pre>
 </details>
 </section>
 <section>
@@ -817,7 +943,7 @@ class Footer(_Component):
 
         for link in self.links:
             if type(link) == Link or type(link) == SocialLink:
-                result += f&#34;\n\t\t\t{link.__html__(header=True)}\n&#34;
+                result += f&#34;\n\t\t\t{link.__html__()}\n&#34;
             else:
                 raise ValueError(f&#34;Footer arguments must be of type ezprez.components.Link or ezprez.components.SocialLink, got \n\ttype {type(link)}\n\tValue{link}&#34;)
 
@@ -839,9 +965,98 @@ class Footer(_Component):
 </dd>
 </dl>
 </dd>
+<dt id="ezprez.components.Grid"><code class="flex name class">
+<span>class <span class="ident">Grid</span></span>
+<span>(</span><span>*contents: Union[ezprez.components._Component, str, List[ezprez.components._Component], List[str]])</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A component that allows you to evenly space multiple peices of content</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>contents</code></strong> :&ensp;<code>(Component, str, List[Component], List[str])</code></dt>
+<dd>The contents you want to include in the grid</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<h3 id="add-a-grid-with-content">Add a grid with content</h3>
+<pre><code>from ezprez.core import Slide
+from ezprez.components import Grid
+
+Slide(&quot;You can also have grids&quot;, Grid(&quot;With&quot;, &quot;Lots&quot;, &quot;of&quot;, &quot;content&quot;))
+</code></pre>
+<h3 id="add-a-slide-of-a-grid-of-lists">Add a slide of a grid of lists</h3>
+<pre><code>from ezprez.core import Slide
+from ezprez.components import Grid
+
+Slide(&quot;Like, alot of content...&quot;, Grid([&quot;You can stack content within grids&quot;, [&quot;like this&quot;, &quot;and this&quot;, &quot;and even this&quot;]], [&quot;This is getting too much now&quot;, [&quot;way&quot;, &quot;way way&quot;, &quot;too much&quot;]]))
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Grid(_Component):
+    &#34;&#34;&#34;A component that allows you to evenly space multiple peices of content
+
+    Attributes
+    ----------
+    contents: (Component, str, List[Component], List[str])
+        The contents you want to include in the grid
+
+    Examples
+    --------
+    ### Add a grid with content
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Grid
+
+    Slide(&#34;You can also have grids&#34;, Grid(&#34;With&#34;, &#34;Lots&#34;, &#34;of&#34;, &#34;content&#34;))
+    ```
+
+    ### Add a slide of a grid of lists
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Grid
+
+    Slide(&#34;Like, alot of content...&#34;, Grid([&#34;You can stack content within grids&#34;, [&#34;like this&#34;, &#34;and this&#34;, &#34;and even this&#34;]], [&#34;This is getting too much now&#34;, [&#34;way&#34;, &#34;way way&#34;, &#34;too much&#34;]]))
+    ```
+    &#34;&#34;&#34;
+    def __init__(self, *contents:Union[_Component, str, List[_Component], List[str]]):
+        self.contents = contents
+
+    def __html__(self):
+        result = &#34;\n\t\t\t\t&lt;div class=&#39;grid&#39;&gt;&#34;
+        for content in self.contents:
+            if type(content) == str:
+                result += f&#34;\n\t\t\t\t\t&lt;div class=&#39;column&#39;&gt;&lt;p&gt;{content}&lt;/p&gt;&lt;/div&gt;\n&#34;
+            elif isinstance(content, _Component):
+                result += &#34;\n\t\t\t\t\t&lt;div class=&#39;column&#39;&gt;&#34;
+                result += content.__html__()
+                result += &#34;&lt;/div&gt;&#34;
+            elif type(content) == list:
+                result += &#34;\n\t\t\t\t\t&lt;div class=&#39;column&#39;&gt;&#34;
+                for subcontent in content:
+                    if isinstance(subcontent, _Component):
+                        result += subcontent.__html__()
+                    elif type(subcontent) == str:
+                        result += f&#34;\n\t\t\t\t\t&lt;p&gt;{subcontent}&lt;/p&gt;\n&#34;
+                    elif type(subcontent) == list:
+                        result += &#34;\n\t\t\t\t\t&lt;ul&gt;&#34;
+                        for point in subcontent:
+                            result += f&#34;\n\t\t\t\t\t&lt;li&gt;{point}&lt;/li&gt;\n&#34;
+                        result += &#34;\n\t\t\t\t\t&lt;/ul&gt;&#34;
+                result += &#34;\n\t\t\t\t\t&lt;/div&gt;&#34;
+            else:
+                raise ValueError(f&#34;Provided content to Grid was {type(content)}, which is not List, Component or string&#34;)
+        return result</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>ezprez.components._Component</li>
+<li>abc.ABC</li>
+</ul>
+</dd>
 <dt id="ezprez.components.Icon"><code class="flex name class">
 <span>class <span class="ident">Icon</span></span>
-<span>(</span><span>label: str, size: str = '48px')</span>
+<span>(</span><span>label: str, size: str = '48px', color: str = '#141414')</span>
 </code></dt>
 <dd>
 <div class="desc"><p>A component that generates an icon</p>
@@ -885,12 +1100,13 @@ class Icon(_Component):
     Slide(&#34;This is a heart icon&#34;, Icon(&#34;fa-heart&#34;))
     ```
     &#34;&#34;&#34;
-    label:str
-    size:str = &#34;48px&#34;
+    label: str
+    size: str = &#34;48px&#34;
+    color: str = &#34;#141414&#34;
 
 
     def __html__(self) -&gt; str:
-        return f&#34;&#34;&#34;\t\t\t\t\t&lt;svg class=&#39;{self.label}&#39; style=&#39;width:{self.size};height:{self.size};&#39;&gt;&lt;use xlink:href=&#39;#{self.label}&#39;&gt;&lt;/use&gt;&lt;/svg&gt;\n&#34;&#34;&#34;</code></pre>
+        return f&#34;&#34;&#34;\t\t\t\t\t&lt;svg class=&#39;{self.label}&#39; style=&#39;width:{self.size};height:{self.size};color:{self.color};&#39;&gt;&lt;use xlink:href=&#39;#{self.label}&#39;&gt;&lt;/use&gt;&lt;/svg&gt;\n&#34;&#34;&#34;</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -899,6 +1115,10 @@ class Icon(_Component):
 </ul>
 <h3>Class variables</h3>
 <dl>
+<dt id="ezprez.components.Icon.color"><code class="name">var <span class="ident">color</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="ezprez.components.Icon.label"><code class="name">var <span class="ident">label</span> : str</code></dt>
 <dd>
 <div class="desc"></div>
@@ -911,23 +1131,89 @@ class Icon(_Component):
 </dd>
 <dt id="ezprez.components.Image"><code class="flex name class">
 <span>class <span class="ident">Image</span></span>
-<span>(</span><span>title: str, path: str, width: Union[bool, int] = False, height: Union[bool, int] = False)</span>
+<span>(</span><span>title: str, filename: str, width: Union[bool, int] = False, height: Union[bool, int] = False)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Image(title: str, path: str, width: Union[bool, int] = False, height: Union[bool, int] = False)</p></div>
+<div class="desc"><p>A component to include images</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>title</code></strong> :&ensp;<code>(str) </code></dt>
+<dd>The alternate text to describe what an image is</dd>
+<dt><strong><code>filename</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>The filename of the image</dd>
+<dt><strong><code>width</code></strong> :&ensp;<code>(int</code> or <code>False)</code></dt>
+<dd>Used to override the width of an image, optional and defaults to False</dd>
+<dt><strong><code>height</code></strong> :&ensp;<code>(int</code> or <code>False)</code></dt>
+<dd>Used to override the height of an image, optional and defaults to False</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>All images must be included in the same directory as the presentation source file under /img or /images</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<h3 id="add-an-image-to-a-slide">Add an image to a slide</h3>
+<pre><code>from ezprez.core import Slide
+from ezprez.components import Image
+
+Slide(&quot;This is an image&quot;, Image(&quot;low poly ice caps&quot;, &quot;kieran-wood-lp-ice-caps-4k-w-peng.jpg&quot;))
+</code></pre>
+<h3 id="add-a-background-image-to-a-slide">Add a background image to a slide</h3>
+<pre><code>from ezprez.core import Slide
+from ezprez.components import Image
+
+Slide(&quot;This is a background image&quot;, image=Image(&quot;low poly ice caps&quot;, &quot;kieran-wood-abstract-landscape.jpg&quot;), background=&quot;black&quot;)
+</code></pre></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@dataclass
 class Image(_Component):
+    &#34;&#34;&#34;A component to include images
+
+    Attributes
+    ----------
+    title: (str) 
+        The alternate text to describe what an image is
+
+    filename: (str)
+        The filename of the image
+
+    width: (int or False)
+        Used to override the width of an image, optional and defaults to False
+
+    height: (int or False)
+        Used to override the height of an image, optional and defaults to False
+
+    Notes
+    -----
+    - All images must be included in the same directory as the presentation source file under /img or /images
+
+    Examples
+    --------
+    ### Add an image to a slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Image
+
+    Slide(&#34;This is an image&#34;, Image(&#34;low poly ice caps&#34;, &#34;kieran-wood-lp-ice-caps-4k-w-peng.jpg&#34;))
+    ```
+
+    ### Add a background image to a slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Image
+
+    Slide(&#34;This is a background image&#34;, image=Image(&#34;low poly ice caps&#34;, &#34;kieran-wood-abstract-landscape.jpg&#34;), background=&#34;black&#34;)
+    ```
+    &#34;&#34;&#34;
     title: str
-    path: str
+    filename: str
     width: Union[bool, int] = False
     height: Union[bool, int] = False
 
     def __html__(self) -&gt; str:
-        return &#34;&#34;&#34; &#34;&#34;&#34;</code></pre>
+        return f&#34;&#34;&#34;&lt;img src=&#39;./static/images/{self.filename}&#39; alt=&#39;{self.title}&#39;{f&#39; width={self.width} &#39; if self.width else &#39;&#39;} {f&#39; height={self.height} &#39; if self.height else &#39;&#39;}&gt;&#34;&#34;&#34;</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -936,11 +1222,11 @@ class Image(_Component):
 </ul>
 <h3>Class variables</h3>
 <dl>
-<dt id="ezprez.components.Image.height"><code class="name">var <span class="ident">height</span> : Union[bool, int]</code></dt>
+<dt id="ezprez.components.Image.filename"><code class="name">var <span class="ident">filename</span> : str</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="ezprez.components.Image.path"><code class="name">var <span class="ident">path</span> : str</code></dt>
+<dt id="ezprez.components.Image.height"><code class="name">var <span class="ident">height</span> : Union[bool, int]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -956,7 +1242,7 @@ class Image(_Component):
 </dd>
 <dt id="ezprez.components.Link"><code class="flex name class">
 <span>class <span class="ident">Link</span></span>
-<span>(</span><span>label: str, link: str)</span>
+<span>(</span><span>label: str, link: str, color: str = '#4dd')</span>
 </code></dt>
 <dd>
 <div class="desc"><p>A component for generating web links</p>
@@ -1002,11 +1288,12 @@ class Link(_Component):
     &#34;&#34;&#34;
     label: str
     link: str
+    color: str = &#34;#4dd&#34;
 
 
     def __html__(self, header:bool = False) -&gt; str:
         if not header:
-            return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href={self.link} target=&#39;_blank&#39; rel=&#39;external&#39;&gt;{self.label}&lt;/a&gt;\n&#34;&#34;&#34;
+            return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href={self.link} target=&#39;_blank&#39; rel=&#39;external&#39; style=&#39;color:{self.color};&#39;&gt;{self.label}&lt;/a&gt;\n&#34;&#34;&#34;
         else:
             return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href={self.link} target=&#39;_blank&#39; rel=&#39;external&#39; style=&#39;background-color:#fff; color:#141414;&#39;&gt;{self.label}&lt;/a&gt;\n&#34;&#34;&#34;</code></pre>
 </details>
@@ -1017,6 +1304,10 @@ class Link(_Component):
 </ul>
 <h3>Class variables</h3>
 <dl>
+<dt id="ezprez.components.Link.color"><code class="name">var <span class="ident">color</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="ezprez.components.Link.label"><code class="name">var <span class="ident">label</span> : str</code></dt>
 <dd>
 <div class="desc"></div>
@@ -1236,6 +1527,7 @@ Slide('This is a youtube icon with no link', SocialLink.youtube)
     ```
     &#34;&#34;&#34;
     url:str
+    icon_color:str
     youtube = 0
     github = 1
     twitter = 2
@@ -1258,22 +1550,41 @@ Slide('This is a youtube icon with no link', SocialLink.youtube)
         self.url = link
         return self
 
+    def color(self, color:str):
+        &#34;&#34;&#34;Function used to asign color parameter
 
-    def __html__(self, header:bool = True) -&gt; str:
-        if self.url: 
-            if header:
-                return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href=&#39;{self.url}&#39; target=&#39;_blank&#39; rel=&#39;external&#39; style=&#39;background-color:#fff; color:#141414;&#39;&gt;
-                                    &lt;i class=&#39;fab fa-{self.name} fa-3x&#39;&gt;&lt;/i&gt;
-                                &lt;/a&gt;\n&#34;&#34;&#34;
-            else:
-                return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href=&#39;{self.url}&#39; target=&#39;_blank&#39; rel=&#39;external&#39;&gt;
-                                    &lt;i class=&#39;fab fa-{self.name} fa-3x&#39;&gt;&lt;/i&gt;
-                                &lt;/a&gt;\n&#34;&#34;&#34;
+        Parameters
+        ----------
+        color : (str)
+            The color you want the icon to be
+
+        Returns
+        -------
+        The instance called from
+        &#34;&#34;&#34;
+        self.icon_color = color
+        return self
+
+
+    def __html__(self, header:bool = False) -&gt; str:
+        try: # If no icon_color is set
+            self.__getattribute__(&#34;icon_color&#34;)
+        except AttributeError:
+            self.icon_color = &#34;#141414&#34;
+
+        try: # If no url is set
+            self.__getattribute__(&#34;url&#34;)
+        except AttributeError:
+            self.url = &#34;#&#34;
+
+        if header:
+            return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href=&#39;{self.url}&#39; target=&#39;_blank&#39; rel=&#39;external&#39; style=&#39;background-color:#fff; color:{str(self.icon_color)};&#39;&gt;
+                                &lt;i class=&#39;fab fa-{self.name} fa-3x&#39;&gt;&lt;/i&gt;
+                            &lt;/a&gt;\n&#34;&#34;&#34;
         else:
-            if header:
-                return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;i class=&#39;fab fa-{self.name} fa-3x&#39; style=&#39;background-color:#fff; color:#141414;&#39;&gt;&lt;/i&gt;\n&#34;&#34;&#34;
-            else:
-                return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;i class=&#39;fab fa-{self.name} fa-3x&#39;&gt;&lt;/i&gt;\n&#34;&#34;&#34;</code></pre>
+            return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href=&#39;{self.url}&#39; target=&#39;_blank&#39; rel=&#39;external&#39; style=&#39;color:{str(self.icon_color)};&#39;&gt;
+                                &lt;i class=&#39;fab fa-{self.name} fa-3x&#39;&gt;&lt;/i&gt;
+                            &lt;/a&gt;\n&#34;&#34;&#34;</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -1282,6 +1593,10 @@ Slide('This is a youtube icon with no link', SocialLink.youtube)
 <h3>Class variables</h3>
 <dl>
 <dt id="ezprez.components.SocialLink.github"><code class="name">var <span class="ident">github</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="ezprez.components.SocialLink.icon_color"><code class="name">var <span class="ident">icon_color</span> : str</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -1308,6 +1623,41 @@ Slide('This is a youtube icon with no link', SocialLink.youtube)
 </dl>
 <h3>Methods</h3>
 <dl>
+<dt id="ezprez.components.SocialLink.color"><code class="name flex">
+<span>def <span class="ident">color</span></span>(<span>self, color: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function used to asign color parameter</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>color</code></strong> :&ensp;<code>(str)</code></dt>
+<dd>The color you want the icon to be</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>The instance called from</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def color(self, color:str):
+    &#34;&#34;&#34;Function used to asign color parameter
+
+    Parameters
+    ----------
+    color : (str)
+        The color you want the icon to be
+
+    Returns
+    -------
+    The instance called from
+    &#34;&#34;&#34;
+    self.icon_color = color
+    return self</code></pre>
+</details>
+</dd>
 <dt id="ezprez.components.SocialLink.link"><code class="name flex">
 <span>def <span class="ident">link</span></span>(<span>self, link)</span>
 </code></dt>
@@ -1494,6 +1844,8 @@ class Video(_Component):
 <li><a href="#raw">Raw</a></li>
 <li><a href="#tableofcontents">TableOfContents</a></li>
 <li><a href="#video">Video</a></li>
+<li><a href="#image">Image</a></li>
+<li><a href="#grid">Grid</a></li>
 </ul>
 </li>
 </ul>
@@ -1532,8 +1884,12 @@ class Video(_Component):
 </ul>
 </li>
 <li>
+<h4><code><a title="ezprez.components.Grid" href="#ezprez.components.Grid">Grid</a></code></h4>
+</li>
+<li>
 <h4><code><a title="ezprez.components.Icon" href="#ezprez.components.Icon">Icon</a></code></h4>
 <ul class="">
+<li><code><a title="ezprez.components.Icon.color" href="#ezprez.components.Icon.color">color</a></code></li>
 <li><code><a title="ezprez.components.Icon.label" href="#ezprez.components.Icon.label">label</a></code></li>
 <li><code><a title="ezprez.components.Icon.size" href="#ezprez.components.Icon.size">size</a></code></li>
 </ul>
@@ -1541,8 +1897,8 @@ class Video(_Component):
 <li>
 <h4><code><a title="ezprez.components.Image" href="#ezprez.components.Image">Image</a></code></h4>
 <ul class="">
+<li><code><a title="ezprez.components.Image.filename" href="#ezprez.components.Image.filename">filename</a></code></li>
 <li><code><a title="ezprez.components.Image.height" href="#ezprez.components.Image.height">height</a></code></li>
-<li><code><a title="ezprez.components.Image.path" href="#ezprez.components.Image.path">path</a></code></li>
 <li><code><a title="ezprez.components.Image.title" href="#ezprez.components.Image.title">title</a></code></li>
 <li><code><a title="ezprez.components.Image.width" href="#ezprez.components.Image.width">width</a></code></li>
 </ul>
@@ -1550,6 +1906,7 @@ class Video(_Component):
 <li>
 <h4><code><a title="ezprez.components.Link" href="#ezprez.components.Link">Link</a></code></h4>
 <ul class="">
+<li><code><a title="ezprez.components.Link.color" href="#ezprez.components.Link.color">color</a></code></li>
 <li><code><a title="ezprez.components.Link.label" href="#ezprez.components.Link.label">label</a></code></li>
 <li><code><a title="ezprez.components.Link.link" href="#ezprez.components.Link.link">link</a></code></li>
 </ul>
@@ -1570,7 +1927,9 @@ class Video(_Component):
 <li>
 <h4><code><a title="ezprez.components.SocialLink" href="#ezprez.components.SocialLink">SocialLink</a></code></h4>
 <ul class="two-column">
+<li><code><a title="ezprez.components.SocialLink.color" href="#ezprez.components.SocialLink.color">color</a></code></li>
 <li><code><a title="ezprez.components.SocialLink.github" href="#ezprez.components.SocialLink.github">github</a></code></li>
+<li><code><a title="ezprez.components.SocialLink.icon_color" href="#ezprez.components.SocialLink.icon_color">icon_color</a></code></li>
 <li><code><a title="ezprez.components.SocialLink.link" href="#ezprez.components.SocialLink.link">link</a></code></li>
 <li><code><a title="ezprez.components.SocialLink.linkedin" href="#ezprez.components.SocialLink.linkedin">linkedin</a></code></li>
 <li><code><a title="ezprez.components.SocialLink.twitch" href="#ezprez.components.SocialLink.twitch">twitch</a></code></li>

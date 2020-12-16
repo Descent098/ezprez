@@ -81,7 +81,7 @@ prez.export(&#34;.&#34;, force=True, folder_name=&#34;Presentation&#34;)
 import os                                   # Used in path validation
 from datetime import datetime               # Used to get date for export
 from typing import Union, List              # Used to enrich type hints in methods
-from shutil import copytree, rmtree         # Used to do high level filesystem operations
+from shutil import copyfile, copytree, rmtree         # Used to do high level filesystem operations
 from dataclasses import dataclass, field    # Used to make class generation faster and more efficient
 
 # Internal dependencies
@@ -167,7 +167,7 @@ class Slide:
         result = f&#34;\n\t\t\t&lt;section class=&#39;bg-{self.background} slide-{self.vertical_alignment}&#39;&gt;&#34;
         
         if self.image:
-            result += f&#34;\n\t\t\t\t&lt;span class=&#39;background&#39; style=&#39;background-image:url(\&#34;{self.image}\&#34;)&#39;&gt;&lt;/span&gt;&#34;
+            result += f&#34;\n\t\t\t\t&lt;span class=&#39;background&#39; style=&#39;background-image:url(\&#34;./static/images/{self.image.filename}\&#34;)&#39;&gt;&lt;/span&gt;&#34;
         result += f&#34;\n\t\t\t\t&lt;div class=&#39;wrap&#39;&gt;\n\t\t\t\t\t&lt;div class=&#39;content-{self.horizontal_alignment}&#39;&gt;\n\t\t\t\t\t&lt;h2&gt;{self.heading}&lt;/h2&gt;\n&#34;
         
         for content in self.contents:
@@ -282,8 +282,9 @@ class Presentation:
 
     def _generate_favicon_markup(self):
         &#34;&#34;&#34;Generates the html to render the favicon properly&#34;&#34;&#34;
-        if self.favicon: # TODO: COPY FAVICON
-            return self.favicon.__html__()
+        if self.favicon:
+            return f&#39;&#39;&#39;&lt;!-- FAVICONS --&gt;
+            &lt;link rel=&#34;apple-touch-icon icon&#34; sizes=&#34;76x76&#34; href=&#34;./static/images/{self.favicon.filename}&#34;&gt;&#39;&#39;&#39;
         else:
             return f&#39;&#39;&#39;&lt;!-- FAVICONS --&gt;
             &lt;link rel=&#34;apple-touch-icon icon&#34; sizes=&#34;76x76&#34; href=&#34;static/images/favicons/favicon-152.png&#34;&gt;&#39;&#39;&#39;
@@ -294,7 +295,7 @@ class Presentation:
         if self.intro:
             if self.image:
                 return f&#34;&#34;&#34;\t\t\t&lt;section class=&#39;bg-{self.background}&#39;&gt;
-                &lt;span class=&#39;background&#39; style=&#39;background-image:url(&#34;{self.image}&#34;)&#39;&gt;&lt;/span&gt;
+                &lt;span class=&#39;background&#39; style=&#39;background-image:url(&#34;./static/images/{self.image.filename}&#34;)&#39;&gt;&lt;/span&gt;
                     &lt;div class=&#39;wrap aligncenter&#39;&gt;
                         &lt;h1&gt;&lt;strong&gt;{self.title}&lt;/strong&gt;&lt;/h1&gt;
                         &lt;p class=&#39;text-intro&#39;&gt;{self.description}&lt;/p&gt;
@@ -484,6 +485,16 @@ class Presentation:
                 copytree(os.path.join(os.path.dirname(__file__), &#34;webslides&#34;), os.path.join(file_path, folder_name))
             else:
                 raise FileExistsError(f&#34;The file path {os.path.join(file_path, folder_name)} exists, to replace use Presentation.export({file_path}, force=True)&#34;)
+
+        # Copy image files
+        if os.path.exists(&#34;./img&#34;):
+            for file_name in os.listdir(&#34;./img&#34;):
+                if os.path.isfile(os.path.join(&#34;img&#34;, file_name)):
+                    copyfile(os.path.join(&#34;img&#34;, file_name), os.path.join(file_path, folder_name, &#34;static&#34;, &#34;images&#34;, file_name))
+        elif os.path.exists(&#34;./images&#34;):
+            for file_name in os.listdir(&#34;./images&#34;):
+                if os.path.isfile(os.path.join(&#34;images&#34;, file_name)):
+                    copyfile(os.path.join(&#34;images&#34;, file_name), os.path.join(file_path, folder_name, &#34;static&#34;, &#34;images&#34;, file_name))
 
         # replace index.html with generated html
         presentation_content = self.__html__()
@@ -650,8 +661,9 @@ class Presentation:
 
     def _generate_favicon_markup(self):
         &#34;&#34;&#34;Generates the html to render the favicon properly&#34;&#34;&#34;
-        if self.favicon: # TODO: COPY FAVICON
-            return self.favicon.__html__()
+        if self.favicon:
+            return f&#39;&#39;&#39;&lt;!-- FAVICONS --&gt;
+            &lt;link rel=&#34;apple-touch-icon icon&#34; sizes=&#34;76x76&#34; href=&#34;./static/images/{self.favicon.filename}&#34;&gt;&#39;&#39;&#39;
         else:
             return f&#39;&#39;&#39;&lt;!-- FAVICONS --&gt;
             &lt;link rel=&#34;apple-touch-icon icon&#34; sizes=&#34;76x76&#34; href=&#34;static/images/favicons/favicon-152.png&#34;&gt;&#39;&#39;&#39;
@@ -662,7 +674,7 @@ class Presentation:
         if self.intro:
             if self.image:
                 return f&#34;&#34;&#34;\t\t\t&lt;section class=&#39;bg-{self.background}&#39;&gt;
-                &lt;span class=&#39;background&#39; style=&#39;background-image:url(&#34;{self.image}&#34;)&#39;&gt;&lt;/span&gt;
+                &lt;span class=&#39;background&#39; style=&#39;background-image:url(&#34;./static/images/{self.image.filename}&#34;)&#39;&gt;&lt;/span&gt;
                     &lt;div class=&#39;wrap aligncenter&#39;&gt;
                         &lt;h1&gt;&lt;strong&gt;{self.title}&lt;/strong&gt;&lt;/h1&gt;
                         &lt;p class=&#39;text-intro&#39;&gt;{self.description}&lt;/p&gt;
@@ -853,6 +865,16 @@ class Presentation:
             else:
                 raise FileExistsError(f&#34;The file path {os.path.join(file_path, folder_name)} exists, to replace use Presentation.export({file_path}, force=True)&#34;)
 
+        # Copy image files
+        if os.path.exists(&#34;./img&#34;):
+            for file_name in os.listdir(&#34;./img&#34;):
+                if os.path.isfile(os.path.join(&#34;img&#34;, file_name)):
+                    copyfile(os.path.join(&#34;img&#34;, file_name), os.path.join(file_path, folder_name, &#34;static&#34;, &#34;images&#34;, file_name))
+        elif os.path.exists(&#34;./images&#34;):
+            for file_name in os.listdir(&#34;./images&#34;):
+                if os.path.isfile(os.path.join(&#34;images&#34;, file_name)):
+                    copyfile(os.path.join(&#34;images&#34;, file_name), os.path.join(file_path, folder_name, &#34;static&#34;, &#34;images&#34;, file_name))
+
         # replace index.html with generated html
         presentation_content = self.__html__()
         index_path = os.path.join(file_path, folder_name, &#34;index.html&#34;)
@@ -1011,6 +1033,16 @@ prez.export(&quot;.&quot;, force=True, folder_name=&quot;Presentation&quot;)
         else:
             raise FileExistsError(f&#34;The file path {os.path.join(file_path, folder_name)} exists, to replace use Presentation.export({file_path}, force=True)&#34;)
 
+    # Copy image files
+    if os.path.exists(&#34;./img&#34;):
+        for file_name in os.listdir(&#34;./img&#34;):
+            if os.path.isfile(os.path.join(&#34;img&#34;, file_name)):
+                copyfile(os.path.join(&#34;img&#34;, file_name), os.path.join(file_path, folder_name, &#34;static&#34;, &#34;images&#34;, file_name))
+    elif os.path.exists(&#34;./images&#34;):
+        for file_name in os.listdir(&#34;./images&#34;):
+            if os.path.isfile(os.path.join(&#34;images&#34;, file_name)):
+                copyfile(os.path.join(&#34;images&#34;, file_name), os.path.join(file_path, folder_name, &#34;static&#34;, &#34;images&#34;, file_name))
+
     # replace index.html with generated html
     presentation_content = self.__html__()
     index_path = os.path.join(file_path, folder_name, &#34;index.html&#34;)
@@ -1142,7 +1174,7 @@ Slide('This is the title...', '... and this is content', ['and', 'so', 'is', 'th
         result = f&#34;\n\t\t\t&lt;section class=&#39;bg-{self.background} slide-{self.vertical_alignment}&#39;&gt;&#34;
         
         if self.image:
-            result += f&#34;\n\t\t\t\t&lt;span class=&#39;background&#39; style=&#39;background-image:url(\&#34;{self.image}\&#34;)&#39;&gt;&lt;/span&gt;&#34;
+            result += f&#34;\n\t\t\t\t&lt;span class=&#39;background&#39; style=&#39;background-image:url(\&#34;./static/images/{self.image.filename}\&#34;)&#39;&gt;&lt;/span&gt;&#34;
         result += f&#34;\n\t\t\t\t&lt;div class=&#39;wrap&#39;&gt;\n\t\t\t\t\t&lt;div class=&#39;content-{self.horizontal_alignment}&#39;&gt;\n\t\t\t\t\t&lt;h2&gt;{self.heading}&lt;/h2&gt;\n&#34;
         
         for content in self.contents:
