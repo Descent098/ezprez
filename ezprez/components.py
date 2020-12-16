@@ -31,6 +31,12 @@ A component used to generate table of contents for a presentation
 
 #### Video
 A component that allows you to embed a youtube video
+
+#### Image
+A component to include images
+
+#### Grid
+A component that allows you to evenly space multiple peices of content
 """
 # Internal Dependencies
 import enum
@@ -72,6 +78,7 @@ class SocialLink(enum.Enum):
     ```
     """
     url:str
+    icon_color:str
     youtube = 0
     github = 1
     twitter = 2
@@ -94,22 +101,41 @@ class SocialLink(enum.Enum):
         self.url = link
         return self
 
+    def color(self, color:str):
+        """Function used to asign color parameter
 
-    def __html__(self, header:bool = True) -> str:
-        if self.url: 
-            if header:
-                return f"""\n\t\t\t\t\t<a href='{self.url}' target='_blank' rel='external' style='background-color:#fff; color:#141414;'>
-                                    <i class='fab fa-{self.name} fa-3x'></i>
-                                </a>\n"""
-            else:
-                return f"""\n\t\t\t\t\t<a href='{self.url}' target='_blank' rel='external'>
-                                    <i class='fab fa-{self.name} fa-3x'></i>
-                                </a>\n"""
+        Parameters
+        ----------
+        color : (str)
+            The color you want the icon to be
+
+        Returns
+        -------
+        The instance called from
+        """
+        self.icon_color = color
+        return self
+
+
+    def __html__(self, header:bool = False) -> str:
+        try: # If no icon_color is set
+            self.__getattribute__("icon_color")
+        except AttributeError:
+            self.icon_color = "#141414"
+
+        try: # If no url is set
+            self.__getattribute__("url")
+        except AttributeError:
+            self.url = "#"
+
+        if header:
+            return f"""\n\t\t\t\t\t<a href='{self.url}' target='_blank' rel='external' style='background-color:#fff; color:{str(self.icon_color)};'>
+                                <i class='fab fa-{self.name} fa-3x'></i>
+                            </a>\n"""
         else:
-            if header:
-                return f"""\n\t\t\t\t\t<i class='fab fa-{self.name} fa-3x' style='background-color:#fff; color:#141414;'></i>\n"""
-            else:
-                return f"""\n\t\t\t\t\t<i class='fab fa-{self.name} fa-3x'></i>\n"""
+            return f"""\n\t\t\t\t\t<a href='{self.url}' target='_blank' rel='external' style='color:{str(self.icon_color)};'>
+                                <i class='fab fa-{self.name} fa-3x'></i>
+                            </a>\n"""
 
 
 @dataclass
@@ -136,11 +162,12 @@ class Link(_Component):
     """
     label: str
     link: str
+    color: str = "#4dd"
 
 
     def __html__(self, header:bool = False) -> str:
         if not header:
-            return f"""\n\t\t\t\t\t<a href={self.link} target='_blank' rel='external'>{self.label}</a>\n"""
+            return f"""\n\t\t\t\t\t<a href={self.link} target='_blank' rel='external' style='color:{self.color};'>{self.label}</a>\n"""
         else:
             return f"""\n\t\t\t\t\t<a href={self.link} target='_blank' rel='external' style='background-color:#fff; color:#141414;'>{self.label}</a>\n"""
 
@@ -213,12 +240,13 @@ class Icon(_Component):
     Slide("This is a heart icon", Icon("fa-heart"))
     ```
     """
-    label:str
-    size:str = "48px"
+    label: str
+    size: str = "48px"
+    color: str = "#141414"
 
 
     def __html__(self) -> str:
-        return f"""\t\t\t\t\t<svg class='{self.label}' style='width:{self.size};height:{self.size};'><use xlink:href='#{self.label}'></use></svg>\n"""
+        return f"""\t\t\t\t\t<svg class='{self.label}' style='width:{self.size};height:{self.size};color:{self.color};'><use xlink:href='#{self.label}'></use></svg>\n"""
 
 
 @dataclass
@@ -251,7 +279,7 @@ class Footer(_Component):
 
         for link in self.links:
             if type(link) == Link or type(link) == SocialLink:
-                result += f"\n\t\t\t{link.__html__(header=True)}\n"
+                result += f"\n\t\t\t{link.__html__()}\n"
             else:
                 raise ValueError(f"Footer arguments must be of type ezprez.components.Link or ezprez.components.SocialLink, got \n\ttype {type(link)}\n\tValue{link}")
 
@@ -463,10 +491,104 @@ class Video(_Component):
 
 @dataclass
 class Image(_Component):
+    """A component to include images
+
+    Attributes
+    ----------
+    title: (str) 
+        The alternate text to describe what an image is
+
+    filename: (str)
+        The filename of the image
+
+    width: (int or False)
+        Used to override the width of an image, optional and defaults to False
+
+    height: (int or False)
+        Used to override the height of an image, optional and defaults to False
+
+    Notes
+    -----
+    - All images must be included in the same directory as the presentation source file under /img or /images
+
+    Examples
+    --------
+    ### Add an image to a slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Image
+
+    Slide("This is an image", Image("low poly ice caps", "kieran-wood-lp-ice-caps-4k-w-peng.jpg"))
+    ```
+
+    ### Add a background image to a slide
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Image
+
+    Slide("This is a background image", image=Image("low poly ice caps", "kieran-wood-abstract-landscape.jpg"), background="black")
+    ```
+    """
     title: str
-    path: str
+    filename: str
     width: Union[bool, int] = False
     height: Union[bool, int] = False
 
     def __html__(self) -> str:
-        return """ """
+        return f"""<img src='./static/images/{self.filename}' alt='{self.title}'{f' width={self.width} ' if self.width else ''} {f' height={self.height} ' if self.height else ''}>"""
+
+
+class Grid(_Component):
+    """A component that allows you to evenly space multiple peices of content
+
+    Attributes
+    ----------
+    contents: (Component, str, List[Component], List[str])
+        The contents you want to include in the grid
+
+    Examples
+    --------
+    ### Add a grid with content
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Grid
+
+    Slide("You can also have grids", Grid("With", "Lots", "of", "content"))
+    ```
+
+    ### Add a slide of a grid of lists
+    ```
+    from ezprez.core import Slide
+    from ezprez.components import Grid
+
+    Slide("Like, alot of content...", Grid(["You can stack content within grids", ["like this", "and this", "and even this"]], ["This is getting too much now", ["way", "way way", "too much"]]))
+    ```
+    """
+    def __init__(self, *contents:Union[_Component, str, List[_Component], List[str]]):
+        self.contents = contents
+
+    def __html__(self):
+        result = "\n\t\t\t\t<div class='grid'>"
+        for content in self.contents:
+            if type(content) == str:
+                result += f"\n\t\t\t\t\t<div class='column'><p>{content}</p></div>\n"
+            elif isinstance(content, _Component):
+                result += "\n\t\t\t\t\t<div class='column'>"
+                result += content.__html__()
+                result += "</div>"
+            elif type(content) == list:
+                result += "\n\t\t\t\t\t<div class='column'>"
+                for subcontent in content:
+                    if isinstance(subcontent, _Component):
+                        result += subcontent.__html__()
+                    elif type(subcontent) == str:
+                        result += f"\n\t\t\t\t\t<p>{subcontent}</p>\n"
+                    elif type(subcontent) == list:
+                        result += "\n\t\t\t\t\t<ul>"
+                        for point in subcontent:
+                            result += f"\n\t\t\t\t\t<li>{point}</li>\n"
+                        result += "\n\t\t\t\t\t</ul>"
+                result += "\n\t\t\t\t\t</div>"
+            else:
+                raise ValueError(f"Provided content to Grid was {type(content)}, which is not List, Component or string")
+        return result

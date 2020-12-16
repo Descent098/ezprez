@@ -31,7 +31,7 @@ prez.export(".", force=True, folder_name="Presentation")
 import os                                   # Used in path validation
 from datetime import datetime               # Used to get date for export
 from typing import Union, List              # Used to enrich type hints in methods
-from shutil import copytree, rmtree         # Used to do high level filesystem operations
+from shutil import copyfile, copytree, rmtree         # Used to do high level filesystem operations
 from dataclasses import dataclass, field    # Used to make class generation faster and more efficient
 
 # Internal dependencies
@@ -117,7 +117,7 @@ class Slide:
         result = f"\n\t\t\t<section class='bg-{self.background} slide-{self.vertical_alignment}'>"
         
         if self.image:
-            result += f"\n\t\t\t\t<span class='background' style='background-image:url(\"{self.image}\")'></span>"
+            result += f"\n\t\t\t\t<span class='background' style='background-image:url(\"./static/images/{self.image.filename}\")'></span>"
         result += f"\n\t\t\t\t<div class='wrap'>\n\t\t\t\t\t<div class='content-{self.horizontal_alignment}'>\n\t\t\t\t\t<h2>{self.heading}</h2>\n"
         
         for content in self.contents:
@@ -232,8 +232,9 @@ class Presentation:
 
     def _generate_favicon_markup(self):
         """Generates the html to render the favicon properly"""
-        if self.favicon: # TODO: COPY FAVICON
-            return self.favicon.__html__()
+        if self.favicon:
+            return f'''<!-- FAVICONS -->
+            <link rel="apple-touch-icon icon" sizes="76x76" href="./static/images/{self.favicon.filename}">'''
         else:
             return f'''<!-- FAVICONS -->
             <link rel="apple-touch-icon icon" sizes="76x76" href="static/images/favicons/favicon-152.png">'''
@@ -244,7 +245,7 @@ class Presentation:
         if self.intro:
             if self.image:
                 return f"""\t\t\t<section class='bg-{self.background}'>
-                <span class='background' style='background-image:url("{self.image}")'></span>
+                <span class='background' style='background-image:url("./static/images/{self.image.filename}")'></span>
                     <div class='wrap aligncenter'>
                         <h1><strong>{self.title}</strong></h1>
                         <p class='text-intro'>{self.description}</p>
@@ -434,6 +435,16 @@ class Presentation:
                 copytree(os.path.join(os.path.dirname(__file__), "webslides"), os.path.join(file_path, folder_name))
             else:
                 raise FileExistsError(f"The file path {os.path.join(file_path, folder_name)} exists, to replace use Presentation.export({file_path}, force=True)")
+
+        # Copy image files
+        if os.path.exists("./img"):
+            for file_name in os.listdir("./img"):
+                if os.path.isfile(os.path.join("img", file_name)):
+                    copyfile(os.path.join("img", file_name), os.path.join(file_path, folder_name, "static", "images", file_name))
+        elif os.path.exists("./images"):
+            for file_name in os.listdir("./images"):
+                if os.path.isfile(os.path.join("images", file_name)):
+                    copyfile(os.path.join("images", file_name), os.path.join(file_path, folder_name, "static", "images", file_name))
 
         # replace index.html with generated html
         presentation_content = self.__html__()

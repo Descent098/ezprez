@@ -47,6 +47,15 @@ header = Navbar('Basic web technologies', [SocialLink.github.link("https://githu
 Presentation(title, url, content, navbar=header)
 ```
 
+*Creating a ```SocialLink``` that is green*
+
+```python
+from ezprez.core import Slide
+from ezprez.components import SocialLink
+
+Slide("Title", SocialLink.github.link("https://github.com/descent098").color("green"))
+```
+
 
 ## Link
 
@@ -57,6 +66,14 @@ from ezprez.core import Slide
 from ezprez.components import Link
 
 Slide("Title", Link("my website", "https://kieranwood.ca"))
+```
+
+*Adding a ```Link``` to a ```Slide``` that is green*
+```python
+from ezprez.core import Slide
+from ezprez.components import Link
+
+Slide("Title", Link("my website", "https://kieranwood.ca", color="green"))
 ```
 
 *Adding an ```Link``` to a ```Navbar```*
@@ -109,6 +126,15 @@ from ezprez.core import Slide
 from ezprez.components import Icon
 
 Slide("Here is an icon", Icon("fa-heart", size="60px"))
+```
+
+*Creating a ```Slide``` with the [heart icon](https://fontawesome.com/icons/heart) that is red and increasing the size to 60px*
+
+```python
+from ezprez.core import Slide
+from ezprez.components import Icon
+
+Slide("Here is an icon", Icon("fa-heart", size="60px", color="red"))
 ```
 
 ## F‎ooter
@@ -235,11 +261,55 @@ A component that allows you to embed a youtube video. You will need to get the v
 
 **Usage**
 
-Adding a youtube video to a Slide
+*Adding a youtube video to a Slide*
 
 ```python
 from ezprez.core import Slide
 from ezprez.components import Video
 
 Slide('Here is a video', Video('wSVljLh1VmI'))
+```
+
+## Grid
+A component that allows you to evenly space multiple peices of content
+
+**Usage**
+
+*Add a ```Grid``` with  a few peices content*
+```
+from ezprez.core import Slide
+from ezprez.components import Grid
+
+Slide("You can also have grids", Grid("With", "Lots", "of", "content"))
+```
+
+*Add a ```Slide``` of a ```Grid``` of lists*
+```
+from ezprez.core import Slide
+from ezprez.components import Grid
+
+Slide("Like, alot of content...", Grid(["You can stack content within grids", ["like this", "and this", "and even this"]], ["This is getting too much now", ["way", "way way", "too much"]]))
+```
+
+## Image
+A component to include images
+
+**Usage**
+
+Image files must be kept in the same directory as the presentation file under ```/img``` or ```/images```
+
+*Add an ```Image``` to a ```Slide```*
+```python
+from ezprez.core import Slide
+from ezprez.components import Image
+
+Slide("This is an image", Image("low poly ice caps", "kieran-wood-lp-ice-caps-4k-w-peng.jpg"))
+```
+
+*Add a background ```Image``` to a ```Slide```*
+```python
+from ezprez.core import Slide
+from ezprez.components import Image
+
+Slide("This is a background image", image=Image("low poly ice caps", "kieran-wood-abstract-landscape.jpg"), background="black")
 ```
