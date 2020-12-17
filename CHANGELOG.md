@@ -1,7 +1,5 @@
 # Changelog
 
-Include information about your changes as you release 
-
 ## V0.1.0; December 17th 2020
 
 Initial Release of ezprez
