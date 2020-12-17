@@ -39,7 +39,6 @@ A component to include images
 A component that allows you to evenly space multiple peices of content
 """
 # Internal Dependencies
-import enum
 from abc import ABC
 from typing import List, Union
 from dataclasses import dataclass
@@ -51,12 +50,14 @@ class _Component(ABC):
         raise NotImplementedError("Components require a __html__() method to be defined")
 
 
-class SocialLink(enum.Enum):
+@dataclass
+class SocialLink(_Component):
     """Can be used to create a social media link icon, or just the icon
 
     Notes 
     -----
-    - If you don't call the object's link function, it will just return the social media icon
+    - If you don't add a url then the SocialLink will just return the icon
+    - Icons include, github, twitch, youtube, linkedin, snapchat, etc. (full list: https://fontawesome.com/icons?d=gallery&s=brands)
 
     Examples
     -------
@@ -65,7 +66,7 @@ class SocialLink(enum.Enum):
     from ezprez.core import Presentation
     from ezprez.components import SocialLink, Navbar
 
-    header = Navbar('Basic web technologies', [SocialLink.github.link("https://github.com/descent098")])
+    header = Navbar('Basic web technologies', [SocialLink("github", "https://github.com/descent098"))
     Presentation(title, url, content, navbar=header)
     ```
 
@@ -74,60 +75,15 @@ class SocialLink(enum.Enum):
     from ezprez.core import Slide
     from ezprez.components import SocialLink
 
-    Slide('This is a youtube icon with no link', SocialLink.youtube)
+    Slide('This is a youtube icon with no link', SocialLink("youtube"))
     ```
     """
-    url:str
-    icon_color:str
-    youtube = 0
-    github = 1
-    twitter = 2
-    linkedin = 3
-    twitch = 4
-
-
-    def link(self, link):
-        """Function used to asign URL parameter to the link
-
-        Parameters
-        ----------
-        link : (str)
-            The url you want to link to
-
-        Returns
-        -------
-        The instance called from
-        """
-        self.url = link
-        return self
-
-    def color(self, color:str):
-        """Function used to asign color parameter
-
-        Parameters
-        ----------
-        color : (str)
-            The color you want the icon to be
-
-        Returns
-        -------
-        The instance called from
-        """
-        self.icon_color = color
-        return self
+    name:str
+    url:str = ""
+    icon_color:str = "#141414"
 
 
     def __html__(self, header:bool = False) -> str:
-        try: # If no icon_color is set
-            self.__getattribute__("icon_color")
-        except AttributeError:
-            self.icon_color = "#141414"
-
-        try: # If no url is set
-            self.__getattribute__("url")
-        except AttributeError:
-            self.url = "#"
-
         if header:
             return f"""\n\t\t\t\t\t<a href='{self.url}' target='_blank' rel='external' style='background-color:#fff; color:{str(self.icon_color)};'>
                                 <i class='fab fa-{self.name} fa-3x'></i>

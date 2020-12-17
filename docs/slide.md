@@ -24,7 +24,7 @@ Slide(title, "This is multiple content", ["You can add", "as many", "arguments a
 Slide(title, "you", "can", "get", "as", "ridiculous", "as", "you", "want", "with", "this")
 ```
 
-You can also use any [components](/components) as a ```Slide``` content:
+You can also use any [components](https://ezprez.readthedocs.io/en/latest/components) as a ```Slide``` content:
 
 ```python
 from ezprez.core import Slide

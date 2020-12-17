@@ -1,5 +1,14 @@
 # Changelog
 
+## V0.1.1; December 17th 2020
+
+Added some post-release improvements and bug fixes
+
+### Bug fixes
+
+- Fixed bug with ```SocialLink``` Component failing to link URL properly (all instances set to last value)
+- Fixed broken links on user documentation
+
 ## V0.1.0; December 17th 2020
 
 Initial Release of ezprez

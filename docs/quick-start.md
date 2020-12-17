@@ -33,7 +33,7 @@ There will then be a folder called ```Presentation```, and inside the ```index.h
 
 ## Where to go from here
 
-I would recommend looking at the [Slide object documentation](/slide), and the [Presentation object documentation](/presentation). 
+I would recommend looking at the [Slide object documentation](https://ezprez.readthedocs.io/en/latest/slide), and the [Presentation object documentation](https://ezprez.readthedocs.io/en/latest/presentation). 
 
 **You can also check out some of these external resources:**
 

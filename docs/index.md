@@ -33,4 +33,4 @@ Ezprez is the simplest API for writing web presentations without needing explici
 
 ## How to start using it
 
-Check out the [Quick start](/quick-start) to get started
+Check out the [Quick start](https://ezprez.readthedocs.io/en/latest/quick-start/) to get started

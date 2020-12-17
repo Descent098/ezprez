@@ -23,7 +23,7 @@ url = "https://kieranwood.ca/ezprez-example" # The URL the presentation will be 
 prez = Presentation(title, description, url)
 ```
 
-From here you can [add slides](/slide#basic-usage) then [export the presentation](#export-content).
+From here you can [add slides](https://ezprez.readthedocs.io/en/latest/slide#basic-usage) then [export the presentation](#export-content).
 
 ## Configuration options
 

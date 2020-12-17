@@ -7,17 +7,9 @@ Inside the ```ezprez.components``` module there are a number of components that 
 
 ## SocialLink
 
-Can be used to create a social media link icon, or just the icon. Can be used in a ```Slide```, or also in a ```Navbar``` or ```Footer```. Currently supports the following social media icons:
-
-- youtube
-- github
-- twitter
-- linkedin
-- twitch
+Can be used to create a social media link icon, or just the icon. Can be used in a ```Slide```, or also in a ```Navbar``` or ```Footer```. 
 
 **Usage**
-
-The usage for this component is slightly different, it is based on an [Enum](https://docs.python.org/3/library/enum.html) and so you need to use ```SocialLink.<name>``` to instantiate it. For example, to create an instance for a twitch link, you would use ```SocialLink.twitch.link("https://twitch.tv")```.
 
 *Creating a ```SocialLink``` with a link to a github account*
 
@@ -25,7 +17,7 @@ The usage for this component is slightly different, it is based on an [Enum](htt
 from ezprez.core import Slide
 from ezprez.components import SocialLink
 
-Slide("Title", SocialLink.github.link("https://github.com/descent098"))
+Slide("Title", SocialLink("github", "https://github.com/descent098"))
 ```
 
 *Creating a ```SocialLink``` that is just the youtube icon*
@@ -34,7 +26,7 @@ Slide("Title", SocialLink.github.link("https://github.com/descent098"))
 from ezprez.core import Slide
 from ezprez.components import SocialLink
 
-Slide("Title", SocialLink.youtube)
+Slide("Title", SocialLink("youtube"))
 ```
 
 *Adding an ```SocialLink``` to a github account in a navbar*
@@ -43,7 +35,7 @@ Slide("Title", SocialLink.youtube)
 from ezprez.core import Presentation
 from ezprez.components import SocialLink, Navbar
 
-header = Navbar('Basic web technologies', [SocialLink.github.link("https://github.com/descent098")])
+header = Navbar('Basic web technologies', [SocialLink("github", "https://github.com/descent098")])
 Presentation(title, url, content, navbar=header)
 ```
 
@@ -53,7 +45,7 @@ Presentation(title, url, content, navbar=header)
 from ezprez.core import Slide
 from ezprez.components import SocialLink
 
-Slide("Title", SocialLink.github.link("https://github.com/descent098").color("green"))
+Slide("Title", SocialLink("github", "https://github.com/descent098", "green"))
 ```
 
 
@@ -149,7 +141,7 @@ Allows you to add a footer to the presentation. It takes in a list of an arbitra
 from ezprez.core import Presentation
 from ezprez.components import Footer
 
-foot = Footer([SocialLink.github.link("https://github.com/Descent098/ezprez-example")])
+foot = Footer([SocialLink("github", "https://github.com/Descent098/ezprez-example")])
 Presentation(title, description, url, footer=foot)
 ```
 
@@ -175,7 +167,7 @@ Allows you to add a navbar to the presentation. It takes in a list of an arbitra
 from ezprez.core import Presentation
 from ezprez.components import Footer
 
-foot = Footer([SocialLink.github.link("https://github.com/Descent098/ezprez-example")])
+foot = Footer([SocialLink("github", "https://github.com/Descent098/ezprez-example")])
 Presentation(title, description, url, footer=foot)
 ```
 
