@@ -501,6 +501,9 @@ class Image(_Component):
     filename: (str)
         The filename of the image
 
+    browser: (bool)
+        If true you can add a browser window border to the image https://webslides.tv/demos/components#slide=114
+
     width: (int or False)
         Used to override the width of an image, optional and defaults to False
 
@@ -531,11 +534,15 @@ class Image(_Component):
     """
     title: str
     filename: str
+    browser: bool = False
     width: Union[bool, int] = False
     height: Union[bool, int] = False
 
     def __html__(self) -> str:
-        return f"""<img src='./static/images/{self.filename}' alt='{self.title}'{f' width={self.width} ' if self.width else ''} {f' height={self.height} ' if self.height else ''}>"""
+        if not self.browser:
+            return f"""<img src='./static/images/{self.filename}' alt='{self.title}'{f' width={self.width} ' if self.width else ''} {f' height={self.height} ' if self.height else ''}>"""
+        else:
+            return f"""<figure class='browser'><img src='./static/images/{self.filename}' alt='{self.title}'{f' width={self.width} ' if self.width else ''} {f' height={self.height} ' if self.height else ''}></figure>\n """
 
 
 class Grid(_Component):

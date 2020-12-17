@@ -71,6 +71,9 @@ class Slide:
 
     vertical_alignment: (str)
         Where to align the slide contents vertically, optional defaults to 'center'
+    
+    animation: (str)
+        Which animation to use for slide transition, optional defaults to 'fadeIn'
 
     Notes
     -----
@@ -78,6 +81,8 @@ class Slide:
     - Vertical alignment can be top, bottom or center
     - Background colors available can be found at https://webslides.tv/demos/components#slide=27; just make sure to remove 'bg', so for example 'bg-black' becomes 'black'
     - Contents is an unpacked variable, meaning you just specify multiple sets of contents such as Slide(title, 'this is content', ['and', 'so', 'is', 'this'], Button('This to', '#'))
+    - Animation can be fadeIn, fadeInUp, zoomIn, slideInLeft, slideInRight
+    - You can also add 'slow' to the end of any animation to slow the animation i.e. 'zoomIn slow'
 
 
     Examples
@@ -100,7 +105,7 @@ class Slide:
     """
     all = []
 
-    def __init__(self, heading:str, *contents:Union[str, list, tuple, _Component], background:Union[bool,str] = False, horizontal_alignment:str = "center", vertical_alignment:str = "center", image:Union[bool, Image]=False ):
+    def __init__(self, heading:str, *contents:Union[str, list, tuple, _Component], background:Union[bool,str] = False, horizontal_alignment:str = "center", vertical_alignment:str = "center", image:Union[bool, Image]=False, animation:str = "fadeIn" ):
         # Assign class attributes
         self.image = image
         self.heading = heading
@@ -108,6 +113,7 @@ class Slide:
         self.background = background
         self.vertical_alignment = vertical_alignment 
         self.horizontal_alignment = horizontal_alignment
+        self.animation = animation
 
         # Append slide to the class variable Slide.all
         Slide.all.append(self)
@@ -118,18 +124,18 @@ class Slide:
         
         if self.image:
             result += f"\n\t\t\t\t<span class='background' style='background-image:url(\"./static/images/{self.image.filename}\")'></span>"
-        result += f"\n\t\t\t\t<div class='wrap'>\n\t\t\t\t\t<div class='content-{self.horizontal_alignment}'>\n\t\t\t\t\t<h2>{self.heading}</h2>\n"
+        result += f"\n\t\t\t\t<div class='wrap {self.animation}'>\n\t\t\t\t\t<div class='content-{self.horizontal_alignment}'>\n\t\t\t\t\t<h2>{self.heading}</h2>\n"
         
         for content in self.contents:
-            if type(content) == str:
+            if type(content) == str: # If the current peice of content is a str
                 result += f"\t\t\t\t\t<p>{content}</p>\n"
 
-            elif type(content) == list or type(content) == tuple:
+            elif type(content) == list or type(content) == tuple: # If the current peice of content is a list or tuple
                 result += f"\t\t\t\t\t<div class='grid {'content-' + self.horizontal_alignment if not self.horizontal_alignment == 'right' else ''}'>\n\t\t\t\t\t\t\t<ul style='text-align:justify;'>\n"
-                for bullet_point in content:
+                for bullet_point in content: # Iterate through each element in the list/tuple
                     result += f"\t\t\t\t\t\t\t\t<li>{bullet_point}</li>\n"
                 result += "\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</ul>\n"
-            elif isinstance(content, _Component) or type(SocialLink):
+            elif isinstance(content, _Component) or type(SocialLink): # If the current peice of content is a Component
                 result += content.__html__()
         result += "\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</section>\n"
 

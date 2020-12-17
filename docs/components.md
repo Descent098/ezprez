@@ -292,7 +292,13 @@ Slide("Like, alot of content...", Grid(["You can stack content within grids", ["
 ```
 
 ## Image
-A component to include images
+
+A component to include images. 
+
+There are several optional fields:
+- width (int): if you want to override the default image width
+- height (int): if you want to override the default image height
+- browser (bool): if ```True``` will add a "browser window" boarder to an image i.e. https://webslides.tv/demos/components#slide=114
 
 **Usage**
 

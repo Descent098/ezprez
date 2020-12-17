@@ -85,3 +85,25 @@ background_image = Image("/path/to/image", "image description")
 
 Slide("This has a background image", "Check it out", image=background_image)
 ```
+
+### Configuring the animation of a slide
+
+By default each slide animates it's transition as a fade in, but this can be configured to one of these five options:
+
+- fadeIn
+- fadeInUp
+- zoomIn
+- slideInLeft
+- slideInRight
+
+Additionally you can make the animation move slowly by adding 'slow' to the end of the animation i.e. 'zoomIn slow'
+
+**Usage**
+
+You can modify the animation using the ```Slide.animation``` attribute
+
+```python
+from ezprez.core import Slide
+
+Slide("You can also change the animation", "Like this one (which is 'zoomIn slow')", animation="zoomIn slow")
+```
