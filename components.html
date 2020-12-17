@@ -93,7 +93,6 @@ A component to include images
 A component that allows you to evenly space multiple peices of content
 &#34;&#34;&#34;
 # Internal Dependencies
-import enum
 from abc import ABC
 from typing import List, Union
 from dataclasses import dataclass
@@ -105,12 +104,14 @@ class _Component(ABC):
         raise NotImplementedError(&#34;Components require a __html__() method to be defined&#34;)
 
 
-class SocialLink(enum.Enum):
+@dataclass
+class SocialLink(_Component):
     &#34;&#34;&#34;Can be used to create a social media link icon, or just the icon
 
     Notes 
     -----
-    - If you don&#39;t call the object&#39;s link function, it will just return the social media icon
+    - If you don&#39;t add a url then the SocialLink will just return the icon
+    - Icons include, github, twitch, youtube, linkedin, snapchat, etc. (full list: https://fontawesome.com/icons?d=gallery&amp;s=brands)
 
     Examples
     -------
@@ -119,7 +120,7 @@ class SocialLink(enum.Enum):
     from ezprez.core import Presentation
     from ezprez.components import SocialLink, Navbar
 
-    header = Navbar(&#39;Basic web technologies&#39;, [SocialLink.github.link(&#34;https://github.com/descent098&#34;)])
+    header = Navbar(&#39;Basic web technologies&#39;, [SocialLink(&#34;github&#34;, &#34;https://github.com/descent098&#34;))
     Presentation(title, url, content, navbar=header)
     ```
 
@@ -128,60 +129,15 @@ class SocialLink(enum.Enum):
     from ezprez.core import Slide
     from ezprez.components import SocialLink
 
-    Slide(&#39;This is a youtube icon with no link&#39;, SocialLink.youtube)
+    Slide(&#39;This is a youtube icon with no link&#39;, SocialLink(&#34;youtube&#34;))
     ```
     &#34;&#34;&#34;
-    url:str
-    icon_color:str
-    youtube = 0
-    github = 1
-    twitter = 2
-    linkedin = 3
-    twitch = 4
-
-
-    def link(self, link):
-        &#34;&#34;&#34;Function used to asign URL parameter to the link
-
-        Parameters
-        ----------
-        link : (str)
-            The url you want to link to
-
-        Returns
-        -------
-        The instance called from
-        &#34;&#34;&#34;
-        self.url = link
-        return self
-
-    def color(self, color:str):
-        &#34;&#34;&#34;Function used to asign color parameter
-
-        Parameters
-        ----------
-        color : (str)
-            The color you want the icon to be
-
-        Returns
-        -------
-        The instance called from
-        &#34;&#34;&#34;
-        self.icon_color = color
-        return self
+    name:str
+    url:str = &#34;&#34;
+    icon_color:str = &#34;#141414&#34;
 
 
     def __html__(self, header:bool = False) -&gt; str:
-        try: # If no icon_color is set
-            self.__getattribute__(&#34;icon_color&#34;)
-        except AttributeError:
-            self.icon_color = &#34;#141414&#34;
-
-        try: # If no url is set
-            self.__getattribute__(&#34;url&#34;)
-        except AttributeError:
-            self.url = &#34;#&#34;
-
         if header:
             return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href=&#39;{self.url}&#39; target=&#39;_blank&#39; rel=&#39;external&#39; style=&#39;background-color:#fff; color:{str(self.icon_color)};&#39;&gt;
                                 &lt;i class=&#39;fab fa-{self.name} fa-3x&#39;&gt;&lt;/i&gt;
@@ -1494,38 +1450,41 @@ class Raw(_Component):
 </dd>
 <dt id="ezprez.components.SocialLink"><code class="flex name class">
 <span>class <span class="ident">SocialLink</span></span>
-<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+<span>(</span><span>name: str, url: str = '', icon_color: str = '#141414')</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Can be used to create a social media link icon, or just the icon</p>
 <h2 id="notes">Notes</h2>
 <ul>
-<li>If you don't call the object's link function, it will just return the social media icon</li>
+<li>If you don't add a url then the SocialLink will just return the icon</li>
+<li>Icons include, github, twitch, youtube, linkedin, snapchat, etc. (full list: <a href="https://fontawesome.com/icons?d=gallery&amp;s=brands">https://fontawesome.com/icons?d=gallery&amp;s=brands</a>)</li>
 </ul>
 <h2 id="examples">Examples</h2>
 <h3 id="adding-an-icon-link-to-someones-github-in-a-navbar">Adding an icon link to someone's github in a navbar</h3>
 <pre><code>from ezprez.core import Presentation
 from ezprez.components import SocialLink, Navbar
 
-header = Navbar('Basic web technologies', [SocialLink.github.link(&quot;https://github.com/descent098&quot;)])
+header = Navbar('Basic web technologies', [SocialLink(&quot;github&quot;, &quot;https://github.com/descent098&quot;))
 Presentation(title, url, content, navbar=header)
 </code></pre>
 <h3 id="adding-an-icon-with-no-link-to-a-slide">Adding an icon with no link to a Slide</h3>
 <pre><code>from ezprez.core import Slide
 from ezprez.components import SocialLink
 
-Slide('This is a youtube icon with no link', SocialLink.youtube)
+Slide('This is a youtube icon with no link', SocialLink(&quot;youtube&quot;))
 </code></pre></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class SocialLink(enum.Enum):
+<pre><code class="python">@dataclass
+class SocialLink(_Component):
     &#34;&#34;&#34;Can be used to create a social media link icon, or just the icon
 
     Notes 
     -----
-    - If you don&#39;t call the object&#39;s link function, it will just return the social media icon
+    - If you don&#39;t add a url then the SocialLink will just return the icon
+    - Icons include, github, twitch, youtube, linkedin, snapchat, etc. (full list: https://fontawesome.com/icons?d=gallery&amp;s=brands)
 
     Examples
     -------
@@ -1534,7 +1493,7 @@ Slide('This is a youtube icon with no link', SocialLink.youtube)
     from ezprez.core import Presentation
     from ezprez.components import SocialLink, Navbar
 
-    header = Navbar(&#39;Basic web technologies&#39;, [SocialLink.github.link(&#34;https://github.com/descent098&#34;)])
+    header = Navbar(&#39;Basic web technologies&#39;, [SocialLink(&#34;github&#34;, &#34;https://github.com/descent098&#34;))
     Presentation(title, url, content, navbar=header)
     ```
 
@@ -1543,60 +1502,15 @@ Slide('This is a youtube icon with no link', SocialLink.youtube)
     from ezprez.core import Slide
     from ezprez.components import SocialLink
 
-    Slide(&#39;This is a youtube icon with no link&#39;, SocialLink.youtube)
+    Slide(&#39;This is a youtube icon with no link&#39;, SocialLink(&#34;youtube&#34;))
     ```
     &#34;&#34;&#34;
-    url:str
-    icon_color:str
-    youtube = 0
-    github = 1
-    twitter = 2
-    linkedin = 3
-    twitch = 4
-
-
-    def link(self, link):
-        &#34;&#34;&#34;Function used to asign URL parameter to the link
-
-        Parameters
-        ----------
-        link : (str)
-            The url you want to link to
-
-        Returns
-        -------
-        The instance called from
-        &#34;&#34;&#34;
-        self.url = link
-        return self
-
-    def color(self, color:str):
-        &#34;&#34;&#34;Function used to asign color parameter
-
-        Parameters
-        ----------
-        color : (str)
-            The color you want the icon to be
-
-        Returns
-        -------
-        The instance called from
-        &#34;&#34;&#34;
-        self.icon_color = color
-        return self
+    name:str
+    url:str = &#34;&#34;
+    icon_color:str = &#34;#141414&#34;
 
 
     def __html__(self, header:bool = False) -&gt; str:
-        try: # If no icon_color is set
-            self.__getattribute__(&#34;icon_color&#34;)
-        except AttributeError:
-            self.icon_color = &#34;#141414&#34;
-
-        try: # If no url is set
-            self.__getattribute__(&#34;url&#34;)
-        except AttributeError:
-            self.url = &#34;#&#34;
-
         if header:
             return f&#34;&#34;&#34;\n\t\t\t\t\t&lt;a href=&#39;{self.url}&#39; target=&#39;_blank&#39; rel=&#39;external&#39; style=&#39;background-color:#fff; color:{str(self.icon_color)};&#39;&gt;
                                 &lt;i class=&#39;fab fa-{self.name} fa-3x&#39;&gt;&lt;/i&gt;
@@ -1608,110 +1522,22 @@ Slide('This is a youtube icon with no link', SocialLink.youtube)
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li>enum.Enum</li>
+<li>ezprez.components._Component</li>
+<li>abc.ABC</li>
 </ul>
 <h3>Class variables</h3>
 <dl>
-<dt id="ezprez.components.SocialLink.github"><code class="name">var <span class="ident">github</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
 <dt id="ezprez.components.SocialLink.icon_color"><code class="name">var <span class="ident">icon_color</span> : str</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="ezprez.components.SocialLink.linkedin"><code class="name">var <span class="ident">linkedin</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="ezprez.components.SocialLink.twitch"><code class="name">var <span class="ident">twitch</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="ezprez.components.SocialLink.twitter"><code class="name">var <span class="ident">twitter</span></code></dt>
+<dt id="ezprez.components.SocialLink.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
 <dt id="ezprez.components.SocialLink.url"><code class="name">var <span class="ident">url</span> : str</code></dt>
 <dd>
 <div class="desc"></div>
-</dd>
-<dt id="ezprez.components.SocialLink.youtube"><code class="name">var <span class="ident">youtube</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-</dl>
-<h3>Methods</h3>
-<dl>
-<dt id="ezprez.components.SocialLink.color"><code class="name flex">
-<span>def <span class="ident">color</span></span>(<span>self, color: str)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Function used to asign color parameter</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>color</code></strong> :&ensp;<code>(str)</code></dt>
-<dd>The color you want the icon to be</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>The instance called from</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def color(self, color:str):
-    &#34;&#34;&#34;Function used to asign color parameter
-
-    Parameters
-    ----------
-    color : (str)
-        The color you want the icon to be
-
-    Returns
-    -------
-    The instance called from
-    &#34;&#34;&#34;
-    self.icon_color = color
-    return self</code></pre>
-</details>
-</dd>
-<dt id="ezprez.components.SocialLink.link"><code class="name flex">
-<span>def <span class="ident">link</span></span>(<span>self, link)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Function used to asign URL parameter to the link</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>link</code></strong> :&ensp;<code>(str)</code></dt>
-<dd>The url you want to link to</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>The instance called from</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def link(self, link):
-    &#34;&#34;&#34;Function used to asign URL parameter to the link
-
-    Parameters
-    ----------
-    link : (str)
-        The url you want to link to
-
-    Returns
-    -------
-    The instance called from
-    &#34;&#34;&#34;
-    self.url = link
-    return self</code></pre>
-</details>
 </dd>
 </dl>
 </dd>
@@ -1947,16 +1773,10 @@ class Video(_Component):
 </li>
 <li>
 <h4><code><a title="ezprez.components.SocialLink" href="#ezprez.components.SocialLink">SocialLink</a></code></h4>
-<ul class="two-column">
-<li><code><a title="ezprez.components.SocialLink.color" href="#ezprez.components.SocialLink.color">color</a></code></li>
-<li><code><a title="ezprez.components.SocialLink.github" href="#ezprez.components.SocialLink.github">github</a></code></li>
+<ul class="">
 <li><code><a title="ezprez.components.SocialLink.icon_color" href="#ezprez.components.SocialLink.icon_color">icon_color</a></code></li>
-<li><code><a title="ezprez.components.SocialLink.link" href="#ezprez.components.SocialLink.link">link</a></code></li>
-<li><code><a title="ezprez.components.SocialLink.linkedin" href="#ezprez.components.SocialLink.linkedin">linkedin</a></code></li>
-<li><code><a title="ezprez.components.SocialLink.twitch" href="#ezprez.components.SocialLink.twitch">twitch</a></code></li>
-<li><code><a title="ezprez.components.SocialLink.twitter" href="#ezprez.components.SocialLink.twitter">twitter</a></code></li>
+<li><code><a title="ezprez.components.SocialLink.name" href="#ezprez.components.SocialLink.name">name</a></code></li>
 <li><code><a title="ezprez.components.SocialLink.url" href="#ezprez.components.SocialLink.url">url</a></code></li>
-<li><code><a title="ezprez.components.SocialLink.youtube" href="#ezprez.components.SocialLink.youtube">youtube</a></code></li>
 </ul>
 </li>
 <li>
