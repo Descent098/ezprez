@@ -2,7 +2,7 @@
 
 Include information about your changes as you release 
 
-## V0.1.0; TBD
+## V0.1.0; December 17th 2020
 
 Initial Release of ezprez
 
@@ -21,6 +21,7 @@ Initial Release of ezprez
   - Added TableOfContents
   - Added Video
   - Added Image
+  - Added Grid
 
 ### Documentation improvements
 
